@@ -27,7 +27,10 @@ class AuthController extends Controller
             auth()->login($user);
             $request->session()->regenerate();
 
-            return redirect()->intended('/');
+            if(auth()->user()->role === 'admin'){
+                return redirect('/admin');
+            }
+            return redirect('/');
         }
 
         // Authentication failed, redirect back with error message
@@ -43,4 +46,5 @@ class AuthController extends Controller
 
         return redirect()->route('login');
     }
+
 }
