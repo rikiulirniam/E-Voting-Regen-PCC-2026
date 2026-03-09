@@ -29,7 +29,7 @@ class AuthController extends Controller
 
             if(auth()->user()->role === 'admin'){
                 return redirect('/admin');
-            }
+            } 
             return redirect('/');
         }
 
