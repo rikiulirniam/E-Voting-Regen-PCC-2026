@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -19,9 +20,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        "username",
+        'username',
         'password',
         'id_peserta',
+        'role',
     ];
 
     /**
@@ -45,5 +47,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function peserta(): BelongsTo
+    {
+        return $this->belongsTo(Peserta::class, 'id_peserta');
     }
 }

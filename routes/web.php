@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CalonAdminController;
+use App\Http\Controllers\PesertaController;
 use App\Http\Middleware\Authorize;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +20,13 @@ Route::prefix('auth')->group(function(){
 
 });
 
-Route::get("/admin", function(){
-    return view("pages.admin.dashboard");
-})->middleware("auth", Authorize::class);
+    Route::prefix("/admin")->group(function(){
+        Route::get("/", [AdminController::class, 'index'])->name("admin.dashboard");
+
+        Route::resource("camin", CalonAdminController::class);
+
+        Route::get("peserta/template", [PesertaController::class, 'downloadTemplate'])->name("peserta.template");
+        Route::get("peserta/export", [PesertaController::class, 'export'])->name("peserta.export");
+        Route::post("peserta/{peserta}/send-credentials", [PesertaController::class, 'sendCredentials'])->name("peserta.send-credentials");
+        Route::resource("peserta", PesertaController::class)->except(['show']);
+    })->middleware("auth", Authorize::class);
