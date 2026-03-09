@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calon Admin - Regen 2026</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-100 dark:bg-gray-900 min-h-screen">
+@extends('layouts.admin')
+@section('title', 'Daftar Calon Admin')
+
+@section('content')
 
     <div class="max-w-6xl mx-auto px-4 py-10">
 
@@ -14,10 +9,6 @@
         <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
             <h1 class="text-3xl font-bold text-gray-800 dark:text-white">Daftar Calon Admin</h1>
             <div class="flex items-center gap-3">
-                <a href="{{ route('admin.dashboard') }}"
-                   class="text-sm text-gray-500 hover:underline dark:text-gray-400">
-                    &larr; Dashboard
-                </a>
                 <a href="{{ route('camin.create') }}"
                    class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -106,6 +97,4 @@
         @endif
 
     </div>
-
-</body>
-</html>
+@endsection
