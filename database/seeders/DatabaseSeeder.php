@@ -21,13 +21,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'username' => 'rikiulir',
             'role' => 'admin',
-            'email' => 'admin@gmail.com',
             'password' => bcrypt('password'), // Don't forget to hash the password
         ]);
         User::create([
             'name' => 'User',
             'username' => 'miau',
-            'email' => 'user@gmail.com',
             'password' => bcrypt('password'), // Don't forget to hash the password
         ]);
     }

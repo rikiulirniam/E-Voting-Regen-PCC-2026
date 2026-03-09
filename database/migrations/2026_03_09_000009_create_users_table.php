@@ -13,11 +13,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+
+            // Definisi Column yang memiliki Foreign Key
+            $table->unsignedBigInteger('id_peserta')->unique()->nullable();
+
             $table->string('name');
             $table->string("username")->unique();
-            $table->string('email')->unique();
-            $table->enum('role', ['admin', 'user'])->default('user');
             $table->string('password');
+            $table->foreign('id_peserta')->references('id')->on('pesertas');
+            $table->enum('role', ['admin', 'user'])->default('user');
+            $table->rememberToken();
             $table->timestamps();
         });
 
