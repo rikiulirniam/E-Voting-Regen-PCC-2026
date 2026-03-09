@@ -9,6 +9,13 @@
         <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
             <h1 class="text-3xl font-bold text-gray-800 dark:text-white">Data Peserta</h1>
             <div class="flex items-center gap-3">
+                <a href="{{ route('peserta.export') }}"
+                   class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 3v13m0 0l-4-4m4 4l4-4"/>
+                    </svg>
+                    Export CSV
+                </a>
                 <a href="{{ route('peserta.create') }}"
                    class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
