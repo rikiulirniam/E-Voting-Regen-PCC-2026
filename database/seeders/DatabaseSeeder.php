@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Peserta;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -23,9 +24,16 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'password' => bcrypt('password'), // Don't forget to hash the password
         ]);
+        $peserta = Peserta::create([
+            'name' => 'Riki Ulir',
+            'nim' => '1234567890',
+            'email' => 'rikiulir@example.com'
+        ]);
         User::create([
             'name' => 'User',
             'username' => 'miau',
+            'id_peserta' => $peserta->id,
+             'role' => 'user',
             'password' => bcrypt('password'), // Don't forget to hash the password
         ]);
     }
