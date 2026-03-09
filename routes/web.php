@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Middleware\Authorize;
 use App\Models\User;
@@ -17,6 +18,4 @@ Route::prefix('auth')->group(function(){
 
 });
 
-Route::get("/admin", function(){
-    return view("pages.admin.dashboard");
-})->middleware("auth", Authorize::class);
+Route::resource("/admin", AdminController::class)->middleware("auth", Authorize::class);
