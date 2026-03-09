@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CalonAdmin;
+use App\Models\Peserta;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view("pages.admin.dashboard");
+        return view("pages.admin.dashboard", [
+            'totalPeserta'     => Peserta::count(),
+            'sudahVote'        => Peserta::where('status_vote', 'sudah')->count(),
+            'belumVote'        => Peserta::where('status_vote', 'belum')->count(),
+            'totalCamin'       => CalonAdmin::count(),
+        ]);
     }
 
     /**

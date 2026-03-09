@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('nim')->unique();
             $table->string('email')->unique();
-            $table->string('password');
             $table->enum('status_jabatan', ['anggota aktif', 'STO'])->default('anggota aktif');
             $table->enum('status_vote', ['belum', 'sudah'])->default('belum');
             $table->timestamps();

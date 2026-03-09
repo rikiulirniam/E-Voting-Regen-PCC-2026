@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Calon Admin - Regen 2026</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-100 dark:bg-gray-900 min-h-screen">
+@extends('layouts.admin')
+@section('title', 'Edit Calon Admin')
+
+@section('content')
 
     <div class="max-w-2xl mx-auto px-4 py-10">
 
@@ -127,6 +122,4 @@
             }
         });
     </script>
-
-</body>
-</html>
+@endsection
