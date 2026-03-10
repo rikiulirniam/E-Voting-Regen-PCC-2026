@@ -15,14 +15,14 @@ class AuthController extends Controller
     {
         // Validate the request data
         $credentials = $request->validate([
-            'name' => ['required', 'min:4'],
+            'username' => ['required', 'min:4'],
             'password' => ['required', 'min:8'],
         ], [
-            'name.required' => 'Nama harus diisi!',
+            'username.required' => 'Username harus diisi!',
             'password.required' => 'Password harus diisi!'
         ]);
 
-        $user = User::where('name', $credentials['name'])->first();
+        $user = User::where('username', $credentials['username'])->first();
 
 
         // Attempt to authenticate the user
@@ -42,8 +42,8 @@ class AuthController extends Controller
 }
         // Authentication failed, redirect back with error message
         return back()->withErrors([
-            'name' => 'The provided credentials do not match our records.',
-        ])->onlyInput('name');
+            'username' => 'The provided credentials do not match our records.',
+        ])->onlyInput('username');
     }
     public function logout(Request $request)
     {
