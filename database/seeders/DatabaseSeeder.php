@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'username' => 'rikiulir',
             'role' => 'admin',
-            'password' => bcrypt('password'), // Don't forget to hash the password
+            'password' => 'password', // Don't forget to hash the password
         ]);
         $peserta = Peserta::create([
             'name' => 'Riki Ulir',
@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'miau',
             'id_peserta' => $peserta->id,
              'role' => 'user',
-            'password' => bcrypt('password'), // Don't forget to hash the password
+            'password' => 'password', // Don't forget to hash the password
         ]);
     }
 }

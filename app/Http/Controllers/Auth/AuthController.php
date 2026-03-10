@@ -15,11 +15,14 @@ class AuthController extends Controller
     {
         // Validate the request data
         $credentials = $request->validate([
-            'username' => ['required', 'min:4'],
+            'name' => ['required', 'min:4'],
             'password' => ['required', 'min:8'],
+        ], [
+            'name.required' => 'Nama harus diisi!',
+            'password.required' => 'Password harus diisi!'
         ]);
 
-        $user = User::where('username', $credentials['username'])->first();
+        $user = User::where('name', $credentials['name'])->first();
 
 
         // Attempt to authenticate the user
@@ -27,19 +30,24 @@ class AuthController extends Controller
             auth()->login($user);
             $request->session()->regenerate();
 
-            if(auth()->user()->role === 'admin'){
+            $userRole = auth()->user()->role;
+            if($userRole === 'admin'){
                 return redirect('/admin');
-            } 
+            } else if ($userRole === 'user') {
+                return redirect('/');
+            }
             return redirect('/');
         }
-
+{
+}
         // Authentication failed, redirect back with error message
         return back()->withErrors([
-            'username' => 'The provided credentials do not match our records.',
-        ]);
+            'name' => 'The provided credentials do not match our records.',
+        ])->onlyInput('name');
     }
     public function logout(Request $request)
     {
+
         auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

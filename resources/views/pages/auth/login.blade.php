@@ -1,3 +1,4 @@
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login Page</title>
-    @vite('resources/css/app.css', 'resources/js/app.js')
 </head>
 
 <body class="w-full mx-auto h-screen flex flex-col p-10 bg-[radial-gradient(circle_at_0%_100%,rgba(220,38,38,0.4),transparent_30%),radial-gradient(circle_at_50%_0%,rgba(220,38,38,0.4),transparent_40%),linear-gradient(to_bottom,#020617,#000000)]">
@@ -25,11 +25,11 @@
             <p class="text-2xl text-white tracking-[.25em] -mt-2">UKM PCC</p>
             <p class="text-xl text-white tracking-wide -mt-1.5">2026/2027</p>
         </div>
-        <form action="{{ route('authenticate') }}" method="POST" class="flex flex-col gap-8 mx-1" autocomplete="off">
+        <form action="{{ route('authenticate') }}" method="POST" class="flex flex-col gap-8 mx-1" autocomplete="off" id="loginForm">
             @csrf
             <div
                 class="flex flex-col gap-6 bg-linear-to-r from-gray-500 to-gray-900 rounded-full outline-1 outline-white py-4 mx-3.5">
-                <input type="text" name="username" id="username" value="{{ old('username') }}"
+                <input type="text" name="name" id="name" value="{{ old('name') }}"
                     class="text-white placeholder:text-center placeholder:font-mono placeholder:text-lg text-center caret-white focus:outline-none font-mono"
                     placeholder="Insert your name">
             </div>
@@ -47,4 +47,5 @@
 
     </section>
 </body>
+
 </html>
