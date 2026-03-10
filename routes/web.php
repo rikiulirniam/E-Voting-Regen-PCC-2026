@@ -12,6 +12,10 @@ Route::get('/', function () {
     return view('pages.public.dashboard');
 })->middleware("auth");
 
+Route::get('/confirm', function () {
+        return view('pages.public.confirm');
+    });
+
 Route::prefix('auth')->group(function(){ 
     Route::get("login", [AuthController::class, 'login'])->name("login")->middleware("guest");
     Route::post("login", [AuthController::class, 'authenticate'])->name("authenticate")->middleware("guest");
