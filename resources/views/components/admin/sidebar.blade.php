@@ -1,12 +1,24 @@
-<aside class="w-60 shrink-0 bg-white dark:bg-gray-800 shadow-md flex flex-col">
-    <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700">
-        <h1 class="text-lg font-bold text-gray-800 dark:text-white leading-tight">Regen 2026</h1>
-        <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Panel Admin</p>
+<aside id="sidebar"
+       class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 shadow-md flex flex-col
+              -translate-x-full transition-transform duration-300 ease-in-out
+              lg:relative lg:translate-x-0 lg:w-60 lg:shrink-0 lg:z-auto">
+
+    <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+        <div>
+            <h1 class="text-lg font-bold text-gray-800 dark:text-white leading-tight">Regen 2026</h1>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Panel Admin</p>
+        </div>
+        <button onclick="closeSidebar()"
+                class="lg:hidden p-1 rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
     </div>
 
     <nav class="flex-1 px-3 py-4 space-y-1">
         {{-- Dashboard --}}
-        <a href="{{ route('admin.dashboard') }}"
+        <a href="{{ route('admin.dashboard') }}" onclick="closeSidebar()"
            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200
                   {{ request()->routeIs('admin.dashboard') ? 'bg-blue-600 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -16,7 +28,7 @@
         </a>
 
         {{-- Peserta --}}
-        <a href="{{ route('peserta.index') }}"
+        <a href="{{ route('peserta.index') }}" onclick="closeSidebar()"
            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200
                   {{ request()->routeIs('peserta.*') ? 'bg-blue-600 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -26,7 +38,7 @@
         </a>
 
         {{-- Calon Admin --}}
-        <a href="{{ route('camin.index') }}"
+        <a href="{{ route('camin.index') }}" onclick="closeSidebar()"
            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200
                   {{ request()->routeIs('camin.*') ? 'bg-blue-600 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
