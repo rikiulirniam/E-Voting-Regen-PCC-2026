@@ -22,10 +22,9 @@
     </div>
     <section class="m-auto flex flex-col gap-15 lg:gap-14 md:gap-30 lg:pt-5 pt-10 md:pt-0 mx-8">
         <div class="flex flex-col items-center gap-0 font-montserrat">
-            <p class="text-2xl lg:text-3xl md:text-3xl text-white tracking-wide">The Next</p>
-            {{-- <h1 class="text-4xl text-white font-bold">ADMINISTRATOR</h1> --}}
+            <p class="text-2xl lg:text-3xl md:text-3xl text-white tracking-wide">Who The Next</p>
             <img src="{{ asset('assets/img/administrator_text.png') }}" alt="Teks Administrator" class="w-auto h-13 lg:h-20 md:h-20">
-            <p class="text-2xl lg:text-4xl md:text-4xl text-white tracking-[.25em] -mt-2 font-semibold">UKM PCC</p>
+            <p class="text-2xl lg:text-4xl md:text-4xl text-white tracking-[.25em] -mt-2 font-black">UKM PCC</p>
             <p class="text-xl lg:text-3xl md:text-3xl text-white tracking-wide -mt-1.5 lg:-mt-1 font-semibold">2026/2027</p>
         </div>
         <form action="{{ route('authenticate') }}" method="POST" class="flex flex-col gap-8 mx-1" autocomplete="off" id="loginForm">
