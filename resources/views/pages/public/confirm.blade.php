@@ -11,12 +11,12 @@
 </head>
 
 <body
-    class="w-full mx-auto h-screen flex flex-col py-10 pb-10 pt-8 bg-[radial-gradient(circle_at_0%_100%,rgba(67,37,137,0.8),transparent_30%),radial-gradient(circle_at_50%_0%,rgba(67,37,137,0.8),transparent_40%),linear-gradient(to_bottom,#020617,#000000)]">
+    class="w-full mx-auto min-h-screen flex flex-col py-10 pb-10 pt-8 bg-[radial-gradient(circle_at_0%_100%,rgba(67,37,137,0.8),transparent_30%),radial-gradient(circle_at_50%_0%,rgba(67,37,137,0.8),transparent_40%),linear-gradient(to_bottom,#020617,#000000)]">
     <div class="mx-auto w-max rounded-full bg-white/10 border-3 border-white/20 p-1.5 md:p-2.5 backdrop-blur-sm">
         <header class="flex items-center gap-0 bg-white px-2 py-1 rounded-full shadow-md">
-            <img src="{{ asset('assets/img/polines.png') }}" class="h-4 w-auto md:h-8">
-            <img src="{{ asset('assets/img/polines-2.png') }}" class="h-4 w-auto md:h-8">
-            <img src="{{ asset('assets/img/pcc.png') }}" class="h-4 w-auto md:h-8">
+            <img src="{{ asset('assets/img/polines.png') }}" class="h-4 w-auto md:h-8 lg:h-6">
+            <img src="{{ asset('assets/img/polines-2.png') }}" class="h-4 w-auto md:h-8 lg:h-6">
+            <img src="{{ asset('assets/img/pcc.png') }}" class="h-4 w-auto md:h-8 lg:h-6">
         </header>
     </div>
     <form action="#" class="my-auto">
@@ -29,7 +29,7 @@
                 </p>
             </div>
             <div class="flex flex-row gap-9 mx-auto">
-                <button type="button" onclick="history.back()"
+                <button type="button" onclick="location.href='{{ route('dashboard') }}'"
                     class="bg-linear-to-r from-gray-400 to-gray-600 rounded-full text-white font-mono tracking-wide py-4.5 md:py-6 w-32 md:w-50 lg:py-5 shadow-[6px_6px_2px_rgba(59,56,55,1)] hover:scale-105 transition">
                     Back
                 </button>

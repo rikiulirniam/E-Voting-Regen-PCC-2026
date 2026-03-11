@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Lemon&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -10,4 +10,6 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
     --font-montserrat: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+    --font-gabarito: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+    --font-lemon: "Lemon", ui-serif, system-ui, serif; 
 }
