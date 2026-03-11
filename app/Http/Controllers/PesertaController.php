@@ -123,7 +123,6 @@ class PesertaController extends Controller
                 ]);
 
                 Mail::to($email)->send(new PesertaCredentials($peserta, $username, $plainPassword));
-                echo "$username : $plainPassword\n";
                 $inserted++;
             });
         }
