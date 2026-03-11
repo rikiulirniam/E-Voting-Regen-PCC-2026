@@ -21,12 +21,10 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Pemilihan Regen 2026</h1>
-        </div>
+
         <div class="body">
             <p class="greeting">Halo, <strong>{{ $peserta->name }}</strong>!</p>
-            <p>Berikut adalah kredensial login Anda untuk mengikuti <strong>Pemilihan Regen 2026</strong>:</p>
+            <p>Berikut adalah kredensial login Anda untuk mengikuti <strong>Regenerasi PCC 2026</strong>:</p>
 
             <div class="info-box">
                 <p><strong>NIM</strong> : {{ $peserta->nim }}</p>
@@ -41,7 +39,7 @@
             </p>
         </div>
         <div class="footer">
-            &copy; {{ date('Y') }} Pemilihan Regen 2026 &mdash; Pesan ini dibuat otomatis, jangan membalas email ini.
+            &copy; {{ date('Y') }} Regenerasi PCC 2026 &mdash; Pesan ini dibuat otomatis, jangan membalas email ini.
         </div>
     </div>
 </body>
