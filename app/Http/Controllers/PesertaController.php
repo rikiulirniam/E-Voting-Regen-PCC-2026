@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\PesertaCredentials;
 use App\Models\Peserta;
 use App\Models\User;
+use App\Models\Voting;
 use App\Http\Requests\StorePesertaRequest;
 use App\Http\Requests\UpdatePesertaRequest;
 use Illuminate\Http\Request;
@@ -122,7 +123,6 @@ class PesertaController extends Controller
                 ]);
 
                 Mail::to($email)->send(new PesertaCredentials($peserta, $username, $plainPassword));
-
                 $inserted++;
             });
         }
@@ -190,6 +190,7 @@ class PesertaController extends Controller
 
     public function destroy(Peserta $peserta)
     {
+        Voting::where('id_peserta', $peserta->id)->delete();
         $peserta->user?->delete();
         $peserta->delete();
 
