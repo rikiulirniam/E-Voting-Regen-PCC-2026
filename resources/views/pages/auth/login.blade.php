@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login Page</title>
+
     <link rel="icon" type="image/png" href="{{ asset('assets/img/pcc.png') }}">
     @vite('resources/css/app.css', 'resources/js/app.js')
 </head>
@@ -27,13 +28,13 @@
             <p class="text-2xl lg:text-4xl md:text-4xl text-white tracking-[.25em] -mt-2 font-semibold">UKM PCC</p>
             <p class="text-xl lg:text-3xl md:text-3xl text-white tracking-wide -mt-1.5 lg:-mt-1 font-semibold">2026/2027</p>
         </div>
-        <form action="{{ route('authenticate') }}" method="POST" class="flex flex-col gap-8 mx-1 lg:mx-10" autocomplete="off">
+        <form action="{{ route('authenticate') }}" method="POST" class="flex flex-col gap-8 mx-1" autocomplete="off" id="loginForm">
             @csrf
             <div
                 class="flex flex-col gap-6 bg-linear-to-r from-gray-500 to-gray-900 rounded-full outline-1 outline-white py-3 md:py-6 lg:py-5 mx-3.5 md:w-100 md:mx-auto">
                 <input type="text" name="username" id="username" value="{{ old('username') }}"
                     class="text-white placeholder:text-center placeholder:font-mono placeholder:text-lg text-center caret-white focus:outline-none font-mono"
-                    placeholder="Insert your name">
+                    placeholder="Insert your username">
             </div>
             <div
                 class="flex flex-col gap-6 bg-linear-to-r from-gray-500 to-gray-900 rounded-full outline-1 outline-white py-3 md:py-6 lg:py-5 mx-3.5 md:w-100 md:mx-auto">

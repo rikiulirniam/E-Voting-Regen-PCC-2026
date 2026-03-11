@@ -17,6 +17,9 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'username' => ['required', 'min:4'],
             'password' => ['required', 'min:8'],
+        ], [
+            'username.required' => 'Username harus diisi!',
+            'password.required' => 'Password harus diisi!'
         ]);
 
         $user = User::where('username', $credentials['username'])->first();
@@ -27,19 +30,24 @@ class AuthController extends Controller
             auth()->login($user);
             $request->session()->regenerate();
 
-            if(auth()->user()->role === 'admin'){
+            $userRole = auth()->user()->role;
+            if($userRole === 'admin'){
                 return redirect('/admin');
-            } 
+            } else if ($userRole === 'user') {
+                return redirect('/');
+            }
             return redirect('/');
         }
-
+{
+}
         // Authentication failed, redirect back with error message
         return back()->withErrors([
             'username' => 'The provided credentials do not match our records.',
-        ]);
+        ])->onlyInput('username');
     }
     public function logout(Request $request)
     {
+
         auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
