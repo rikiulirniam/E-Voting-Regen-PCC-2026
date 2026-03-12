@@ -8,13 +8,14 @@ use App\Http\Middleware\Authorize;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('pages.public.dashboard');
-})->middleware("auth");
+// Route::get('/', function () {
+//     return view('pages.public.voting');
+// })->middleware("auth")->name('dashboard');
+Route::get('/', [CalonAdminController::class, 'camin'])->middleware('auth')->name('dashboard');
 
 Route::get('/confirm', function () {
-        return view('pages.public.confirm');
-    });
+    return view('pages.public.confirm');
+})->middleware('auth');
 
 Route::prefix('auth')->group(function(){
     Route::get("login", [AuthController::class, 'login'])->name("login")->middleware("guest");

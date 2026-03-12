@@ -16,6 +16,13 @@ class CalonAdminController extends Controller
         ]);
     }
 
+    // frontend
+    public function camin()
+    {
+        $calon_admin = CalonAdmin::orderBy('no_urut')->get();
+        return view('pages.public.voting', compact('calon_admin'));
+    }
+
     public function create()
     {
         return view("pages.admin.camin.create");
