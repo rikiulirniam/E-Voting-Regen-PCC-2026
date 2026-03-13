@@ -10,12 +10,28 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view("pages.admin.dashboard", [
-            'totalPeserta'     => Peserta::count(),
-            'sudahVote'        => Peserta::where('status_vote', 'sudah')->count(),
-            'belumVote'        => Peserta::where('status_vote', 'belum')->count(),
-            'totalCamin'       => CalonAdmin::count(),
-        ]);
+        return view('pages.admin.dashboard', $this->dashboardData());
+    }
+
+    public function display()
+    {
+        return view('pages.admin.display', array_merge(
+            $this->dashboardData(),
+            [
+                'displayQrUrl' => config('app.display_qr_url'),
+            ]
+        ));
+    }
+
+    private function dashboardData(): array
+    {
+        return [
+            'totalPeserta'  => Peserta::count(),
+            'sudahVote'     => Peserta::where('status_vote', 'sudah')->count(),
+            'belumVote'     => Peserta::where('status_vote', 'belum')->count(),
+            'totalCamin'    => CalonAdmin::count(),
+            'votePerPaslon' => CalonAdmin::withCount('votings')->orderBy('no_urut')->get(),
+        ];
     }
 
     /**

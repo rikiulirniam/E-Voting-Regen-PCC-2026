@@ -46,6 +46,16 @@
             </svg>
             Calon Admin
         </a>
+
+        {{-- Display --}}
+        <a href="{{ route('admin.display') }}" onclick="closeSidebar()"
+           class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200
+                  {{ request()->routeIs('admin.display') ? 'bg-blue-600 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm13 2v4m2-2h-4"/>
+            </svg>
+            Display
+        </a>
     </nav>
 
     {{-- Logout --}}
