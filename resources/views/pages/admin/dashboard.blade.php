@@ -66,6 +66,10 @@
 
             </div>
 
+            <x-admin.vote-pie-chart
+                :vote-per-paslon="$votePerPaslon"
+                wrapper-class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm py-6 px-10 mb-10 w-full md:w-fit max-w-full" />
+
             {{-- Quick Access --}}
             <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Akses Cepat</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -106,3 +110,4 @@
 
     </div>
 @endsection
+
