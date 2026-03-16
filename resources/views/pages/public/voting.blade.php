@@ -73,7 +73,8 @@
                                     </div>
                                     <img src="{{ asset('storage/' . $c_adm->foto) }}"
                                         class="absolute inset-0 w-full h-full object-cover rounded-2xl">
-                                    <div class="caminOverlay absolute bottom-0 w-full h-1/2 bg-black/60 backdrop-blur-md text-white p-4 pt-15 overflow-hidden rounded-b-2xl scb-hide mask-transparan z-30 pointer-event-auto">
+                                    <div
+                                        class="caminOverlay absolute bottom-0 w-full h-1/2 bg-black/60 backdrop-blur-md text-white p-4 pt-15 overflow-hidden rounded-b-2xl scb-hide mask-transparan z-30 pointer-events-auto">
                                         <div class="chv-wrapper fade-btm h-full pb-5 rounded-b-2xl">
                                             <button type="button"
                                                 class="btn-selengkapnya flex flex-row gap-2 items-center justify-end mb-2 ml-auto">
@@ -137,7 +138,8 @@
             </div>
         </section>
         {{-- dsktop btn --}}
-        <div class="hidden lg:flex absolute flex-row justify-between gap-12 mx-auto my-auto px-10 w-full top-[70%] z-0 pointer-events-none">
+        <div
+            class="hidden lg:flex absolute flex-row justify-between gap-12 mx-auto my-auto px-10 w-full top-[70%] z-0 pointer-events-none">
             <div onclick="prev()"
                 class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-l from-gray-600 to-gray-950 flex items-center justify-center transition hover:scale-95">
                 <i class="fa-solid fa-chevron-left text-white text-xl"></i>
@@ -256,20 +258,29 @@
             const btnTutup = card.querySelector(".btn-tutup")
             const chevronWrapper = card.querySelector(".chv-wrapper")
             btnSelengkapnya.addEventListener("click", () => {
-                caminOverlay.classList.remove("h-1/2","mask-transparan","pt-15","overflow-hidden")
-                caminOverlay.classList.add("h-full","rounded-t-2xl","pt-8","overflow-y-auto")
+                caminOverlay.classList.remove("h-1/2", "mask-transparan", "pt-15", "overflow-hidden")
+                caminOverlay.classList.add("h-full", "rounded-t-2xl", "pt-8", "overflow-y-auto")
                 btnSelengkapnya.classList.add("hidden")
                 btnTutup.classList.remove("hidden")
                 chevronWrapper.classList.remove("fade-btm")
-                chevronWrapper.classList.add("mb-20")
+                setTimeout(() => {
+                    if (caminOverlay.scrollHeight > caminOverlay.clientHeight) {
+                        caminOverlay.classList.add("overflow-y-auto")
+                        chevronWrapper.classList.add("mb-20")
+                    } else {
+                        caminOverlay.classList.remove("overflow-y-auto")
+                        chevronWrapper.classList.remove("mb-20")
+                    }
+                }, 0)
             })
             btnTutup.addEventListener("click", () => {
-                caminOverlay.classList.remove("h-full","rounded-t-2xl","pt-8","overflow-y-auto")
-                caminOverlay.classList.add("h-1/2","mask-transparan","pt-15","overflow-hidden")
+                caminOverlay.classList.remove("h-full", "rounded-t-2xl", "pt-8", "overflow-y-auto")
+                caminOverlay.classList.add("h-1/2", "mask-transparan", "pt-15", "overflow-hidden")
                 btnTutup.classList.add("hidden")
                 btnSelengkapnya.classList.remove("hidden")
                 chevronWrapper.classList.add("fade-btm")
                 chevronWrapper.classList.remove("mb-20")
+                caminOverlay.scrollTop = 0
                 // console.log("tutup ininya")
             })
         })
