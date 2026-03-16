@@ -74,7 +74,7 @@
                                     <img src="{{ asset('storage/' . $c_adm->foto) }}"
                                         class="absolute inset-0 w-full h-full object-cover rounded-2xl">
                                     <div class="caminOverlay absolute bottom-0 w-full h-1/2 bg-black/60 backdrop-blur-md text-white p-4 pt-15 overflow-hidden rounded-b-2xl scb-hide mask-transparan z-30 pointer-event-auto">
-                                        <div class="fade-btm h-full pb-5 rounded-b-2xl">
+                                        <div class="chv-wrapper fade-btm h-full pb-5 rounded-b-2xl">
                                             <button type="button"
                                                 class="btn-selengkapnya flex flex-row gap-2 items-center justify-end mb-2 ml-auto">
                                                 <i class="fa-solid fa-chevron-up"></i>
@@ -254,17 +254,22 @@
             const caminOverlay = card.querySelector(".caminOverlay")
             const btnSelengkapnya = card.querySelector(".btn-selengkapnya")
             const btnTutup = card.querySelector(".btn-tutup")
+            const chevronWrapper = card.querySelector(".chv-wrapper")
             btnSelengkapnya.addEventListener("click", () => {
                 caminOverlay.classList.remove("h-1/2","mask-transparan","pt-15","overflow-hidden")
                 caminOverlay.classList.add("h-full","rounded-t-2xl","pt-8","overflow-y-auto")
                 btnSelengkapnya.classList.add("hidden")
                 btnTutup.classList.remove("hidden")
+                chevronWrapper.classList.remove("fade-btm")
+                chevronWrapper.classList.add("mb-20")
             })
             btnTutup.addEventListener("click", () => {
                 caminOverlay.classList.remove("h-full","rounded-t-2xl","pt-8","overflow-y-auto")
                 caminOverlay.classList.add("h-1/2","mask-transparan","pt-15","overflow-hidden")
                 btnTutup.classList.add("hidden")
                 btnSelengkapnya.classList.remove("hidden")
+                chevronWrapper.classList.add("fade-btm")
+                chevronWrapper.classList.remove("mb-20")
                 // console.log("tutup ininya")
             })
         })
