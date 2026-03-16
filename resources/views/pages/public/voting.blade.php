@@ -11,7 +11,7 @@
     @vite('resources/css/app.css', 'resources/js/app.js')
 </head>
 
-<body class="w-full min-h-screen flex flex-col py-10 pb-10 pt-8 bg-purple bg-desktop overflow-x-hidden">
+<body class="w-full min-h-screen flex flex-col py-10 pb-10 pt-8 bg-mobile bg-desktop overflow-x-hidden">
     <div id="votingPage">
         <div
             class="mx-auto w-max rounded-full bg-white/10 border-3 border-white/20 p-1.5 md:p-2.5 backdrop-blur-sm lg:hidden">
@@ -40,7 +40,8 @@
                     CHOOSE YOUR CANDIDATE
                 </p>
             </div>
-            <div class="lg:hidden max-w-100 mx-auto w-full md:w-1/2 absolute left-0 right-0 top-5 md:relative md:top-16">
+            <div
+                class="lg:hidden max-w-100 mx-auto w-full md:w-1/2 absolute left-0 right-0 top-5 md:relative md:top-16">
                 <div
                     class="w-max border border-white/60 rounded-xl px-3.5 py-0.5 bg-linear-to-r from-gray-600 to-gray-900">
                     <p class="text-white text-2xl font-gabarito font-bold tracking-[.25em]">
@@ -56,40 +57,52 @@
                                 class="mx-auto w-full max-w-100 rounded-2xl bg-white/10 border-2 border-white/60 p-2 lg:p-3 backdrop-blur-sm font-montserrat">
                                 <div class="relative rounded-2xl w-full h-130 lg:h-150 shadow-lg">
                                     <div
-                                        class="hidden lg:flex absolute -top-8 -right-8 z-50 w-15 h-15 items-center justify-center rounded-full bg-gray-600/95 border border-white/60 shadow-lg">
+                                        class="absolute flex -top-9 -right-2.5 w-16 h-16 lg:-top-8 lg:-right-8 z-50 lg:w-15 lg:h-15 items-center justify-center rounded-full bg-gray-600/95 border border-white/60 shadow-lg">
                                         <p class="text-white text-4xl font-bold font-montaga items-center"
                                             style="-webkit-text-stroke: 0.1px #7520b6;">
                                             {{ $c_adm->no_urut }}
                                         </p>
                                     </div>
                                     {{-- nourut mobilr --}}
-                                    <div
+                                    {{-- <div
                                         class="lg:hidden absolute -top-9 -right-2.5 z-50 w-16 h-16 flex items-center justify-center rounded-full bg-gray-600/90 shadow-lg">
                                         <p class="text-4xl font-bold text-red-500 font-lemon items-center"
                                             style="-webkit-text-stroke: 0.1px #000;">
                                             {{ $c_adm->no_urut }}
                                         </p>
-                                    </div>
+                                    </div> --}}
                                     <img src="{{ asset('storage/' . $c_adm->foto) }}"
                                         class="absolute inset-0 w-full h-full object-cover rounded-2xl">
-                                    <div class="absolute bottom-0 w-full h-1/2 bg-black/50 backdrop-blur-md text-white p-4 pt-15 overflow-y-auto rounded-b-2xl scb-hide"
-                                        style="mask-image:linear-gradient(to top,black 75%,transparent 100%);
-                                                                                                -webkit-mask-image:linear-gradient(to top,black 75%,transparent 100%);">
-                                        <h3 class="font-bold text-lg mb-1 drop-shadow-2xl lg:text-2xl">
-                                            {{ $c_adm->name }}
-                                        </h3>
-                                        <p class="text-sm font-semibold mb-1 lg:text-lg">Visi</p>
-                                        <p class="text-xs mb-3 opacity-90 lg:text-sm">
-                                            {{ $c_adm->visi }}
-                                        </p>
-                                        <p class="text-sm font-semibold mb-1 lg:text-lg">Misi</p>
-                                        <p class="text-xs opacity-90 lg:text-sm">
-                                            {{ $c_adm->misi }}
-                                        </p>
+                                    <div
+                                        class="caminOverlay absolute bottom-0 w-full h-1/2 bg-black/60 backdrop-blur-md text-white p-4 pt-15 overflow-hidden rounded-b-2xl scb-hide mask-transparan z-30 pointer-events-auto">
+                                        <div class="chv-wrapper fade-btm h-full pb-5 rounded-b-2xl">
+                                            <button type="button"
+                                                class="btn-selengkapnya flex flex-row gap-2 items-center justify-end mb-2 ml-auto">
+                                                <i class="fa-solid fa-chevron-up"></i>
+                                                <p class="text-xs">Selengkapnya</p>
+                                            </button>
+                                            <h3 class="font-bold text-lg mb-1 drop-shadow-2xl lg:text-2xl">
+                                                {{ $c_adm->name }}
+                                            </h3>
+                                            <p class="text-sm font-semibold mb-1 lg:text-lg">Visi</p>
+                                            <p class="text-xs mb-3 opacity-90 lg:text-sm">
+                                                {{ $c_adm->visi }}
+                                            </p>
+                                            <p class="text-sm font-semibold mb-1 lg:text-lg">Misi</p>
+                                            <p class="text-xs opacity-90 lg:text-sm">
+                                                {{ $c_adm->misi }}
+                                            </p>
+                                            <button type="button"
+                                                class="btn-tutup hidden flex flex-row gap-2 items-center justify-end mt-5 ml-auto mr-4">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                                <p class="text-xs">Tutup</p>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <form method="post" action="{{ route('vote-in') }}" class="frm_voting hidden lg:flex justify-center mt-5">
+                            <form method="post" action="{{ route('vote-in') }}"
+                                class="frm_voting hidden lg:flex justify-center mt-5">
                                 @csrf
                                 <input type="hidden" name="c_admin_id" class="c_admin_id">
                                 <button type="submit"
@@ -125,13 +138,14 @@
             </div>
         </section>
         {{-- dsktop btn --}}
-        <div class="hidden lg:flex absolute flex-row justify-between gap-12 mx-auto my-auto px-10 w-full top-[70%]">
+        <div
+            class="hidden lg:flex absolute flex-row justify-between gap-12 mx-auto my-auto px-10 w-full top-[70%] z-0 pointer-events-none">
             <div onclick="prev()"
-                class="cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-l from-gray-600 to-gray-950 flex items-center justify-center transition hover:scale-95">
+                class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-l from-gray-600 to-gray-950 flex items-center justify-center transition hover:scale-95">
                 <i class="fa-solid fa-chevron-left text-white text-xl"></i>
             </div>
             <div onclick="next()"
-                class="cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-r from-purple-400 to-indigo-900 flex items-center justify-center transition hover:scale-95">
+                class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-r from-purple-400 to-indigo-900 flex items-center justify-center transition hover:scale-95">
                 <i class="fa-solid fa-chevron-right text-white text-xl"></i>
             </div>
         </div>
@@ -146,7 +160,7 @@
                 <input type="hidden" name="c_admin_id" id="confirm_id">
                 <section class="flex flex-col justify-center gap-8">
                     <div
-                        class="shadow-[6px_6px_2px_rgba(59,56,55,1)] lg:shadow-black/50 py-6 px-1 text-center bg-linear-to-b from-gray-800 to-gray-600 m-auto mx-12 rounded-2xl border border-white md:w-110 md:py-12 md:mx-auto lg:bg-none lg:backdrop-blur-2xl">
+                        class="bg-gray-600/20 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] py-6 px-1 text-center m-auto mx-12 rounded-2xl border border-white md:w-110 md:py-12 md:mx-auto lg:bg-none backdrop-blur-2xl">
                         <p class="font-mono tracking-wide text-white mx-10 text-xl md:text-2xl">
                             Choose it wisely.<br>
                             Are you sure about your choice?
@@ -155,12 +169,12 @@
 
                     <div class="flex w-full gap-5 md:gap-15 px-12 md:px-0 md:w-auto md:mx-auto">
                         <button type="button" onclick="tutupConfirm()"
-                            class="bg-linear-to-r from-gray-400 to-gray-600 rounded-full text-white font-mono tracking-wide py-4 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(59,56,55,1)] lg:shadow-black/50 lg:text-2xl lg:py-1.5 lg:w-35 lg:rounded-2xl lg:border lg:border-white lg:bg-none lg:backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
+                            class="bg-gray-600/20 text-white font-mono tracking-wide py-2 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] lg:text-2xl lg:py-1.5 lg:w-35 rounded-2xl border border-white lg:bg-none backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
                             Back
                         </button>
 
                         <button type="submit"
-                            class="bg-linear-to-r from-gray-400 to-gray-600 rounded-full text-white font-mono tracking-wide py-4 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(59,56,55,1)] lg:shadow-black/50 lg:text-2xl lg:py-1.5 lg:w-35 lg:rounded-2xl lg:border lg:border-white lg:bg-none lg:backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
+                            class="bg-gray-600/20 text-white font-mono tracking-wide py-2 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] lg:text-2xl lg:py-1.5 lg:w-35 rounded-2xl border border-white lg:bg-none backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
                             Confirm
                         </button>
                     </div>
@@ -236,6 +250,38 @@
                 const idcAdm = cardAktif.dataset.id
                 bukaConfirm(idcAdm)
                 console.log(idcAdm)
+            })
+        })
+        document.querySelectorAll(".c-admin-card").forEach(card => {
+            const caminOverlay = card.querySelector(".caminOverlay")
+            const btnSelengkapnya = card.querySelector(".btn-selengkapnya")
+            const btnTutup = card.querySelector(".btn-tutup")
+            const chevronWrapper = card.querySelector(".chv-wrapper")
+            btnSelengkapnya.addEventListener("click", () => {
+                caminOverlay.classList.remove("h-1/2", "mask-transparan", "pt-15", "overflow-hidden")
+                caminOverlay.classList.add("h-full", "rounded-t-2xl", "pt-8", "overflow-y-auto")
+                btnSelengkapnya.classList.add("hidden")
+                btnTutup.classList.remove("hidden")
+                chevronWrapper.classList.remove("fade-btm")
+                setTimeout(() => {
+                    if (caminOverlay.scrollHeight > caminOverlay.clientHeight) {
+                        caminOverlay.classList.add("overflow-y-auto")
+                        chevronWrapper.classList.add("mb-20")
+                    } else {
+                        caminOverlay.classList.remove("overflow-y-auto")
+                        chevronWrapper.classList.remove("mb-20")
+                    }
+                }, 0)
+            })
+            btnTutup.addEventListener("click", () => {
+                caminOverlay.classList.remove("h-full", "rounded-t-2xl", "pt-8", "overflow-y-auto")
+                caminOverlay.classList.add("h-1/2", "mask-transparan", "pt-15", "overflow-hidden")
+                btnTutup.classList.add("hidden")
+                btnSelengkapnya.classList.remove("hidden")
+                chevronWrapper.classList.add("fade-btm")
+                chevronWrapper.classList.remove("mb-20")
+                caminOverlay.scrollTop = 0
+                // console.log("tutup ininya")
             })
         })
     </script>
