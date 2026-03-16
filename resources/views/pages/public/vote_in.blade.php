@@ -11,7 +11,7 @@
     @vite('resources/css/app.css', 'resources/js/app.js')
 </head>
 
-<body class="w-full min-h-screen flex flex-col py-10 pb-10 pt-8 bg-purple bg-desktop">
+<body class="w-full min-h-screen flex flex-col py-10 pb-10 pt-8 bg-mobile bg-desktop">
     <div
         class="mx-auto w-max rounded-full bg-white/10 border-3 border-white/20 p-1.5 md:p-2.5 backdrop-blur-sm lg:hidden">
         <div class="flex items-center gap-0 bg-white px-2 py-1 rounded-full shadow-md">
