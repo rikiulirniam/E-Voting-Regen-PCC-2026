@@ -40,7 +40,8 @@
                     CHOOSE YOUR CANDIDATE
                 </p>
             </div>
-            <div class="lg:hidden max-w-100 mx-auto w-full md:w-1/2 absolute left-0 right-0 top-5 md:relative md:top-16">
+            <div
+                class="lg:hidden max-w-100 mx-auto w-full md:w-1/2 absolute left-0 right-0 top-5 md:relative md:top-16">
                 <div
                     class="w-max border border-white/60 rounded-xl px-3.5 py-0.5 bg-linear-to-r from-gray-600 to-gray-900">
                     <p class="text-white text-2xl font-gabarito font-bold tracking-[.25em]">
@@ -72,24 +73,35 @@
                                     </div>
                                     <img src="{{ asset('storage/' . $c_adm->foto) }}"
                                         class="absolute inset-0 w-full h-full object-cover rounded-2xl">
-                                    <div class="absolute bottom-0 w-full h-1/2 bg-black/50 backdrop-blur-md text-white p-4 pt-15 overflow-y-auto rounded-b-2xl scb-hide"
-                                        style="mask-image:linear-gradient(to top,black 75%,transparent 100%);
-                                                                                                -webkit-mask-image:linear-gradient(to top,black 75%,transparent 100%);">
-                                        <h3 class="font-bold text-lg mb-1 drop-shadow-2xl lg:text-2xl">
-                                            {{ $c_adm->name }}
-                                        </h3>
-                                        <p class="text-sm font-semibold mb-1 lg:text-lg">Visi</p>
-                                        <p class="text-xs mb-3 opacity-90 lg:text-sm">
-                                            {{ $c_adm->visi }}
-                                        </p>
-                                        <p class="text-sm font-semibold mb-1 lg:text-lg">Misi</p>
-                                        <p class="text-xs opacity-90 lg:text-sm">
-                                            {{ $c_adm->misi }}
-                                        </p>
+                                    <div class="caminOverlay absolute bottom-0 w-full h-1/2 bg-black/60 backdrop-blur-md text-white p-4 pt-15 overflow-hidden rounded-b-2xl scb-hide mask-transparan z-30">
+                                        <div class="fade-btm h-full pb-5 rounded-b-2xl">
+                                            <button type="button"
+                                                class="btn-selengkapnya flex flex-row gap-2 items-center justify-end mb-2 ml-auto">
+                                                <i class="fa-solid fa-chevron-up"></i>
+                                                <p class="text-xs">Selengkapnya</p>
+                                            </button>
+                                            <h3 class="font-bold text-lg mb-1 drop-shadow-2xl lg:text-2xl">
+                                                {{ $c_adm->name }}
+                                            </h3>
+                                            <p class="text-sm font-semibold mb-1 lg:text-lg">Visi</p>
+                                            <p class="text-xs mb-3 opacity-90 lg:text-sm">
+                                                {{ $c_adm->visi }}
+                                            </p>
+                                            <p class="text-sm font-semibold mb-1 lg:text-lg">Misi</p>
+                                            <p class="text-xs opacity-90 lg:text-sm">
+                                                {{ $c_adm->misi }}
+                                            </p>
+                                            <button type="button"
+                                                class="btn-tutup hidden flex flex-row gap-2 items-center justify-end mt-5 ml-auto mr-4">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                                <p class="text-xs">Tutup</p>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <form method="post" action="{{ route('vote-in') }}" class="frm_voting hidden lg:flex justify-center mt-5">
+                            <form method="post" action="{{ route('vote-in') }}"
+                                class="frm_voting hidden lg:flex justify-center mt-5">
                                 @csrf
                                 <input type="hidden" name="c_admin_id" class="c_admin_id">
                                 <button type="submit"
@@ -236,6 +248,24 @@
                 const idcAdm = cardAktif.dataset.id
                 bukaConfirm(idcAdm)
                 console.log(idcAdm)
+            })
+        })
+        document.querySelectorAll(".c-admin-card").forEach(card => {
+            const caminOverlay = card.querySelector(".caminOverlay")
+            const btnSelengkapnya = card.querySelector(".btn-selengkapnya")
+            const btnTutup = card.querySelector(".btn-tutup")
+            btnSelengkapnya.addEventListener("click", () => {
+                caminOverlay.classList.remove("h-1/2","mask-transparan","pt-15","overflow-hidden")
+                caminOverlay.classList.add("h-full","rounded-t-2xl","pt-8","overflow-y-auto")
+                btnSelengkapnya.classList.add("hidden")
+                btnTutup.classList.remove("hidden")
+            })
+            btnTutup.addEventListener("click", () => {
+                caminOverlay.classList.remove("h-full","rounded-t-2xl","pt-8","overflow-y-auto")
+                caminOverlay.classList.add("h-1/2","mask-transparan","pt-15","overflow-hidden")
+                btnTutup.classList.add("hidden")
+                btnSelengkapnya.classList.remove("hidden")
+                // console.log("tutup ininya")
             })
         })
     </script>

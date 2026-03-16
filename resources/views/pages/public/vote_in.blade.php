@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Choose the Next Administrator</title>
+    <title>Thank You for Participating!</title>
     <link rel="icon" type="image/png" href="{{ asset('assets/img/pcc.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     @vite('resources/css/app.css', 'resources/js/app.js')
@@ -90,9 +90,15 @@
             </div>
         </div>
     </section>
-    <section class="mx-auto -mt-25 lg:mt-0 md:mt-10">
+    <section class="mx-auto -mt-25 lg:mt-0 md:mt-10 lg:hidden">
         <button type="button" onclick="location.href='{{ route('logout') }}'"
             class="w-30 bg-linear-to-r from-gray-400 to-gray-600 rounded-full text-white font-mono tracking-wide py-4 shadow-[6px_6px_2px_rgba(59,56,55,1)] md:hidden">
+            Log Out
+        </button>
+    </section>
+    <section class="hidden lg:flex absolute bottom-8 right-9">
+        <button type="button" onclick="location.href='{{ route('logout') }}'"
+            class="bg-linear-to-r from-gray-400 to-gray-600 rounded-full text-white font-mono tracking-wide py-4 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(59,56,55,1)] lg:shadow-black/50 lg:text-2xl lg:py-1.5 lg:w-35 lg:rounded-2xl lg:border lg:border-white lg:bg-none lg:backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
             Log Out
         </button>
     </section>

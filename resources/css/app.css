@@ -57,4 +57,12 @@
             0 0 10px rgba(255, 255, 255, 0.7),
             0 0 18px rgba(255, 255, 255, 0.5);
     }
+    .mask-transparan{
+        mask-image:linear-gradient(to top,black 75%,transparent 100%); 
+        -webkit-mask-image:linear-gradient(to top,black 75%,transparent 100%);
+    }
+    .fade-btm{
+        mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+    }
 }
