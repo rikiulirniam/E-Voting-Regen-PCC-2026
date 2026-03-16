@@ -46,7 +46,7 @@
                     style="clip-path: path('M 20 0 L 260 0 C 260 0, 280 0, 280 20 L 280 40 C 280 40, 280 60, 300 60 L 380 60 C 380 60, 400 60, 400 80 L 400 430 C 400 420, 400 450, 380 450 L 180 450 C 180 450, 160 450, 160 430 L 160 420 C 160 420, 160 400, 140 400 L 20 400 C 20 400, 0 400, 0 380 L 0 20 C 0 20, 0 0, 20 0 Z')">
                     <div class="absolute top-4 left-3 w-7 h-7 bg-gray-950 border border-white rounded-full"></div>
                     <div class="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                        <div class="flex bg-gray-200 w-45 h-9 items-center justify-center self-start ml-7">
+                        <div class="flex bg-gray-300 lg:bg-gray-200 w-45 h-9 items-center justify-center self-start ml-7">
                             <p
                                 class="font-montserrat tracking-widest text-xl font-semibold text-green-800 leading-none">
                                 VOTE IN
@@ -82,8 +82,8 @@
                     <div class="absolute bottom-4 right-5 w-7 h-7 bg-gray-950 border border-white rounded-full"></div>
                 </div>
             </div>
-            <div class="absolute bottom-0 left-0  lg:scale-100 origin-left
-                    w-38 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+            <div class="absolute bottom-0 left-0 lg:scale-100 origin-left
+                    w-38 h-10 bg-gray-300 lg:bg-gray-200 rounded-full flex items-center justify-center">
                 <p class="font-handjet text-2xl font-bold text-green-800 leading-none">
                     VOTE IN
                 </p>
@@ -92,13 +92,13 @@
     </section>
     <section class="mx-auto -mt-25 lg:mt-0 md:mt-10 lg:hidden">
         <button type="button" onclick="location.href='{{ route('logout') }}'"
-            class="w-30 bg-linear-to-r from-gray-400 to-gray-600 rounded-full text-white font-mono tracking-wide py-4 shadow-[6px_6px_2px_rgba(59,56,55,1)] md:hidden">
+            class="w-30 bg-gray-600/20 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] rounded-xl text-white font-mono tracking-wide py-1.5 border border-white backdrop-blur-2xl hover:bg-indigo-950/80 hover:scale-100 hover:transition-all scale-105">
             Log Out
         </button>
     </section>
     <section class="hidden lg:flex absolute bottom-8 right-9">
         <button type="button" onclick="location.href='{{ route('logout') }}'"
-            class="bg-linear-to-r from-gray-400 to-gray-600 rounded-full text-white font-mono tracking-wide py-4 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(59,56,55,1)] lg:shadow-black/50 lg:text-2xl lg:py-1.5 lg:w-35 lg:rounded-2xl lg:border lg:border-white lg:bg-none lg:backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
+            class="text-white font-mono tracking-wide py-4 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(59,56,55,1)] lg:shadow-black/50 lg:text-2xl lg:py-1.5 lg:w-35 lg:rounded-2xl lg:border lg:border-white lg:bg-none lg:backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
             Log Out
         </button>
     </section>

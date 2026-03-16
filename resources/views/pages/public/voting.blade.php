@@ -11,7 +11,7 @@
     @vite('resources/css/app.css', 'resources/js/app.js')
 </head>
 
-<body class="w-full min-h-screen flex flex-col py-10 pb-10 pt-8 bg-purple bg-desktop overflow-x-hidden">
+<body class="w-full min-h-screen flex flex-col py-10 pb-10 pt-8 bg-mobile bg-desktop overflow-x-hidden">
     <div id="votingPage">
         <div
             class="mx-auto w-max rounded-full bg-white/10 border-3 border-white/20 p-1.5 md:p-2.5 backdrop-blur-sm lg:hidden">
@@ -57,20 +57,20 @@
                                 class="mx-auto w-full max-w-100 rounded-2xl bg-white/10 border-2 border-white/60 p-2 lg:p-3 backdrop-blur-sm font-montserrat">
                                 <div class="relative rounded-2xl w-full h-130 lg:h-150 shadow-lg">
                                     <div
-                                        class="hidden lg:flex absolute -top-8 -right-8 z-50 w-15 h-15 items-center justify-center rounded-full bg-gray-600/95 border border-white/60 shadow-lg">
+                                        class="absolute flex -top-9 -right-2.5 w-16 h-16 lg:-top-8 lg:-right-8 z-50 lg:w-15 lg:h-15 items-center justify-center rounded-full bg-gray-600/95 border border-white/60 shadow-lg">
                                         <p class="text-white text-4xl font-bold font-montaga items-center"
                                             style="-webkit-text-stroke: 0.1px #7520b6;">
                                             {{ $c_adm->no_urut }}
                                         </p>
                                     </div>
                                     {{-- nourut mobilr --}}
-                                    <div
+                                    {{-- <div
                                         class="lg:hidden absolute -top-9 -right-2.5 z-50 w-16 h-16 flex items-center justify-center rounded-full bg-gray-600/90 shadow-lg">
                                         <p class="text-4xl font-bold text-red-500 font-lemon items-center"
                                             style="-webkit-text-stroke: 0.1px #000;">
                                             {{ $c_adm->no_urut }}
                                         </p>
-                                    </div>
+                                    </div> --}}
                                     <img src="{{ asset('storage/' . $c_adm->foto) }}"
                                         class="absolute inset-0 w-full h-full object-cover rounded-2xl">
                                     <div
@@ -160,7 +160,7 @@
                 <input type="hidden" name="c_admin_id" id="confirm_id">
                 <section class="flex flex-col justify-center gap-8">
                     <div
-                        class="shadow-[6px_6px_2px_rgba(59,56,55,1)] lg:shadow-black/50 py-6 px-1 text-center bg-linear-to-b from-gray-800 to-gray-600 m-auto mx-12 rounded-2xl border border-white md:w-110 md:py-12 md:mx-auto lg:bg-none lg:backdrop-blur-2xl">
+                        class="bg-gray-600/20 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] py-6 px-1 text-center m-auto mx-12 rounded-2xl border border-white md:w-110 md:py-12 md:mx-auto lg:bg-none backdrop-blur-2xl">
                         <p class="font-mono tracking-wide text-white mx-10 text-xl md:text-2xl">
                             Choose it wisely.<br>
                             Are you sure about your choice?
@@ -169,12 +169,12 @@
 
                     <div class="flex w-full gap-5 md:gap-15 px-12 md:px-0 md:w-auto md:mx-auto">
                         <button type="button" onclick="tutupConfirm()"
-                            class="bg-linear-to-r from-gray-400 to-gray-600 rounded-full text-white font-mono tracking-wide py-4 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(59,56,55,1)] lg:shadow-black/50 lg:text-2xl lg:py-1.5 lg:w-35 lg:rounded-2xl lg:border lg:border-white lg:bg-none lg:backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
+                            class="bg-gray-600/20 text-white font-mono tracking-wide py-2 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] lg:text-2xl lg:py-1.5 lg:w-35 rounded-2xl border border-white lg:bg-none backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
                             Back
                         </button>
 
                         <button type="submit"
-                            class="bg-linear-to-r from-gray-400 to-gray-600 rounded-full text-white font-mono tracking-wide py-4 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(59,56,55,1)] lg:shadow-black/50 lg:text-2xl lg:py-1.5 lg:w-35 lg:rounded-2xl lg:border lg:border-white lg:bg-none lg:backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
+                            class="bg-gray-600/20 text-white font-mono tracking-wide py-2 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] lg:text-2xl lg:py-1.5 lg:w-35 rounded-2xl border border-white lg:bg-none backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
                             Confirm
                         </button>
                     </div>
