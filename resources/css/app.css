@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Lemon&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Gwendolyn:wght@400;700&family=Handjet:wght,ELSH@100..900,2&family=Lemon&family=Montaga&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -11,5 +11,50 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
     --font-montserrat: "Montserrat", ui-sans-serif, system-ui, sans-serif;
     --font-gabarito: "Montserrat", ui-sans-serif, system-ui, sans-serif;
-    --font-lemon: "Lemon", ui-serif, system-ui, serif; 
+    --font-lemon: "Lemon", ui-serif, system-ui, serif;
+    --font-montaga: "Montaga", ui-serif, system-ui, serif;
+    --font-handjet: "Handjet", ui-sans-serif, system-ui, sans-serif;
+    --font-gwendolyn: "Gwendolyn", cursive;
+}
+
+@layer utilities {
+
+    .bg-mobile {
+        background-image:
+            radial-gradient(circle at 0% 100%, rgba(220, 38, 38, 0.4), transparent 30%),
+            radial-gradient(circle at 50% 0%, rgba(220, 38, 38, 0.4), transparent 40%),
+            linear-gradient(to bottom, #020617, #000000);
+    }
+
+    .bg-purple {
+        background-image:
+            radial-gradient(circle at 0% 100%, rgba(67, 37, 137, 0.8), transparent 30%),
+            radial-gradient(circle at 50% 0%, rgba(67, 37, 137, 0.8), transparent 40%),
+            linear-gradient(to bottom, #020617, #000000);
+    }
+
+    @media (min-width: 1024px) {
+        .bg-desktop {
+            background-image: url('desktop_bg.png');
+            background-color: #000c1a;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    }
+
+    .scb-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scb-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .thank-glow {
+        text-shadow:
+            0 0 4px rgba(255, 255, 255, 0.9),
+            0 0 10px rgba(255, 255, 255, 0.7),
+            0 0 18px rgba(255, 255, 255, 0.5);
+    }
 }
