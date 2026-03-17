@@ -6,7 +6,7 @@
 
             <div class="mb-8">
                 <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Dashboard</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Selamat datang di panel admin Regen 2026.</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Selamat datang di panel admin {{env('APP_NAME')}}</p>
             </div>
 
             {{-- Stats Cards --}}

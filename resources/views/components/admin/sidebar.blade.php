@@ -5,7 +5,7 @@
 
     <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
         <div>
-            <h1 class="text-lg font-bold text-gray-800 dark:text-white leading-tight">Regen 2026</h1>
+            <h1 class="text-lg font-bold text-gray-800 dark:text-white leading-tight">{{env('APP_NAME')}}</h1>
             <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Panel Admin</p>
         </div>
         <button onclick="closeSidebar()"

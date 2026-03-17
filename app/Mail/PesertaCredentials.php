@@ -22,7 +22,7 @@ class PesertaCredentials extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Kredensial Login - Pemilihan Regen 2026',
+            subject: 'Kredensial Login - Pemilihan Calon Admin 2026',
         );
     }
 
