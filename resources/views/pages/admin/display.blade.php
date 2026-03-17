@@ -8,12 +8,12 @@
     @endphp
 
     <div class="h-screen w-full p-4 md:p-6 lg:p-8 overflow-auto lg:overflow-hidden">
+        <div class="header py-3">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Display Voting</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 my-1">Pantau statistik real-time untuk layar utama.</p>
+        </div>
         <div class="h-full grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
             <section class="lg:col-span-8 flex flex-col gap-4 lg:gap-6 min-h-0">
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Display Voting</h2>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Pantau statistik real-time untuk layar utama.</p>
-                </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5">
@@ -37,8 +37,8 @@
                         :show-title="false"
                         wrapper-class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5 h-full w-full" />
                 </div>
-            </section>
 
+            </section>
             <aside class="lg:col-span-4 min-h-0">
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm h-full p-5 md:p-6 flex flex-col items-center justify-center text-center">
                     <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">QR Voting</h3>
