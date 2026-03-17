@@ -8,11 +8,26 @@
     <title>Login Page</title>
 
     <link rel="icon" type="image/png" href="{{ asset('assets/img/pcc.png') }}">
-    @vite('resources/css/app.css', 'resources/js/app.js')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body
     class="w-full mx-auto min-h-screen flex flex-col py-10 pb-10 pt-8 bg-[radial-gradient(circle_at_0%_100%,rgba(220,38,38,0.4),transparent_30%),radial-gradient(circle_at_50%_0%,rgba(220,38,38,0.4),transparent_40%),linear-gradient(to_bottom,#020617,#000000)]">
+    @if($errors->any())
+    <div
+        x-data="{ show : true }"
+        x-init="setTimeout(() => show = false, 3000)"
+        x-show="show"
+        x-transition
+        class="fixed top-5 right-5 bg-red-500 text-white px-4 py-3 rounded shadow-lg w-80">
+        <span class="block font-bold mb-1">ERROR</span>
+        <ul class="text-sm list-disc list-inside">
+            @foreach ($errors->all() as $error)
+            {{ $error }} {{ $loop->last ? '. ' : ', dan ' }}
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="mx-auto w-max rounded-full bg-white/10 border-3 border-white/20 p-1.5 md:p-2.5 backdrop-blur-sm">
         <header class="flex items-center gap-0 bg-white px-2 py-1 rounded-full shadow-md">
             <img src="{{ asset('assets/img/polines.png') }}" class="h-4 w-auto md:h-8 lg:h-6">

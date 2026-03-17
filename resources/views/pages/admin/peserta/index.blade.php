@@ -121,14 +121,14 @@
                                 <td class="px-4 py-3">
                                     <div class="flex items-center justify-end gap-2">
                                         <a href="{{ route('peserta.edit', $peserta) }}"
-                                           class="text-xs font-medium px-2.5 py-1 rounded-lg bg-yellow-100 hover:bg-yellow-200 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 transition-colors duration-200">
+                                           class="text-xs font-medium px-2.5 py-1 rounded-lg bg-yellow-100 hover:bg-yellow-200 hover:text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 transition-colors duration-200">
                                             Edit
                                         </a>
                                         <form action="{{ route('peserta.send-credentials', $peserta) }}" method="POST"
                                               onsubmit="return confirm('Kirim ulang kredensial ke {{ $peserta->email }}? Password lama akan diganti.')">
                                             @csrf
                                             <button type="submit"
-                                                    class="text-xs font-medium px-2.5 py-1 rounded-lg bg-blue-100 hover:bg-blue-200 text-blue-700 dark:bg-blue-900 dark:text-blue-200 transition-colors duration-200">
+                                                    class="text-xs font-medium px-2.5 py-1 rounded-lg bg-blue-100 hover:bg-blue-200 hover:text-blue-700 dark:bg-blue-900 dark:text-blue-200 transition-colors duration-200">
                                                 Kirim Email
                                             </button>
                                         </form>
@@ -137,7 +137,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                    class="text-xs font-medium px-2.5 py-1 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 dark:bg-red-900 dark:text-red-200 transition-colors duration-200">
+                                                    class="text-xs font-medium px-2.5 py-1 rounded-lg bg-red-100 hover:bg-red-200 hover:text-red-700 dark:bg-red-900 dark:text-red-200 transition-colors duration-200">
                                                 Hapus
                                             </button>
                                         </form>

@@ -28,39 +28,42 @@
                 </p>
             </div>
         </div>
+        <a href="{{ route("logout") }}" class="text-white bg-gray-600 to-gray-700 rounded-md px-2 py-1">
+            Logout doang
+        </a>
         <div class="w-full overflow-hidden">
             <div id="carousel" class="flex gap-6 transition-transform duration-500">
                 @foreach($calon_admin as $c_adm)
-                    <div class="shrink-0 w-full md:w-1/2 lg:w-1/3 c-admin-card" data-id="{{ $c_adm->id }}">
-                        <div
-                            class="mx-auto w-full max-w-100 rounded-2xl bg-white/10 border-2 border-white/60 p-2 backdrop-blur-sm font-montserrat">
-                            <div class="relative overflow-hidden rounded-2xl w-full h-130 shadow-lg">
-                                <div class="absolute z-50 right-2 top-2 w-12 h-12 flex items-center justify-center">
-                                    <p class="text-red-600 font-bold text-5xl font-lemon filter drop-shadow-lg tracking-tighter"
-                                        style="-webkit-text-stroke: 1.5px #000">
-                                        {{ $c_adm->no_urut }}
-                                    </p>
-                                </div>
-                                <img src="{{ asset('storage/' . $c_adm->foto) }}"
-                                    class="absolute inset-0 w-full h-full object-cover">
-                                <div class="absolute bottom-0 w-full h-1/2 bg-black/20 backdrop-blur-md text-white p-4 pt-15 overflow-y-auto"
-                                    style="mask-image:linear-gradient(to top,black 75%,transparent 100%);
+                <div class="shrink-0 w-full md:w-1/2 lg:w-1/3 c-admin-card" data-id="{{ $c_adm->id }}">
+                    <div
+                        class="mx-auto w-full max-w-100 rounded-2xl bg-white/10 border-2 border-white/60 p-2 backdrop-blur-sm font-montserrat">
+                        <div class="relative overflow-hidden rounded-2xl w-full h-130 shadow-lg">
+                            <div class="absolute z-50 right-2 top-2 w-12 h-12 flex items-center justify-center">
+                                <p class="text-red-600 font-bold text-5xl font-lemon filter drop-shadow-lg tracking-tighter"
+                                    style="-webkit-text-stroke: 1.5px #000">
+                                    {{ $c_adm->no_urut }}
+                                </p>
+                            </div>
+                            <img src="{{ asset('storage/' . $c_adm->foto) }}"
+                                class="absolute inset-0 w-full h-full object-cover">
+                            <div class="absolute bottom-0 w-full h-1/2 bg-black/20 backdrop-blur-md text-white p-4 pt-15 overflow-y-auto"
+                                style="mask-image:linear-gradient(to top,black 75%,transparent 100%);
                                     -webkit-mask-image:linear-gradient(to top,black 75%,transparent 100%);">
-                                    <h3 class="font-bold text-lg mb-1 drop-shadow-2xl">
-                                        {{ $c_adm->name }}
-                                    </h3>
-                                    <p class="text-sm font-semibold mb-1">Visi</p>
-                                    <p class="text-xs mb-3 opacity-90">
-                                        {{ $c_adm->visi }}
-                                    </p>
-                                    <p class="text-sm font-semibold mb-1">Misi</p>
-                                    <p class="text-xs opacity-90">
-                                        {{ $c_adm->misi }}
-                                    </p>
-                                </div>
+                                <h3 class="font-bold text-lg mb-1 drop-shadow-2xl">
+                                    {{ $c_adm->name }}
+                                </h3>
+                                <p class="text-sm font-semibold mb-1">Visi</p>
+                                <p class="text-xs mb-3 opacity-90">
+                                    {{ $c_adm->visi }}
+                                </p>
+                                <p class="text-sm font-semibold mb-1">Misi</p>
+                                <p class="text-xs opacity-90">
+                                    {{ $c_adm->misi }}
+                                </p>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endforeach
             </div>
         </div>
@@ -91,6 +94,7 @@
         let idx = 0
         const carousel = document.getElementById("carousel")
         const camin = document.querySelectorAll(".c-admin-card")
+
         function update() {
             const cardW = camin[0].offsetWidth + 24
             const wrapW = carousel.parentElement.offsetWidth
@@ -105,12 +109,14 @@
                 }
             })
         }
+
         function next() {
             if (idx < camin.length - 1) {
                 idx++
                 update()
             }
         }
+
         function prev() {
             if (idx > 0) {
                 idx--
@@ -118,7 +124,7 @@
             }
         }
         update()
-        document.getElementById("frm_voting").addEventListener("submit", function () {
+        document.getElementById("frm_voting").addEventListener("submit", function() {
             const cardAktif = camin[idx]
             const idcAdm = cardAktif.dataset.id
             document.getElementById("c_admin_id").value = idcAdm

@@ -1,5 +1,9 @@
 import './bootstrap';
 
+import Alpine from 'alpinejs'
+window.Alpine= Alpine
+Alpine.start()
+
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('loginForm');
     const submitBtn = document.getElementById('btn_submit');

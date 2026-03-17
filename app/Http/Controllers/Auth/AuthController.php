@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function login(){
+    public function login()
+    {
         return view("pages.auth.login");
     }
     public function authenticate(Request $request)
@@ -26,23 +27,21 @@ class AuthController extends Controller
 
 
         // Attempt to authenticate the user
-        if($user && $user->password && password_verify($credentials['password'], $user->password)){
+        if ($user && $user->password && password_verify($credentials['password'], $user->password)) {
             auth()->login($user);
             $request->session()->regenerate();
 
             $userRole = auth()->user()->role;
-            if($userRole === 'admin'){
+            if ($userRole === 'admin') {
                 return redirect('/admin');
             } else if ($userRole === 'user') {
                 return redirect('/');
             }
             return redirect('/');
         }
-{
-}
         // Authentication failed, redirect back with error message
         return back()->withErrors([
-            'username' => 'The provided credentials do not match our records.',
+            'username' => 'Terjadi kesalahan saat mencoba login, periksa username atau password anda.',
         ])->onlyInput('username');
     }
     public function logout(Request $request)
@@ -54,5 +53,4 @@ class AuthController extends Controller
 
         return redirect()->route('login');
     }
-
 }
