@@ -12,35 +12,65 @@
             <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Display Voting</h2>
             <p class="text-sm text-gray-500 dark:text-gray-400 my-1">Pantau statistik real-time untuk layar utama.</p>
         </div>
-        <div class="h-full grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
-            <section class="lg:col-span-8 flex flex-col gap-4 lg:gap-6 min-h-0">
+        <div class="h-9/10 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+            <section class="lg:col-span-8 flex flex-col justify-center gap-4 lg:gap-6 min-h-0">
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5">
+                    <div class="bg-white dark:bg-gray-800  shadow-sm p-5">
                         <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Total Peserta</p>
                         <p class="mt-2 text-3xl font-bold text-gray-800 dark:text-white">{{ $totalPeserta }}</p>
                     </div>
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5">
+                    <div class="bg-white dark:bg-gray-800  shadow-sm p-5">
                         <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Sudah Vote</p>
                         <p class="mt-2 text-3xl font-bold text-green-600 dark:text-green-400">{{ $sudahVote }}</p>
                     </div>
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5">
+                    <div class="bg-white dark:bg-gray-800  shadow-sm p-5">
                         <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Belum Vote</p>
                         <p class="mt-2 text-3xl font-bold text-amber-600 dark:text-amber-400">{{ $belumVote }}</p>
                     </div>
                 </div>
 
                 <div class="flex-1 min-h-0">
-                    <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Distribusi Suara Per Paslon</h3>
-                    <x-admin.vote-pie-chart
-                        :vote-per-paslon="$votePerPaslon"
-                        :show-title="false"
-                        wrapper-class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-5 h-full w-full" />
+                    @php
+                        $percentageVoted = $totalPeserta > 0 ? ($sudahVote / $totalPeserta) * 100 : 0;
+                        $percentageRemaining = 100 - $percentageVoted;
+                    @endphp
+
+                    <div class="bg-white dark:bg-gray-800  shadow-sm p-6 w-full flex flex-col  justify-center">
+
+                        <div class="flex-1 flex flex-col justify-center gap-8">
+                            <h3 class="text-sm text-center font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-6">Progress Voting</h3>
+                            <div>
+
+                                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-12 overflow-hidden flex">
+                                    <div class="h-full bg-green-500 transition-all duration-500 flex items-center justify-center"
+                                         style="width: {{ $percentageVoted }}%">
+                                        <span class="text-white font-bold text-sm">{{ round($percentageVoted, 1) }}%</span>
+                                    </div>
+                                    <div class="h-full bg-amber-500 transition-all duration-500 flex items-center justify-center"
+                                         style="width: {{ $percentageRemaining }}%">
+                                        <span class="text-white font-bold text-sm">{{ round($percentageRemaining, 1) }}%</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between mt-4 text-sm">
+                                    <div class="flex items-center gap-2">
+                                        <span class="inline-block w-3 h-3 rounded-full bg-green-500"></span>
+                                        <span class="text-gray-600  dark:text-gray-400">Sudah Vote</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="inline-block w-3 h-3 rounded-full bg-amber-500"></span>
+                                        <span class="text-gray-600  dark:text-gray-400">Belum Vote</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </section>
             <aside class="lg:col-span-4 min-h-0">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm h-full p-5 md:p-6 flex flex-col items-center justify-center text-center">
+                <div class="bg-white dark:bg-gray-800 shadow-sm  p-5 md:p-6 flex flex-col items-center justify-center text-center">
                     <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">QR Voting</h3>
 
                     <div class="bg-white rounded-xl p-3 border border-gray-200 w-fit">
