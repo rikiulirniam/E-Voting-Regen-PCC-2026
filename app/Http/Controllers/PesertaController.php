@@ -217,7 +217,7 @@ class PesertaController extends Controller
 
     public function export()
     {
-        $pesertas = Peserta::with('user')->orderBy('name')->get();
+        $pesertas = Peserta::with(['user', 'voting.calonAdmin'])->orderBy('name')->get();
 
         $filename = 'peserta_' . now()->format('Ymd_His') . '.csv';
 
@@ -229,17 +229,18 @@ class PesertaController extends Controller
         $callback = function () use ($pesertas) {
             $handle = fopen('php://output', 'w');
             fputs($handle, "sep=,\n");
-            fputs($handle, "name,nim,email,username,status_jabatan,status_vote\n");
+            fputcsv($handle, ['Nama', 'NIM', 'E-mail', 'Username', 'Status Jabatan', 'Status Vote', 'No.Urut Pilihan']);
 
             foreach ($pesertas as $peserta) {
-                fputs($handle, implode(',', [
+                fputcsv($handle, [
                     $peserta->name,
                     $peserta->nim,
                     $peserta->email,
-                    $peserta->user->username ?? '',
+                    $peserta->user?->username ?? '',
                     $peserta->status_jabatan,
                     $peserta->status_vote,
-                ]) . "\n");
+                    $peserta->voting?->calonAdmin?->no_urut ?? '',
+                ]);
             }
 
             fclose($handle);

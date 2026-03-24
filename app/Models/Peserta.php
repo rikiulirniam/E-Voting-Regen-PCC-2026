@@ -13,4 +13,9 @@ class Peserta extends Model
     {
         return $this->hasOne(User::class, 'id_peserta');
     }
+
+    public function voting()
+    {
+        return $this->hasOne(Voting::class, 'id_peserta');
+    }
 }
