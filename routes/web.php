@@ -8,12 +8,11 @@ use App\Http\Middleware\Authorize;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/vote-in', function () {
-//     return view('pages.public.vote_in');
-// })->middleware("auth");
+//
 Route::get('/', [CalonAdminController::class, 'camin'])
     ->middleware(['auth', 'peserta.not_voted'])
     ->name('dashboard');
+
 Route::post('/vote-in', [CalonAdminController::class, 'vote_in'])
     ->middleware(['auth', 'peserta.not_voted'])
     ->name('vote-in');
