@@ -8,11 +8,14 @@ use App\Http\Middleware\Authorize;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/vote-in', function () {
-//     return view('pages.public.vote_in');
-// })->middleware("auth");
-Route::get('/', [CalonAdminController::class, 'camin'])->middleware('auth')->name('dashboard');
-Route::post('/vote-in', [CalonAdminController::class, 'vote_in'])->middleware('auth')->name('vote-in');
+//
+Route::get('/', [CalonAdminController::class, 'camin'])
+    ->middleware(['auth', 'peserta.not_voted'])
+    ->name('dashboard');
+
+Route::post('/vote-in', [CalonAdminController::class, 'vote_in'])
+    ->middleware(['auth', 'peserta.not_voted'])
+    ->name('vote-in');
 
 Route::prefix('auth')->group(function(){
     Route::get("login", [AuthController::class, 'login'])->name("login")->middleware("guest");
@@ -24,6 +27,7 @@ Route::prefix('auth')->group(function(){
 Route::prefix("/admin")->group(function () {
     Route::get("/", [AdminController::class, 'index'])->name("admin.dashboard");
     Route::get('/display', [AdminController::class, 'display'])->name('admin.display');
+    Route::get('/display/stats', [AdminController::class, 'displayStats'])->name('admin.display.stats');
 
     Route::resource("camin", CalonAdminController::class);
 

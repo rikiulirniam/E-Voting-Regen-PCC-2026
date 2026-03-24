@@ -26,7 +26,15 @@ class CalonAdminController extends Controller
     public function vote_in(Request $request)
     {
         $camin_id = $request->input('c_admin_id');
-        // dd($camin_id);
+        $camin = CalonAdmin::findOrFail($camin_id);
+        $peserta = auth()->user()->peserta;
+        $voting = $camin->votings()->create([
+            'id_peserta' => $peserta->id,
+        ]);
+        $peserta->update([
+            'status_vote' => 'sudah',
+        ]);
+
         return view('pages.public.vote_in');
     }
     // fe end
