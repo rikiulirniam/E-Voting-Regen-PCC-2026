@@ -63,7 +63,6 @@
                                         <span id="display-progress-remaining-count" class="text-gray-600  dark:text-gray-400">Belum Vote ({{ $belumVote }})</span>
                                     </div>
                                 </div>
-                                <p id="display-updated-at" class="mt-3 text-xs text-center text-gray-500 dark:text-gray-400">Terakhir diperbarui: {{ now()->format('H:i:s') }}</p>
                             </div>
                         </div>
                     </div>
@@ -107,7 +106,6 @@
             const progressRemainingTextEl = document.getElementById('display-progress-remaining-text');
             const progressVotedCountEl = document.getElementById('display-progress-voted-count');
             const progressRemainingCountEl = document.getElementById('display-progress-remaining-count');
-            const updatedAtEl = document.getElementById('display-updated-at');
 
             async function refreshStats() {
                 try {
@@ -135,7 +133,6 @@
                     progressRemainingTextEl.textContent = stats.percentageRemaining.toFixed(1) + '%';
                     progressVotedCountEl.textContent = 'Sudah Vote (' + stats.sudahVote + ')';
                     progressRemainingCountEl.textContent = 'Belum Vote (' + stats.belumVote + ')';
-                    updatedAtEl.textContent = 'Terakhir diperbarui: ' + stats.updatedAt;
                 } catch (error) {
                     // Ignore temporary network errors and retry in next interval.
                 }
