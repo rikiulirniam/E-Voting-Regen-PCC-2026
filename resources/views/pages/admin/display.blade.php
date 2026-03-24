@@ -18,15 +18,15 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-white dark:bg-gray-800  shadow-sm p-5">
                         <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Total Peserta</p>
-                        <p class="mt-2 text-3xl font-bold text-gray-800 dark:text-white">{{ $totalPeserta }}</p>
+                        <p id="display-total-peserta" class="mt-2 text-3xl font-bold text-gray-800 dark:text-white">{{ $totalPeserta }}</p>
                     </div>
                     <div class="bg-white dark:bg-gray-800  shadow-sm p-5">
                         <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Sudah Vote</p>
-                        <p class="mt-2 text-3xl font-bold text-green-600 dark:text-green-400">{{ $sudahVote }}</p>
+                        <p id="display-sudah-vote" class="mt-2 text-3xl font-bold text-green-600 dark:text-green-400">{{ $sudahVote }}</p>
                     </div>
                     <div class="bg-white dark:bg-gray-800  shadow-sm p-5">
                         <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">Belum Vote</p>
-                        <p class="mt-2 text-3xl font-bold text-amber-600 dark:text-amber-400">{{ $belumVote }}</p>
+                        <p id="display-belum-vote" class="mt-2 text-3xl font-bold text-amber-600 dark:text-amber-400">{{ $belumVote }}</p>
                     </div>
                 </div>
 
@@ -43,26 +43,27 @@
                             <div>
 
                                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-12 overflow-hidden flex">
-                                    <div class="h-full bg-green-500 transition-all duration-500 flex items-center justify-center"
+                                    <div id="display-progress-voted" class="h-full bg-green-500 transition-all duration-500 flex items-center justify-center"
                                          style="width: {{ $percentageVoted }}%">
-                                        <span class="text-white font-bold text-sm">{{ round($percentageVoted, 1) }}%</span>
+                                        <span id="display-progress-voted-text" class="text-white font-bold text-sm">{{ round($percentageVoted, 1) }}%</span>
                                     </div>
-                                    <div class="h-full bg-amber-500 transition-all duration-500 flex items-center justify-center"
+                                    <div id="display-progress-remaining" class="h-full bg-amber-500 transition-all duration-500 flex items-center justify-center"
                                          style="width: {{ $percentageRemaining }}%">
-                                        <span class="text-white font-bold text-sm">{{ round($percentageRemaining, 1) }}%</span>
+                                        <span id="display-progress-remaining-text" class="text-white font-bold text-sm">{{ round($percentageRemaining, 1) }}%</span>
                                     </div>
                                 </div>
 
                                 <div class="flex justify-between mt-4 text-sm">
                                     <div class="flex items-center gap-2">
                                         <span class="inline-block w-3 h-3 rounded-full bg-green-500"></span>
-                                        <span class="text-gray-600  dark:text-gray-400">Sudah Vote</span>
+                                        <span id="display-progress-voted-count" class="text-gray-600  dark:text-gray-400">Sudah Vote ({{ $sudahVote }})</span>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <span class="inline-block w-3 h-3 rounded-full bg-amber-500"></span>
-                                        <span class="text-gray-600  dark:text-gray-400">Belum Vote</span>
+                                        <span id="display-progress-remaining-count" class="text-gray-600  dark:text-gray-400">Belum Vote ({{ $belumVote }})</span>
                                     </div>
                                 </div>
+                                <p id="display-updated-at" class="mt-3 text-xs text-center text-gray-500 dark:text-gray-400">Terakhir diperbarui: {{ now()->format('H:i:s') }}</p>
                             </div>
                         </div>
                     </div>
@@ -90,4 +91,58 @@
             </aside>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        (function () {
+            const statsUrl = @json(route('admin.display.stats'));
+
+            const totalPesertaEl = document.getElementById('display-total-peserta');
+            const sudahVoteEl = document.getElementById('display-sudah-vote');
+            const belumVoteEl = document.getElementById('display-belum-vote');
+            const progressVotedEl = document.getElementById('display-progress-voted');
+            const progressVotedTextEl = document.getElementById('display-progress-voted-text');
+            const progressRemainingEl = document.getElementById('display-progress-remaining');
+            const progressRemainingTextEl = document.getElementById('display-progress-remaining-text');
+            const progressVotedCountEl = document.getElementById('display-progress-voted-count');
+            const progressRemainingCountEl = document.getElementById('display-progress-remaining-count');
+            const updatedAtEl = document.getElementById('display-updated-at');
+
+            async function refreshStats() {
+                try {
+                    const response = await fetch(statsUrl, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json',
+                        },
+                        cache: 'no-store',
+                    });
+
+                    if (!response.ok) {
+                        return;
+                    }
+
+                    const stats = await response.json();
+
+                    totalPesertaEl.textContent = stats.totalPeserta;
+                    sudahVoteEl.textContent = stats.sudahVote;
+                    belumVoteEl.textContent = stats.belumVote;
+
+                    progressVotedEl.style.width = stats.percentageVoted + '%';
+                    progressRemainingEl.style.width = stats.percentageRemaining + '%';
+                    progressVotedTextEl.textContent = stats.percentageVoted.toFixed(1) + '%';
+                    progressRemainingTextEl.textContent = stats.percentageRemaining.toFixed(1) + '%';
+                    progressVotedCountEl.textContent = 'Sudah Vote (' + stats.sudahVote + ')';
+                    progressRemainingCountEl.textContent = 'Belum Vote (' + stats.belumVote + ')';
+                    updatedAtEl.textContent = 'Terakhir diperbarui: ' + stats.updatedAt;
+                } catch (error) {
+                    // Ignore temporary network errors and retry in next interval.
+                }
+            }
+
+            setInterval(refreshStats, 5000);
+            refreshStats();
+        })();
+    </script>
 @endsection

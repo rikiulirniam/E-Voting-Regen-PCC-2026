@@ -27,6 +27,7 @@ Route::prefix('auth')->group(function(){
 Route::prefix("/admin")->group(function () {
     Route::get("/", [AdminController::class, 'index'])->name("admin.dashboard");
     Route::get('/display', [AdminController::class, 'display'])->name('admin.display');
+    Route::get('/display/stats', [AdminController::class, 'displayStats'])->name('admin.display.stats');
 
     Route::resource("camin", CalonAdminController::class);
 

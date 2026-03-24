@@ -23,12 +23,37 @@ class AdminController extends Controller
         ));
     }
 
+    public function displayStats()
+    {
+        return response()->json($this->displayStatsData());
+    }
+
+    private function displayStatsData(): array
+    {
+        $totalPeserta = Peserta::count();
+        $sudahVote = Peserta::where('status_vote', 'sudah')->count();
+        $belumVote = Peserta::where('status_vote', 'belum')->count();
+        $percentageVoted = $totalPeserta > 0 ? round(($sudahVote / $totalPeserta) * 100, 1) : 0.0;
+        $percentageRemaining = max(0, round(100 - $percentageVoted, 1));
+
+        return [
+            'totalPeserta' => $totalPeserta,
+            'sudahVote' => $sudahVote,
+            'belumVote' => $belumVote,
+            'percentageVoted' => $percentageVoted,
+            'percentageRemaining' => $percentageRemaining,
+            'updatedAt' => now()->format('H:i:s'),
+        ];
+    }
+
     private function dashboardData(): array
     {
+        $stats = $this->displayStatsData();
+
         return [
-            'totalPeserta'  => Peserta::count(),
-            'sudahVote'     => Peserta::where('status_vote', 'sudah')->count(),
-            'belumVote'     => Peserta::where('status_vote', 'belum')->count(),
+            'totalPeserta'  => $stats['totalPeserta'],
+            'sudahVote'     => $stats['sudahVote'],
+            'belumVote'     => $stats['belumVote'],
             'totalCamin'    => CalonAdmin::count(),
             'votePerPaslon' => CalonAdmin::withCount('votings')->orderBy('no_urut')->get(),
         ];
