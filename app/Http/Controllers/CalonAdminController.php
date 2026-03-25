@@ -35,6 +35,38 @@ class CalonAdminController extends Controller
             'status_vote' => 'sudah',
         ]);
 
+        if ($request->expectsJson()) {
+            return response()->json([
+                'redirect' => route('vote-in.success'),
+            ]);
+        }
+
+        return redirect()->route('vote-in.success');
+    }
+
+    public function vote_in_fallback()
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        $peserta = $user->peserta;
+
+        if ($peserta && $peserta->status_vote === 'sudah') {
+            return redirect()->route('vote-in.success');
+        }
+
+        return redirect()->route('dashboard');
+    }
+
+    public function vote_in_success()
+    {
         return view('pages.public.vote_in');
     }
     // fe end

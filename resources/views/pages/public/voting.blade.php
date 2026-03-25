@@ -122,7 +122,7 @@
                         <i class="fa-solid fa-chevron-left text-white text-xl items-center"></i>
                     </p>
                 </div>
-                <form class="frm_voting" method="poat" action="#">
+                <form class="frm_voting" method="post" action="{{ route('vote-in') }}">
                     @csrf
                     <input type="hidden" name="c_admin_id" class="c_admin_id">
                     <button type="submit"
@@ -252,6 +252,45 @@
                 console.log(idcAdm)
             })
         })
+
+        const confirmForm = document.getElementById("confirm_form")
+        const confirmIdInput = document.getElementById("confirm_id")
+
+        confirmForm.addEventListener("submit", async function (e) {
+            e.preventDefault()
+
+            if (!confirmIdInput.value) {
+                alert("Pilih calon terlebih dahulu.")
+                return
+            }
+
+            const submitBtn = confirmForm.querySelector('button[type="submit"]')
+            submitBtn.disabled = true
+
+            try {
+                const response = await fetch(confirmForm.action, {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": confirmForm.querySelector('input[name="_token"]').value,
+                        "Accept": "application/json"
+                    },
+                    body: new FormData(confirmForm)
+                })
+
+                if (!response.ok) {
+                    throw new Error("Vote request failed")
+                }
+
+                const result = await response.json()
+                window.location.href = result.redirect || "{{ route('vote-in.success') }}"
+            } catch (error) {
+                alert("Gagal mengirim vote. Coba lagi.")
+                submitBtn.disabled = false
+            }
+        })
+
         document.querySelectorAll(".c-admin-card").forEach(card => {
             const caminOverlay = card.querySelector(".caminOverlay")
             const btnSelengkapnya = card.querySelector(".btn-selengkapnya")
