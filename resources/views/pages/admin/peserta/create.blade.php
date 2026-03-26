@@ -56,7 +56,7 @@
                     <ul class="list-disc list-inside space-y-1 text-xs">
                         <li>Baris pertama adalah header (akan dilewati otomatis).</li>
                         <li><strong>Username</strong> dan <strong>password</strong> akan di-generate otomatis dan dikirim ke email masing-masing peserta.</li>
-                        <li><strong>status_jabatan</strong>: <code>anggota aktif</code> atau <code>STO</code> (default: <code>anggota aktif</code> jika kosong).</li>
+                        <li><strong>status_jabatan</strong>: <code>anggota aktif</code> atau <code>STO</code>.</li>
                         <li>NIM dan email harus unik — baris duplikat akan dilewati.</li>
                         <li>Simpan file Excel sebagai <strong>CSV (Comma delimited)</strong> sebelum upload.</li>
                     </ul>
