@@ -113,14 +113,40 @@
                 </div>
                 @endforeach
             </div>
-    </div>
-    {{-- muncul mobilr only --}}
-    <div class="flex items-center justify-between w-full max-w-xs mx-auto lg:hidden">
-        <div onclick="prev()"
-            class="cursor-pointer border border-white/60 rounded-full w-10 h-10 flex items-center justify-center bg-linear-to-r from-gray-600 to-gray-900">
-            <p class="text-white text-2xl font-gabarito text-center">
-                <i class="fa-solid fa-chevron-left text-white text-xl items-center"></i>
-            </p>
+            {{-- muncul mobilr only --}}
+            <div class="flex items-center justify-between w-full max-w-xs mx-auto lg:hidden">
+                <div onclick="prev()"
+                    class="cursor-pointer border border-white/60 rounded-full w-10 h-10 flex items-center justify-center bg-linear-to-r from-gray-600 to-gray-900">
+                    <p class="text-white text-2xl font-gabarito text-center">
+                        <i class="fa-solid fa-chevron-left text-white text-xl items-center"></i>
+                    </p>
+                </div>
+                <form class="frm_voting" method="post" action="{{ route('vote-in') }}">
+                    @csrf
+                    <input type="hidden" name="c_admin_id" class="c_admin_id">
+                    <button type="submit"
+                        class="border border-white/60 rounded-xl px-3.5 py-1 bg-linear-to-r from-gray-600 to-gray-900  transition hover:scale-105">
+                        <p class="text-white text-2xl font-gabarito font-bold tracking-[.25em]">VOTE</p>
+                    </button>
+                </form>
+                <div onclick="next()"
+                    class="cursor-pointer border border-white/60 rounded-full w-10 h-10 flex items-center justify-center bg-linear-to-r from-gray-600 to-gray-900">
+                    <p class="text-white text-2xl font-gabarito text-center"><i
+                            class="fa-solid fa-chevron-right text-white text-xl items-center"></i></p>
+                </div>
+            </div>
+        </section>
+        {{-- dsktop btn --}}
+        <div
+            class="hidden lg:flex absolute flex-row justify-between gap-12 mx-auto my-auto px-10 w-full top-[70%] z-0 pointer-events-none">
+            <div onclick="prev()"
+                class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-l from-gray-600 to-gray-950 flex items-center justify-center transition hover:scale-95">
+                <i class="fa-solid fa-chevron-left text-white text-xl"></i>
+            </div>
+            <div onclick="next()"
+                class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-r from-purple-400 to-indigo-900 flex items-center justify-center transition hover:scale-95">
+                <i class="fa-solid fa-chevron-right text-white text-xl"></i>
+            </div>
         </div>
         <form class="frm_voting" method="poat" action="#">
             @csrf
@@ -256,6 +282,45 @@
                 console.log(idcAdm)
             })
         })
+
+        const confirmForm = document.getElementById("confirm_form")
+        const confirmIdInput = document.getElementById("confirm_id")
+
+        confirmForm.addEventListener("submit", async function (e) {
+            e.preventDefault()
+
+            if (!confirmIdInput.value) {
+                alert("Pilih calon terlebih dahulu.")
+                return
+            }
+
+            const submitBtn = confirmForm.querySelector('button[type="submit"]')
+            submitBtn.disabled = true
+
+            try {
+                const response = await fetch(confirmForm.action, {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-TOKEN": confirmForm.querySelector('input[name="_token"]').value,
+                        "Accept": "application/json"
+                    },
+                    body: new FormData(confirmForm)
+                })
+
+                if (!response.ok) {
+                    throw new Error("Vote request failed")
+                }
+
+                const result = await response.json()
+                window.location.href = result.redirect || "{{ route('vote-in.success') }}"
+            } catch (error) {
+                alert("Gagal mengirim vote. Coba lagi.")
+                submitBtn.disabled = false
+            }
+        })
+
         document.querySelectorAll(".c-admin-card").forEach(card => {
             const caminOverlay = card.querySelector(".caminOverlay")
             const btnSelengkapnya = card.querySelector(".btn-selengkapnya")
