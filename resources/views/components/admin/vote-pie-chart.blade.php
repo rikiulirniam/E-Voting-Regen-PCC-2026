@@ -16,7 +16,7 @@
     <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">{{ $title }}</h3>
 @endif
 
-<div class="{{ $wrapperClass }}">
+<div class="{{ $wrapperClass }} justify-center flex">
     @if($votePerPaslon->sum('votings_count') > 0)
         <div class="flex flex-col md:flex-row items-center gap-8">
             <div class="w-full md:w-64 h-64">
@@ -28,7 +28,7 @@
                         <span class="inline-block w-4 h-4 rounded-full"
                               style="background-color: {{ $colors[$loop->index % count($colors)] }}"></span>
                         <span class="text-sm text-gray-700 dark:text-gray-300">
-                            Paslon {{ $paslon->no_urut }} -- {{ $paslon->name }}
+                            Paslon {{ $paslon->no_urut }} - {{ $paslon->name }}
                         </span>
                         <span class="ml-auto text-sm font-semibold text-gray-800 dark:text-white">
                             {{ $paslon->votings_count }} suara

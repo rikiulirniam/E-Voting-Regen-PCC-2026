@@ -6,6 +6,7 @@ use App\Models\CalonAdmin;
 use App\Http\Requests\StoreCalonAdminRequest;
 use App\Http\Requests\UpdateCalonAdminRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class CalonAdminController extends Controller
 {
@@ -22,6 +23,13 @@ class CalonAdminController extends Controller
         $calon_admin = CalonAdmin::orderBy('no_urut')->get();
         return view('pages.public.voting', compact('calon_admin'));
     }
+    public function vote_in(Request $request)
+    {
+        $camin_id = $request->input('c_admin_id');
+        // dd($camin_id);
+        return view('pages.public.vote_in');
+    }
+    // fe end
 
     public function create()
     {
