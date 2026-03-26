@@ -39,20 +39,41 @@
         <form action="{{ route('authenticate') }}" method="POST" class="flex flex-col gap-6 mx-1 lg:gap-3.5 scale-85 md:scale-100" autocomplete="off"
             id="loginForm">
             @csrf
+
+            @if ($errors->any())
+                <div class="w-full md:w-100 lg:w-70 mx-auto rounded-xl border border-red-400/60 bg-red-900/70 px-4 py-3 text-center text-sm text-red-100 font-mono">
+                    @if ($errors->has('login'))
+                        {{ $errors->first('login') }}
+                    @else
+                        {{ $errors->first() }}
+                    @endif
+                </div>
+            @endif
+
             <div
-                class="flex flex-col py-2.5 md:py-6 w-full md:w-100 mx-auto lg:w-70 lg:py-2 rounded-xl placeholder:lg:text-xs bg-linear-to-b from-gray-950 to-gray-900 lborder outline outline-white/50">
+                class="flex flex-col py-2.5 md:py-6 w-full md:w-100 mx-auto lg:w-70 lg:py-2 rounded-xl placeholder:lg:text-xs bg-linear-to-b from-gray-950 to-gray-900 lborder outline {{ $errors->has('username') ? 'outline-red-400' : 'outline-white/50' }}">
                 <input type="text" name="username" id="username" value="{{ old('username') }}"
                     class="text-white placeholder:text-center placeholder:font-mono placeholder:text-lg text-center caret-white focus:outline-none font-mono"
                     placeholder="Insert your username">
             </div>
+
+            @error('username')
+                <p class="-mt-4 md:-mt-2 w-full md:w-100 lg:w-70 mx-auto text-xs text-red-200 font-mono text-center">{{ $message }}</p>
+            @enderror
+
             <div
-                class="flex flex-col py-2.5 md:py-6 w-full md:w-100 mx-auto lg:w-70 lg:py-2 rounded-xl placeholder:lg:text-xs bg-linear-to-b from-gray-950 to-gray-900 lborder outline outline-white/50">
+                class="flex flex-col py-2.5 md:py-6 w-full md:w-100 mx-auto lg:w-70 lg:py-2 rounded-xl placeholder:lg:text-xs bg-linear-to-b from-gray-950 to-gray-900 lborder outline {{ $errors->has('password') ? 'outline-red-400' : 'outline-white/50' }}">
                 <input type="password" name="password" id="password"
                     class="text-white placeholder:text-center placeholder:font-mono placeholder:text-lg text-center caret-white focus:outline-none font-mono"
                     placeholder="Insert your password">
             </div>
+
+            @error('password')
+                <p class="-mt-4 md:-mt-2 w-full md:w-100 lg:w-70 mx-auto text-xs text-red-200 font-mono text-center">{{ $message }}</p>
+            @enderror
+
             <button type="submit" id="btn_submit"
-                class="text-white font-mono tracking-wide py-2.5 md:py-6 w-full md:w-50 mx-auto lg:w-70 lg:py-2 rounded-xl placeholder:lg:text-xs bg-linear-to-r from-blue-700 via-indigo-500 to-blue-700 
+                class="text-white font-mono tracking-wide py-2.5 md:py-6 w-full md:w-50 mx-auto lg:w-70 lg:py-2 rounded-xl placeholder:lg:text-xs bg-linear-to-r from-blue-700 via-indigo-500 to-blue-700
                             border-none lg:mt-2 hover:bg-linear-to-r hover:from-indigo-900 hover:via-indigo-700 hover:to-indigo-900 hover:scale-98 transition-all">
                 Login
             </button>

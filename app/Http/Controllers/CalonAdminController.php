@@ -26,9 +26,48 @@ class CalonAdminController extends Controller
     public function vote_in(Request $request)
     {
         $camin_id = $request->input('c_admin_id');
+        $camin = CalonAdmin::findOrFail($camin_id);
+        $peserta = auth()->user()->peserta;
+        $voting = $camin->votings()->create([
+            'id_peserta' => $peserta->id,
+        ]);
+        $peserta->update([
+            'status_vote' => 'sudah',
+        ]);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'redirect' => route('vote-in.success'),
+            ]);
+        }
+
+        return redirect()->route('vote-in.success');
+    }
+
+    public function vote_in_fallback()
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        $peserta = $user->peserta;
+
+        if ($peserta && $peserta->status_vote === 'sudah') {
+            return redirect()->route('vote-in.success');
+        }
+
+        return redirect()->route('dashboard');
+    }
+
+    public function vote_in_success()
+    {
         $camin = CalonAdmin::all();
-        
-        // dd($camin);
         return view('pages.public.vote_in', compact('camin'));
     }
     // fe end
