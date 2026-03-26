@@ -28,7 +28,7 @@ class CalonAdminController extends Controller
         $camin_id = $request->input('c_admin_id');
         $camin = CalonAdmin::all();
         
-        // dd($camin_id);
+        // dd($camin);
         return view('pages.public.vote_in', compact('camin'));
     }
     // fe end
