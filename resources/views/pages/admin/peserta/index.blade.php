@@ -164,9 +164,9 @@
         </div>
 
         {{-- Total count --}}
-        <p class="mt-3 text-xs text-gray-500 dark:text-gray-400">
+        <!-- <p class="mt-3 text-xs text-gray-500 dark:text-gray-400">
             Menampilkan {{ $pesertas->firstItem() ?? 0 }}–{{ $pesertas->lastItem() ?? 0 }} dari {{ $pesertas->total() }} peserta
-        </p>
+        </p> -->
 
     </div>
-@endsection
+@endsection 

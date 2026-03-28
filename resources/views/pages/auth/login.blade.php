@@ -12,6 +12,7 @@
 </head>
 
 <body class="w-full mx-auto min-h-screen flex flex-col py-10 pb-10 pt-8 bg-mobile bg-desktop">
+    @include('layouts.intro_animation')
     @if($errors->any())
     <div
         x-data="{ show : true }"
