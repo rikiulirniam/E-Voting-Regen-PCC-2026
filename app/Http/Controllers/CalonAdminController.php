@@ -67,7 +67,8 @@ class CalonAdminController extends Controller
 
     public function vote_in_success()
     {
-        return view('pages.public.vote_in');
+        $camin = CalonAdmin::all();
+        return view('pages.public.vote_in', compact('camin'));
     }
     // fe end
 

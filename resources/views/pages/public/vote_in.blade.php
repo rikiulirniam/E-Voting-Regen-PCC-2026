@@ -54,7 +54,40 @@
                         </div>
                         <div class="relative w-full px-7 h-35 flex items-center overflow-hidden">
                             <div class="flex w-full h-full border-2 border-white z-0">
-                                <img src="https://picsum.photos/600?1"
+                                @php
+                                    $urlfoto = $camin->pluck('foto')->toArray();
+                                    while (count($urlfoto) < 3) {
+                                        $urlfoto[] = null;
+                                    }
+                                @endphp
+                                @if ($urlfoto[0])
+                                    <img src="{{ asset('storage/' . $urlfoto[0]) }}"
+                                        style="clip-path: polygon(0 0, 60% 0, 100% 100%, 0 100%);"
+                                        class="h-full flex-1 min-w-0 object-cover">
+                                @else
+                                    <img src="https://picsum.photos/600?1"
+                                        style="clip-path: polygon(0 0, 60% 0, 100% 100%, 0 100%);"
+                                        class="h-full flex-1 min-w-0 object-cover">
+                                @endif
+                                @if ($urlfoto[1])
+                                    <img src="{{ asset('storage/' . $urlfoto[1]) }}"
+                                        style="clip-path: polygon(0 0, 100% 0, 60% 100%, 40% 100%);"
+                                        class="h-full flex-1 min-w-0 object-cover -ml-18">
+                                @else
+                                    <img src="https://picsum.photos/600?2"
+                                        style="clip-path: polygon(0 0, 100% 0, 60% 100%, 40% 100%);"
+                                        class="h-full flex-1 min-w-0 object-cover -ml-18">
+                                @endif
+                                @if ($urlfoto[2])
+                                    <img src="{{ asset('storage/' . $urlfoto[2]) }}"
+                                        style="clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%);"
+                                        class="h-full flex-1 min-w-0 object-cover -ml-25">
+                                @else
+                                    <img src="https://picsum.photos/600?3"
+                                        style="clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%);"
+                                        class="h-full flex-1 min-w-0 object-cover -ml-25">
+                                @endif
+                                {{-- <img src="https://picsum.photos/600?1"
                                     style="clip-path: polygon(0 0, 60% 0, 100% 100%, 0 100%);"
                                     class="h-full flex-1 min-w-0 object-cover">
                                 <img src="https://picsum.photos/600?2"
@@ -62,7 +95,7 @@
                                     class="h-full flex-1 min-w-0 object-cover -ml-18">
                                 <img src="https://picsum.photos/600?3"
                                     style="clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%);"
-                                    class="h-full flex-1 min-w-0 object-cover -ml-25">
+                                    class="h-full flex-1 min-w-0 object-cover -ml-25"> --}}
                             </div>
                             <div class="absolute inset-0 bg-black/40 mx-7"></div>
                             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
