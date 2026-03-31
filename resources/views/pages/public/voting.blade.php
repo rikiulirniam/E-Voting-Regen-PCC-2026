@@ -52,67 +52,66 @@
             <div class="w-full overflow-hidden pt-18 lg:pt-8 lg:pr-6">
                 <div id="carousel" class="flex gap-6 lg:gap-2 transition-transform duration-500">
                     @foreach($calon_admin as $c_adm)
-                        <div class="shrink-0 w-full md:w-[50%] lg:w-[28%] c-admin-card" data-id="{{ $c_adm->id }}">
-                            <div
-                                class="mx-auto w-full max-w-100 rounded-2xl bg-white/10 border-2 border-white/60 p-2 lg:p-3 backdrop-blur-sm font-montserrat">
-                                <div class="relative rounded-2xl w-full h-130 lg:h-150 shadow-lg">
-                                    <div
-                                        class="absolute flex -top-9 -right-2.5 w-16 h-16 lg:-top-8 lg:-right-8 z-50 lg:w-15 lg:h-15 items-center justify-center rounded-full bg-gray-600/95 border border-white/60 shadow-lg">
-                                        <p class="text-white text-4xl font-bold font-montaga items-center"
-                                            style="-webkit-text-stroke: 0.1px #7520b6;">
-                                            {{ $c_adm->no_urut }}
-                                        </p>
-                                    </div>
-                                    {{-- nourut mobilr --}}
-                                    {{-- <div
+                    <div class="shrink-0 w-full md:w-[50%] lg:w-[28%] c-admin-card" data-id="{{ $c_adm->id }}">
+                        <div
+                            class="mx-auto w-full max-w-100 rounded-2xl bg-white/10 border-2 border-white/60 p-2 lg:p-3 backdrop-blur-sm font-montserrat">
+                            <div class="relative rounded-2xl w-full h-130 lg:h-150 shadow-lg">
+                                <div
+                                    class="absolute flex -top-9 -right-2.5 w-16 h-16 lg:-top-8 lg:-right-8 z-50 lg:w-15 lg:h-15 items-center justify-center rounded-full bg-gray-600/95 border border-white/60 shadow-lg">
+                                    <p class="text-white text-4xl font-bold font-montaga items-center"
+                                        style="-webkit-text-stroke: 0.1px #7520b6;">
+                                        {{ $c_adm->no_urut }}
+                                    </p>
+                                </div>
+                                {{-- nourut mobilr --}}
+                                {{-- <div
                                         class="lg:hidden absolute -top-9 -right-2.5 z-50 w-16 h-16 flex items-center justify-center rounded-full bg-gray-600/90 shadow-lg">
                                         <p class="text-4xl font-bold text-red-500 font-lemon items-center"
                                             style="-webkit-text-stroke: 0.1px #000;">
                                             {{ $c_adm->no_urut }}
-                                        </p>
-                                    </div> --}}
-                                    <img src="{{ asset('storage/' . $c_adm->foto) }}"
-                                        class="absolute inset-0 w-full h-full object-cover rounded-2xl">
-                                    <div
-                                        class="caminOverlay absolute bottom-0 w-full h-1/2 bg-black/60 backdrop-blur-md text-white p-4 pt-15 overflow-hidden rounded-b-2xl scb-hide mask-transparan z-30 pointer-events-auto">
-                                        <div class="chv-wrapper fade-btm h-full pb-5 rounded-b-2xl">
-                                            <button type="button"
-                                                class="btn-selengkapnya flex flex-row gap-2 items-center justify-end mb-2 ml-auto">
-                                                <i class="fa-solid fa-chevron-up"></i>
-                                                <p class="text-xs">Selengkapnya</p>
-                                            </button>
-                                            <h3 class="font-bold text-lg mb-1 drop-shadow-2xl lg:text-2xl">
-                                                {{ $c_adm->name }}
-                                            </h3>
-                                            <p class="text-sm font-semibold mb-1 lg:text-lg">Visi</p>
-                                            <p class="text-xs mb-3 opacity-90 lg:text-sm">
-                                                {{ $c_adm->visi }}
-                                            </p>
-                                            <p class="text-sm font-semibold mb-1 lg:text-lg">Misi</p>
-                                            <p class="text-xs opacity-90 lg:text-sm">
-                                                {{ $c_adm->misi }}
-                                            </p>
-                                            <button type="button"
-                                                class="btn-tutup hidden flex flex-row gap-2 items-center justify-end mt-5 ml-auto mr-4">
-                                                <i class="fa-solid fa-chevron-down"></i>
-                                                <p class="text-xs">Tutup</p>
-                                            </button>
-                                        </div>
-                                    </div>
+                                </p>
+                            </div> --}}
+                            <img src="{{ asset('storage/' . $c_adm->foto) }}"
+                                class="absolute inset-0 w-full h-full object-cover rounded-2xl">
+                            <div
+                                class="caminOverlay absolute bottom-0 w-full h-1/2 bg-black/60 backdrop-blur-md text-white p-4 pt-15 overflow-hidden rounded-b-2xl scb-hide mask-transparan z-30 pointer-events-auto">
+                                <div class="chv-wrapper fade-btm h-full pb-5 rounded-b-2xl">
+                                    <button type="button"
+                                        class="btn-selengkapnya flex flex-row gap-2 items-center justify-end mb-2 ml-auto">
+                                        <i class="fa-solid fa-chevron-up"></i>
+                                        <p class="text-xs">Selengkapnya</p>
+                                    </button>
+                                    <h3 class="font-bold text-lg mb-1 drop-shadow-2xl lg:text-2xl">
+                                        {{ $c_adm->name }}
+                                    </h3>
+                                    <p class="text-sm font-semibold mb-1 lg:text-lg">Visi</p>
+                                    <p class="text-xs mb-3 opacity-90 lg:text-sm">
+                                        {{ $c_adm->visi }}
+                                    </p>
+                                    <p class="text-sm font-semibold mb-1 lg:text-lg">Misi</p>
+                                    <p class="text-xs opacity-90 lg:text-sm">
+                                        {{ $c_adm->misi }}
+                                    </p>
+                                    <button type="button"
+                                        class="btn-tutup hidden flex flex-row gap-2 items-center justify-end mt-5 ml-auto mr-4">
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                        <p class="text-xs">Tutup</p>
+                                    </button>
                                 </div>
                             </div>
-                            <form method="post" action="{{ route('vote-in') }}"
-                                class="frm_voting hidden lg:flex justify-center mt-5">
-                                @csrf
-                                <input type="hidden" name="c_admin_id" class="c_admin_id">
-                                <button type="submit"
-                                    class="rounded-xl py-2 bg-linear-to-r from-indigo-600 via-indigo-500 to-indigo-600 transition hover:scale-95 px-15 mb-8 shadow-lg lg:hover:bg-linear-to-r lg:hover:from-indigo-900 lg:hover:via-indigo-700 lg:hover:to-indigo-900 lg:hover:scale-98 lg:transition-all">
-                                    <p class="text-white text-2xl font-montaga tracking-[.25em]">VOTE</p>
-                                </button>
-                            </form>
                         </div>
-                    @endforeach
+                    </div>
+                    <form method="post" action="{{ route('vote-in') }}"
+                        class="frm_voting hidden lg:flex justify-center mt-5">
+                        @csrf
+                        <input type="hidden" name="c_admin_id" class="c_admin_id">
+                        <button type="submit"
+                            class="rounded-xl py-2 bg-linear-to-r from-indigo-600 via-indigo-500 to-indigo-600 transition hover:scale-95 px-15 mb-8 shadow-lg lg:hover:bg-linear-to-r lg:hover:from-indigo-900 lg:hover:via-indigo-700 lg:hover:to-indigo-900 lg:hover:scale-98 lg:transition-all">
+                            <p class="text-white text-2xl font-montaga tracking-[.25em]">VOTE</p>
+                        </button>
+                    </form>
                 </div>
+                @endforeach
             </div>
             {{-- muncul mobilr only --}}
             <div class="flex items-center justify-between w-full max-w-xs mx-auto lg:hidden">
@@ -149,6 +148,33 @@
                 <i class="fa-solid fa-chevron-right text-white text-xl"></i>
             </div>
         </div>
+        <form class="frm_voting" method="poat" action="#">
+            @csrf
+            <input type="hidden" name="c_admin_id" class="c_admin_id">
+            <button type="submit"
+                class="border border-white/60 rounded-xl px-3.5 py-1 bg-linear-to-r from-gray-600 to-gray-900  transition hover:scale-105">
+                <p class="text-white text-2xl font-gabarito font-bold tracking-[.25em]">VOTE</p>
+            </button>
+        </form>
+        <div onclick="next()"
+            class="cursor-pointer border border-white/60 rounded-full w-10 h-10 flex items-center justify-center bg-linear-to-r from-gray-600 to-gray-900">
+            <p class="text-white text-2xl font-gabarito text-center"><i
+                    class="fa-solid fa-chevron-right text-white text-xl items-center"></i></p>
+        </div>
+    </div>
+    </section>
+    {{-- dsktop btn --}}
+    <div
+        class="hidden lg:flex absolute flex-row justify-between gap-12 mx-auto my-auto px-10 w-full top-[70%] z-0 pointer-events-none">
+        <div onclick="prev()"
+            class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-l from-gray-600 to-gray-950 flex items-center justify-center transition hover:scale-95">
+            <i class="fa-solid fa-chevron-left text-white text-xl"></i>
+        </div>
+        <div onclick="next()"
+            class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-r from-purple-400 to-indigo-900 flex items-center justify-center transition hover:scale-95">
+            <i class="fa-solid fa-chevron-right text-white text-xl"></i>
+        </div>
+    </div>
     </div>
 
     {{-- confirm popup --}}
@@ -190,10 +216,11 @@
         if (window.innerWidth >= 1024) {
             caminCard = 3
         } else
-            if (window.innerWidth >= 768) {
-                caminCard = 2
-            }
+        if (window.innerWidth >= 768) {
+            caminCard = 2
+        }
         let idx = Math.floor(caminCard / 2)
+
         function update() {
             const gap = parseInt(getComputedStyle(carousel).gap || 0)
             const cardW = camin[0].offsetWidth + gap
@@ -209,12 +236,14 @@
                 }
             })
         }
+
         function next() {
             if (idx < camin.length - 1) {
                 idx++
                 update()
             }
         }
+
         function prev() {
             if (idx > 0) {
                 idx--
@@ -235,6 +264,7 @@
                 vtgPage.classList.add("hidden")
             }
         }
+
         function tutupConfirm() {
             const ovl = document.getElementById("confirmOverlay")
             const vtgPage = document.getElementById("votingPage")
@@ -244,7 +274,7 @@
         }
 
         document.querySelectorAll(".frm_voting").forEach(form => {
-            form.addEventListener("submit", function (e) {
+            form.addEventListener("submit", function(e) {
                 e.preventDefault()
                 const cardAktif = camin[idx]
                 const idcAdm = cardAktif.dataset.id

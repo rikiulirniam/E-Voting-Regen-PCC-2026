@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(){
+    public function login()
+    {
         return view("pages.auth.login");
     }
 
@@ -26,6 +27,7 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('username', $credentials['username'])->first();
+
 
         if ($user && $user->password && password_verify($credentials['password'], $user->password)) {
             Auth::login($user);
@@ -54,5 +56,4 @@ class AuthController extends Controller
 
         return redirect()->route('login');
     }
-
 }

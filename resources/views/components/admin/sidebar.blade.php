@@ -1,7 +1,7 @@
 <aside id="sidebar"
        class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 shadow-md flex flex-col
               -translate-x-full transition-transform duration-300 ease-in-out
-              lg:relative lg:translate-x-0 lg:w-60 lg:shrink-0 lg:z-auto">
+              lg:sticky lg:h-screen lg:translate-x-0 lg:w-60 lg:shrink-0 lg:z-auto">
 
     <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
         <div>

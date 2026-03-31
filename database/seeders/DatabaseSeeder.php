@@ -33,8 +33,21 @@ class DatabaseSeeder extends Seeder
             'name' => 'User',
             'username' => 'miau',
             'id_peserta' => $peserta->id,
-             'role' => 'user',
+            'role' => 'user',
             'password' => bcrypt('password'), // Don't forget to hash the password
+        ]);
+
+        $peserta_b = Peserta::create([
+            'name' => 'Lorem Ipsum',
+            'nim' => '4352463668',
+            'email' => 'lorem@example.com'
+        ]);
+        User::create([
+            'name' => 'Lorem',
+            'username' => 'lorem',
+            'id_peserta' => $peserta_b->id,
+            'role' => 'user',
+            'password' => bcrypt('loremipsum'), // Don't forget to hash the password
         ]);
     }
 }

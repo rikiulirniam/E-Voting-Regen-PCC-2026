@@ -30,7 +30,7 @@ class PesertaController extends Controller
             });
         }
 
-        $pesertas = $query->orderBy('name')->paginate(20)->withQueryString();
+        $pesertas = $query->orderBy('name')->paginate(10)->withQueryString();
 
         return view('pages.admin.peserta.index', compact('pesertas'));
     }
