@@ -55,13 +55,13 @@
                         <div class="relative w-full px-7 h-35 flex items-center overflow-hidden">
                             <div class="flex w-full h-full border-2 border-white z-0">
                                 @php
-                                    $urlfoto = $camin->pluck('foto')->toArray();
+                                    $urlfoto = $camin->pluck('foto_url')->toArray();
                                     while (count($urlfoto) < 3) {
                                         $urlfoto[] = null;
                                     }
                                 @endphp
                                 @if ($urlfoto[0])
-                                    <img src="{{ asset('storage/' . $urlfoto[0]) }}"
+                                    <img src="{{ $urlfoto[0] }}"
                                         style="clip-path: polygon(0 0, 60% 0, 100% 100%, 0 100%);"
                                         class="h-full flex-1 min-w-0 object-cover">
                                 @else
@@ -70,7 +70,7 @@
                                         class="h-full flex-1 min-w-0 object-cover">
                                 @endif
                                 @if ($urlfoto[1])
-                                    <img src="{{ asset('storage/' . $urlfoto[1]) }}"
+                                    <img src="{{ $urlfoto[1] }}"
                                         style="clip-path: polygon(0 0, 100% 0, 60% 100%, 40% 100%);"
                                         class="h-full flex-1 min-w-0 object-cover -ml-18">
                                 @else
@@ -79,7 +79,7 @@
                                         class="h-full flex-1 min-w-0 object-cover -ml-18">
                                 @endif
                                 @if ($urlfoto[2])
-                                    <img src="{{ asset('storage/' . $urlfoto[2]) }}"
+                                    <img src="{{ $urlfoto[2] }}"
                                         style="clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%);"
                                         class="h-full flex-1 min-w-0 object-cover -ml-25">
                                 @else

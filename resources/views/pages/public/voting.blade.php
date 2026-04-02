@@ -71,8 +71,10 @@
                                             {{ $c_adm->no_urut }}
                                         </p>
                                     </div> --}}
-                                    <img src="{{ asset('storage/' . $c_adm->foto) }}"
-                                        class="absolute inset-0 w-full h-full object-cover rounded-2xl">
+                                    @if($c_adm->foto_url)
+                                        <img src="{{ $c_adm->foto_url }}"
+                                            class="absolute inset-0 w-full h-full object-cover rounded-2xl">
+                                    @endif
                                     <div
                                         class="caminOverlay absolute bottom-0 w-full h-1/2 bg-black/60 backdrop-blur-md text-white p-4 pt-15 overflow-hidden rounded-b-2xl scb-hide mask-transparan z-30 pointer-events-auto">
                                         <div class="chv-wrapper fade-btm h-full pb-5 rounded-b-2xl">
@@ -101,7 +103,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <form method="post" action="{{ route('vote-in') }}"
+                            <form method="post" action="{{ route('vote-in-submit') }}"
                                 class="frm_voting hidden lg:flex justify-center mt-5">
                                 @csrf
                                 <input type="hidden" name="c_admin_id" class="c_admin_id">
@@ -122,7 +124,7 @@
                         <i class="fa-solid fa-chevron-left text-white text-xl items-center"></i>
                     </p>
                 </div>
-                <form class="frm_voting" method="post" action="{{ route('vote-in') }}">
+                <form class="frm_voting" method="post" action="{{ route('vote-in-submit') }}">
                     @csrf
                     <input type="hidden" name="c_admin_id" class="c_admin_id">
                     <button type="submit"
@@ -155,7 +157,7 @@
     <div id="confirmOverlay" class="hidden fixed inset-0 z-999 items-center justify-center">
         <div class="absolute inset-0 backdrop-blur-sm hidden lg:block"></div>
         <div class="relative z-10">
-            <form id="confirm_form" action="{{ route('vote-in') }}" method="post" class="my-auto">
+            <form id="confirm_form" action="{{ route('vote-in-submit') }}" method="post" class="my-auto">
                 @csrf
                 <input type="hidden" name="c_admin_id" id="confirm_id">
                 <section class="flex flex-col justify-center gap-8">
@@ -173,7 +175,7 @@
                             Back
                         </button>
 
-                        <button type="submit"
+                        <button type="button" onclick="submitVote()"
                             class="bg-gray-600/20 text-white font-mono tracking-wide py-2 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] lg:text-2xl lg:py-1.5 lg:w-35 rounded-2xl border border-white lg:bg-none backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
                             Confirm
                         </button>
@@ -249,47 +251,19 @@
                 const cardAktif = camin[idx]
                 const idcAdm = cardAktif.dataset.id
                 bukaConfirm(idcAdm)
-                console.log(idcAdm)
             })
         })
 
-        const confirmForm = document.getElementById("confirm_form")
         const confirmIdInput = document.getElementById("confirm_id")
 
-        confirmForm.addEventListener("submit", async function (e) {
-            e.preventDefault()
-
+        function submitVote() {
+            const confirmForm = document.getElementById("confirm_form")
             if (!confirmIdInput.value) {
                 alert("Pilih calon terlebih dahulu.")
                 return
             }
-
-            const submitBtn = confirmForm.querySelector('button[type="submit"]')
-            submitBtn.disabled = true
-
-            try {
-                const response = await fetch(confirmForm.action, {
-                    method: "POST",
-                    credentials: "same-origin",
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest",
-                        "X-CSRF-TOKEN": confirmForm.querySelector('input[name="_token"]').value,
-                        "Accept": "application/json"
-                    },
-                    body: new FormData(confirmForm)
-                })
-
-                if (!response.ok) {
-                    throw new Error("Vote request failed")
-                }
-
-                const result = await response.json()
-                window.location.href = result.redirect || "{{ route('vote-in.success') }}"
-            } catch (error) {
-                alert("Gagal mengirim vote. Coba lagi.")
-                submitBtn.disabled = false
-            }
-        })
+            confirmForm.submit()
+        }
 
         document.querySelectorAll(".c-admin-card").forEach(card => {
             const caminOverlay = card.querySelector(".caminOverlay")

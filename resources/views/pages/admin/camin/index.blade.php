@@ -37,8 +37,8 @@
 
                         {{-- Foto --}}
                         <div class="w-full h-56 bg-gray-200 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
-                            @if($item->foto)
-                                <img src="{{ asset('storage/' . $item->foto) }}"
+                            @if($item->foto_url)
+                                <img src="{{ $item->foto_url }}"
                                      alt="Foto {{ $item->name }}"
                                      class="w-full h-full object-cover">
                             @else
