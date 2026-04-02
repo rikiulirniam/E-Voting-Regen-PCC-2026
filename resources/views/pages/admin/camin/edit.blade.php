@@ -74,10 +74,10 @@
                 </label>
 
                 {{-- Foto saat ini --}}
-                @if($camin->foto)
+                @if($camin->foto_url)
                     <div class="mb-3 flex items-center gap-4">
                         <img id="foto-current"
-                             src="{{ asset('storage/' . $camin->foto) }}"
+                             src="{{ $camin->foto_url }}"
                              alt="Foto saat ini"
                              class="h-32 w-32 object-cover rounded-xl border border-gray-200 dark:border-gray-600">
                         <p class="text-xs text-gray-500 dark:text-gray-400">Foto saat ini.<br>Upload baru untuk menggantinya.</p>
