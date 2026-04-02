@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard - Public</title>
-        @vite('resources/css/app.css', 'resources/js/app.js')
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/pcc.png') }}">
+    @vite('resources/css/app.css', 'resources/js/app.js')
 
 </head>
 <body>
