@@ -86,11 +86,11 @@
                                     </h3>
                                     <p class="text-sm font-semibold mb-1 lg:text-lg">Visi</p>
                                     <p class="text-xs mb-3 opacity-90 lg:text-sm">
-                                        {{ $c_adm->visi }}
+                                        {!! nl2br(e($c_adm->visi)) !!}
                                     </p>
                                     <p class="text-sm font-semibold mb-1 lg:text-lg">Misi</p>
                                     <p class="text-xs opacity-90 lg:text-sm">
-                                        {{ $c_adm->misi }}
+                                        {!! nl2br(e($c_adm->misi)) !!}
                                     </p>
                                     <button type="button"
                                         class="btn-tutup hidden flex flex-row gap-2 items-center justify-end mt-5 ml-auto mr-4">
@@ -114,7 +114,7 @@
                 @endforeach
             </div>
             {{-- muncul mobilr only --}}
-            <div class="flex items-center justify-between w-full max-w-xs mx-auto lg:hidden">
+            <div class="flex items-center mt-3 justify-between w-full max-w-xs mx-auto lg:hidden">
                 <div onclick="prev()"
                     class="cursor-pointer border border-white/60 rounded-full w-10 h-10 flex items-center justify-center bg-linear-to-r from-gray-600 to-gray-900">
                     <p class="text-white text-2xl font-gabarito text-center">
@@ -148,19 +148,7 @@
                 <i class="fa-solid fa-chevron-right text-white text-xl"></i>
             </div>
         </div>
-        <form class="frm_voting" method="poat" action="#">
-            @csrf
-            <input type="hidden" name="c_admin_id" class="c_admin_id">
-            <button type="submit"
-                class="border border-white/60 rounded-xl px-3.5 py-1 bg-linear-to-r from-gray-600 to-gray-900  transition hover:scale-105">
-                <p class="text-white text-2xl font-gabarito font-bold tracking-[.25em]">VOTE</p>
-            </button>
-        </form>
-        <div onclick="next()"
-            class="cursor-pointer border border-white/60 rounded-full w-10 h-10 flex items-center justify-center bg-linear-to-r from-gray-600 to-gray-900">
-            <p class="text-white text-2xl font-gabarito text-center"><i
-                    class="fa-solid fa-chevron-right text-white text-xl items-center"></i></p>
-        </div>
+
     </div>
     </section>
     {{-- dsktop btn --}}
