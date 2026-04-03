@@ -46,7 +46,8 @@
                     style="clip-path: path('M 20 0 L 260 0 C 260 0, 280 0, 280 20 L 280 40 C 280 40, 280 60, 300 60 L 380 60 C 380 60, 400 60, 400 80 L 400 430 C 400 420, 400 450, 380 450 L 180 450 C 180 450, 160 450, 160 430 L 160 420 C 160 420, 160 400, 140 400 L 20 400 C 20 400, 0 400, 0 380 L 0 20 C 0 20, 0 0, 20 0 Z')">
                     <div class="absolute top-4 left-3 w-7 h-7 bg-gray-950 border border-white rounded-full"></div>
                     <div class="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                        <div class="flex bg-gray-300 lg:bg-gray-200 w-45 h-9 items-center justify-center self-start ml-7">
+                        <div
+                            class="flex bg-gray-300 lg:bg-gray-200 w-45 h-9 items-center justify-center self-start ml-7">
                             <p
                                 class="font-montserrat tracking-widest text-xl font-semibold text-green-800 leading-none">
                                 VOTE IN
@@ -54,13 +55,13 @@
                         </div>
                         <div class="relative w-full px-7 h-35 flex items-center overflow-hidden">
                             <div class="flex w-full h-full border-2 border-white z-0">
-                                <img src="https://picsum.photos/600?1"
+                                <img src="{{ asset('assets/img/camin/abimanyugilar_01.png') }}" alt="Abimanyu Gilar Waluyo"
                                     style="clip-path: polygon(0 0, 60% 0, 100% 100%, 0 100%);"
                                     class="h-full flex-1 min-w-0 object-cover">
-                                <img src="https://picsum.photos/600?2"
+                                <img src="{{ asset('assets/img/camin/alfinrozaaq_02.png') }}" alt="Alfin Rozaaq Nirwana"
                                     style="clip-path: polygon(0 0, 100% 0, 60% 100%, 40% 100%);"
                                     class="h-full flex-1 min-w-0 object-cover -ml-18">
-                                <img src="https://picsum.photos/600?3"
+                                <img src="{{ asset('assets/img/camin/mikhaelsurya_03.png') }}" alt="Mikhael Surya Adeputra"
                                     style="clip-path: polygon(40% 0, 100% 0, 100% 100%, 0 100%);"
                                     class="h-full flex-1 min-w-0 object-cover -ml-25">
                             </div>

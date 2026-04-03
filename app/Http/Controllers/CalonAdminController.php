@@ -25,23 +25,64 @@ class CalonAdminController extends Controller
     }
     public function vote_in(Request $request)
     {
-        $camin_id = $request->input('c_admin_id');
-        $camin = CalonAdmin::findOrFail($camin_id);
-        $peserta = auth()->user()->peserta;
-        $voting = $camin->votings()->create([
-            'id_peserta' => $peserta->id,
-        ]);
-        $peserta->update([
-            'status_vote' => 'sudah',
-        ]);
+        try {
+            $camin_id = $request->input('c_admin_id');
+            $user = auth()->user();
 
-        if ($request->expectsJson()) {
-            return response()->json([
-                'redirect' => route('vote-in.success'),
+            \Log::info('Vote attempt', ['user_id' => $user->id, 'camin_id' => $camin_id]);
+
+            // Validate that c_admin_id is provided
+            if (!$camin_id) {
+                return back()->with('error', 'Calon admin harus dipilih.');
+            }
+
+            $camin = CalonAdmin::findOrFail($camin_id);
+                $peserta = $user->peserta;
+
+            // Validate that peserta exists
+            if (!$peserta) {
+                \Log::error('Vote failed: Peserta not found', ['user_id' => $user->id]);
+                return redirect()->route('logout');
+            }
+
+            // Check if already voted
+            if ($peserta->status_vote === 'sudah') {
+                \Log::info('Vote rejected: User already voted', ['user_id' => $user->id, 'peserta_id' => $peserta->id]);
+                return redirect()->route('vote-in.success')->with('info', 'Anda sudah melakukan voting.');
+            }
+
+            // Create voting record
+            $voting = $camin->votings()->create(['id_peserta' => $peserta->id]);
+
+            // Update peserta status
+            $peserta->update(['status_vote' => 'sudah']);
+
+            \Log::info('Vote recorded successfully', [
+                'user_id' => $user->id,
+                'peserta_id' => $peserta->id,
+                'camin_id' => $camin_id,
+                'voting_id' => $voting->id,
             ]);
-        }
 
-        return redirect()->route('vote-in.success');
+            return redirect()->route('vote-in.success')->with('success', 'Vote berhasil direkam!');
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Handle double vote attempt (unique constraint violation on id_peserta)
+            if (strpos($e->getMessage(), 'UNIQUE constraint failed') !== false ||
+                strpos($e->getMessage(), 'Duplicate entry') !== false) {
+                \Log::warning('Duplicate vote attempt (constraint violation)', [
+                    'user_id' => $user->id ?? null,
+                    'error' => $e->getMessage(),
+                ]);
+                return redirect()->route('vote-in.success')->with('info', 'Anda sudah melakukan voting.');
+            }
+
+            // Log other database errors
+            \Log::error('Voting database error: ' . $e->getMessage(), ['user_id' => $user->id ?? null]);
+            return back()->with('error', 'Terjadi kesalahan database. Silakan coba lagi.');
+        } catch (\Exception $e) {
+            \Log::error('Voting error: ' . $e->getMessage(), ['user_id' => $user->id ?? null, 'trace' => $e->getTraceAsString()]);
+            return back()->with('error', 'Terjadi kesalahan. Silakan coba lagi.');
+        }
     }
 
     public function vote_in_fallback()
@@ -67,7 +108,8 @@ class CalonAdminController extends Controller
 
     public function vote_in_success()
     {
-        return view('pages.public.vote_in');
+        $camin = CalonAdmin::all();
+        return view('pages.public.vote_in', compact('camin'));
     }
     // fe end
 
