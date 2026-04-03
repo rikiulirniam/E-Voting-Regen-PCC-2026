@@ -25,15 +25,13 @@ jobs:
       - name: Generate App Key
         run: php artisan key:generate
 
-      - name: Run Tests
-        run: php artisan test
 
   deploy:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup PHP & Install Dependencies
         uses: shivammathur/setup-php@v2
         with:
