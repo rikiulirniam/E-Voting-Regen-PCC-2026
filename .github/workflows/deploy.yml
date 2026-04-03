@@ -5,29 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, bcmath, pdo_mysql
-
-      - name: Install Dependencies
-        run: composer install --no-dev --optimize-autoloader
-
-      - name: Copy .env
-        run: cp .env.example .env
-
-      - name: Generate App Key
-        run: php artisan key:generate
-
-
   deploy:
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +24,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          server-dir: /public_html/    # sesuaikan dengan folder di hosting
+          server-dir: /    # sesuaikan dengan folder di hosting
           exclude: |
             **/.git*
             **/.git*/**
