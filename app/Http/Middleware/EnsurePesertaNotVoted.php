@@ -17,16 +17,31 @@ class EnsurePesertaNotVoted
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check() && Auth::user()->role === 'user') {
-            $peserta = Auth::user()->peserta;
+            try {
+                // Fresh load user and eagerly load peserta relationship
+                $user = Auth::user()->fresh(['peserta']);
+                $peserta = $user?->peserta;
 
-            if ($peserta && $peserta->status_vote === 'sudah') {
-                $logoutUrl = route('logout');
+                if ($peserta && $peserta->status_vote === 'sudah') {
+                    \Log::info('Vote blocked: User ' . $user->id . ' already voted');
 
-                return response(
-                    '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Sudah Vote</title></head><body><script>alert("Anda sudah vote. Klik OK untuk logout.");window.location.href=' . json_encode($logoutUrl) . ';</script></body></html>',
-                    200,
-                    ['Content-Type' => 'text/html; charset=UTF-8']
-                );
+                    // Handle JSON requests
+                    if ($request->expectsJson()) {
+                        return response()->json([
+                            'error' => 'Anda sudah melakukan voting.',
+                        ], 403);
+                    }
+
+                    $logoutUrl = route('logout');
+                    return response(
+                        '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Sudah Vote</title></head><body><script>alert("Anda sudah vote. Klik OK untuk logout.");window.location.href=' . json_encode($logoutUrl) . ';</script></body></html>',
+                        200,
+                        ['Content-Type' => 'text/html; charset=UTF-8']
+                    );
+                }
+            } catch (\Exception $e) {
+                \Log::error('Error in EnsurePesertaNotVoted middleware: ' . $e->getMessage());
+                // Don't block the request if there's an error loading peserta
             }
         }
 

@@ -16,10 +16,14 @@ class Authorize
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if(auth()->status)
         if (Auth::check() && Auth::user()->role === 'admin') {
             return $next($request);
         }
-        return redirect()->back()->withErrors(['error' => 'Anda tidak memiliki akses ke halaman ini.']);
+
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        return redirect()->route('dashboard')->withErrors(['error' => 'Anda tidak memiliki akses ke halaman ini.']);
     }
 }
