@@ -8,7 +8,7 @@
     <title>Choose the Next Administrator</title>
     <link rel="icon" type="image/png" href="{{ asset('assets/img/pcc.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    @vite('resources/css/app.css', 'resources/js/app.js')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="w-full min-h-screen flex flex-col py-10 pb-10 pt-8 bg-mobile bg-desktop overflow-x-hidden">

@@ -1,5 +1,13 @@
 <?php
 
+$rawMailScheme = strtolower((string) env('MAIL_SCHEME', ''));
+
+$mailScheme = match ($rawMailScheme) {
+    'smtp', 'smtps' => $rawMailScheme,
+    'ssl' => 'smtps',
+    default => null,
+};
+
 return [
 
     /*
@@ -39,7 +47,7 @@ return [
 
         'smtp' => [
             'transport' => 'smtp',
-            'scheme' => env('MAIL_SCHEME'),
+            'scheme' => $mailScheme,
             'url' => env('MAIL_URL'),
             'host' => env('MAIL_HOST', '127.0.0.1'),
             'port' => env('MAIL_PORT', 2525),

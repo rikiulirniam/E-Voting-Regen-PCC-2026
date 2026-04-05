@@ -8,7 +8,7 @@
     <title>Login Page</title>
 
     <link rel="icon" type="image/png" href="{{ asset('assets/img/pcc.png') }}">
-    @vite('resources/css/app.css', 'resources/js/app.js')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="w-full mx-auto min-h-screen flex flex-col py-10 pb-10 pt-8 bg-mobile bg-desktop">
