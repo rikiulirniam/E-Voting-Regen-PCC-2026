@@ -62,14 +62,14 @@
                             <div class="mb-3">
                                 <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Visi</p>
                                 <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-3">
-                                    {{ $item->visi }}
+                                    {!! nl2br(e($item->visi)) !!}
                                 </p>
                             </div>
 
                             <div class="mb-4">
                                 <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Misi</p>
-                                <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-4">
-                                    {{ $item->misi }}
+                                <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-3">
+                                    {!! nl2br(e($item->misi)) !!}
                                 </p>
                             </div>
 

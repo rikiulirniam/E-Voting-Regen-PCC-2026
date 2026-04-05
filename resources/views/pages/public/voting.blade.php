@@ -51,27 +51,27 @@
             </div>
             <div class="w-full overflow-hidden pt-18 lg:pt-8 lg:pr-6">
                 <div id="carousel" class="flex gap-6 lg:gap-2 transition-transform duration-500">
-                    @foreach($calon_admin as $c_adm)
-                    <div class="shrink-0 w-full md:w-[50%] lg:w-[28%] c-admin-card" data-id="{{ $c_adm->id }}">
-                        <div
-                            class="mx-auto w-full max-w-100 rounded-2xl bg-white/10 border-2 border-white/60 p-2 lg:p-3 backdrop-blur-sm font-montserrat">
-                            <div class="relative rounded-2xl w-full h-130 lg:h-150 shadow-lg">
-                                <div
-                                    class="absolute flex -top-9 -right-2.5 w-16 h-16 lg:-top-8 lg:-right-8 z-50 lg:w-15 lg:h-15 items-center justify-center rounded-full bg-gray-600/95 border border-white/60 shadow-lg">
-                                    <p class="text-white text-4xl font-bold font-montaga items-center"
-                                        style="-webkit-text-stroke: 0.1px #7520b6;">
-                                        {{ $c_adm->no_urut }}
-                                    </p>
-                                </div>
-                                {{-- nourut mobilr --}}
-                                {{-- <div
+                    @foreach ($calon_admin as $c_adm)
+                        <div class="shrink-0 w-full md:w-[50%] lg:w-[28%] c-admin-card" data-id="{{ $c_adm->id }}">
+                            <div
+                                class="mx-auto w-full max-w-100 rounded-2xl bg-white/10 border-2 border-white/60 p-2 lg:p-3 backdrop-blur-sm font-montserrat">
+                                <div class="relative rounded-2xl w-full h-130 lg:h-150 shadow-lg">
+                                    <div
+                                        class="absolute flex -top-9 -right-2.5 w-16 h-16 lg:-top-8 lg:-right-8 z-50 lg:w-15 lg:h-15 items-center justify-center rounded-full bg-gray-600/95 border border-white/60 shadow-lg">
+                                        <p class="text-white text-4xl font-bold font-montaga items-center"
+                                            style="-webkit-text-stroke: 0.1px #7520b6;">
+                                            {{ $c_adm->no_urut }}
+                                        </p>
+                                    </div>
+                                    {{-- nourut mobilr --}}
+                                    {{-- <div
                                         class="lg:hidden absolute -top-9 -right-2.5 z-50 w-16 h-16 flex items-center justify-center rounded-full bg-gray-600/90 shadow-lg">
                                         <p class="text-4xl font-bold text-red-500 font-lemon items-center"
                                             style="-webkit-text-stroke: 0.1px #000;">
                                             {{ $c_adm->no_urut }}
                                         </p>
                                     </div> --}}
-                                    @if($c_adm->foto_url)
+                                    @if ($c_adm->foto_url)
                                         <img src="{{ $c_adm->foto_url }}"
                                             class="absolute inset-0 w-full h-full object-cover rounded-2xl">
                                     @endif
@@ -88,11 +88,11 @@
                                             </h3>
                                             <p class="text-sm font-semibold mb-1 lg:text-lg">Visi</p>
                                             <p class="text-xs mb-3 opacity-90 lg:text-sm">
-                                                {{ $c_adm->visi }}
+                                                {!! nl2br(e($c_adm->visi)) !!}
                                             </p>
                                             <p class="text-sm font-semibold mb-1 lg:text-lg">Misi</p>
                                             <p class="text-xs opacity-90 lg:text-sm">
-                                                {{ $c_adm->misi }}
+                                                {!! nl2br(e($c_adm->misi)) !!}
                                             </p>
                                             <button type="button"
                                                 class="btn-tutup hidden flex flex-row gap-2 items-center justify-end mt-5 ml-auto mr-4">
@@ -113,112 +113,75 @@
                                 </button>
                             </form>
                         </div>
+                    @endforeach
+                </div>
+                {{-- muncul mobilr only --}}
+                <div class="flex items-center mt-3 justify-between w-full max-w-xs mx-auto lg:hidden">
+                    <div onclick="prev()"
+                        class="cursor-pointer border border-white/60 rounded-full w-10 h-10 flex items-center justify-center bg-linear-to-r from-gray-600 to-gray-900">
+                        <p class="text-white text-2xl font-gabarito text-center">
+                            <i class="fa-solid fa-chevron-left text-white text-xl items-center"></i>
+                        </p>
                     </div>
-                    <form method="post" action="{{ route('vote-in') }}"
-                        class="frm_voting hidden lg:flex justify-center mt-5">
+                    <form class="frm_voting" method="post" action="{{ route('vote-in-submit') }}">
                         @csrf
                         <input type="hidden" name="c_admin_id" class="c_admin_id">
                         <button type="submit"
-                            class="rounded-xl py-2 bg-linear-to-r from-indigo-600 via-indigo-500 to-indigo-600 transition hover:scale-95 px-15 mb-8 shadow-lg lg:hover:bg-linear-to-r lg:hover:from-indigo-900 lg:hover:via-indigo-700 lg:hover:to-indigo-900 lg:hover:scale-98 lg:transition-all">
-                            <p class="text-white text-2xl font-montaga tracking-[.25em]">VOTE</p>
+                            class="border border-white/60 rounded-xl px-3.5 py-1 bg-linear-to-r from-gray-600 to-gray-900  transition hover:scale-105">
+                            <p class="text-white text-2xl font-gabarito font-bold tracking-[.25em]">VOTE</p>
                         </button>
                     </form>
+                    <div onclick="next()"
+                        class="cursor-pointer border border-white/60 rounded-full w-10 h-10 flex items-center justify-center bg-linear-to-r from-gray-600 to-gray-900">
+                        <p class="text-white text-2xl font-gabarito text-center"><i
+                                class="fa-solid fa-chevron-right text-white text-xl items-center"></i></p>
+                    </div>
                 </div>
-                @endforeach
-            </div>
-            {{-- muncul mobilr only --}}
-            <div class="flex items-center justify-between w-full max-w-xs mx-auto lg:hidden">
-                <div onclick="prev()"
-                    class="cursor-pointer border border-white/60 rounded-full w-10 h-10 flex items-center justify-center bg-linear-to-r from-gray-600 to-gray-900">
-                    <p class="text-white text-2xl font-gabarito text-center">
-                        <i class="fa-solid fa-chevron-left text-white text-xl items-center"></i>
-                    </p>
-                </div>
-                <form class="frm_voting" method="post" action="{{ route('vote-in-submit') }}">
-                    @csrf
-                    <input type="hidden" name="c_admin_id" class="c_admin_id">
-                    <button type="submit"
-                        class="border border-white/60 rounded-xl px-3.5 py-1 bg-linear-to-r from-gray-600 to-gray-900  transition hover:scale-105">
-                        <p class="text-white text-2xl font-gabarito font-bold tracking-[.25em]">VOTE</p>
-                    </button>
-                </form>
-                <div onclick="next()"
-                    class="cursor-pointer border border-white/60 rounded-full w-10 h-10 flex items-center justify-center bg-linear-to-r from-gray-600 to-gray-900">
-                    <p class="text-white text-2xl font-gabarito text-center"><i
-                            class="fa-solid fa-chevron-right text-white text-xl items-center"></i></p>
+                {{-- dsktop btn --}}
+                <div
+                    class="hidden lg:flex fixed top-1/2 left-0 w-full px-6 justify-between -translate-y-1/2 z-50 pointer-events-none">
+                    <div onclick="prev()"
+                        class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-l from-gray-600 to-gray-950 flex items-center justify-center transition hover:scale-95">
+                        <i class="fa-solid fa-chevron-left text-white text-xl"></i>
+                    </div>
+                    <div onclick="next()"
+                        class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-r from-purple-400 to-indigo-900 flex items-center justify-center transition hover:scale-95">
+                        <i class="fa-solid fa-chevron-right text-white text-xl"></i>
+                    </div>
                 </div>
             </div>
         </section>
-        {{-- dsktop btn --}}
-        <div
-            class="hidden lg:flex absolute flex-row justify-between gap-12 mx-auto my-auto px-10 w-full top-[70%] z-0 pointer-events-none">
-            <div onclick="prev()"
-                class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-l from-gray-600 to-gray-950 flex items-center justify-center transition hover:scale-95">
-                <i class="fa-solid fa-chevron-left text-white text-xl"></i>
+
+        {{-- confirm popup --}}
+        <div id="confirmOverlay" class="hidden fixed inset-0 z-999 items-center justify-center">
+            <div class="absolute inset-0 backdrop-blur-sm hidden lg:block"></div>
+            <div class="relative z-10">
+                <form id="confirm_form" action="{{ route('vote-in-submit') }}" method="post" class="my-auto">
+                    @csrf
+                    <input type="hidden" name="c_admin_id" id="confirm_id">
+                    <section class="flex flex-col justify-center gap-8">
+                        <div
+                            class="bg-gray-600/20 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] py-6 px-1 text-center m-auto mx-12 rounded-2xl border border-white md:w-110 md:py-12 md:mx-auto lg:bg-none backdrop-blur-2xl">
+                            <p class="font-mono tracking-wide text-white mx-10 text-xl md:text-2xl">
+                                Choose it wisely.<br>
+                                Are you sure about your choice?
+                            </p>
+                        </div>
+
+                        <div class="flex w-full gap-5 md:gap-15 px-12 md:px-0 md:w-auto md:mx-auto">
+                            <button type="button" onclick="tutupConfirm()"
+                                class="bg-gray-600/20 text-white font-mono tracking-wide py-2 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] lg:text-2xl lg:py-1.5 lg:w-35 rounded-2xl border border-white lg:bg-none backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
+                                Back
+                            </button>
+
+                            <button type="button" onclick="submitVote()"
+                                class="bg-gray-600/20 text-white font-mono tracking-wide py-2 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] lg:text-2xl lg:py-1.5 lg:w-35 rounded-2xl border border-white lg:bg-none backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
+                                Confirm
+                            </button>
+                        </div>
+                    </section>
+                </form>
             </div>
-            <div onclick="next()"
-                class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-r from-purple-400 to-indigo-900 flex items-center justify-center transition hover:scale-95">
-                <i class="fa-solid fa-chevron-right text-white text-xl"></i>
-            </div>
-        </div>
-        <form class="frm_voting" method="poat" action="#">
-            @csrf
-            <input type="hidden" name="c_admin_id" class="c_admin_id">
-            <button type="submit"
-                class="border border-white/60 rounded-xl px-3.5 py-1 bg-linear-to-r from-gray-600 to-gray-900  transition hover:scale-105">
-                <p class="text-white text-2xl font-gabarito font-bold tracking-[.25em]">VOTE</p>
-            </button>
-        </form>
-        <div onclick="next()"
-            class="cursor-pointer border border-white/60 rounded-full w-10 h-10 flex items-center justify-center bg-linear-to-r from-gray-600 to-gray-900">
-            <p class="text-white text-2xl font-gabarito text-center"><i
-                    class="fa-solid fa-chevron-right text-white text-xl items-center"></i></p>
-        </div>
-    </div>
-    </section>
-    {{-- dsktop btn --}}
-    <div
-        class="hidden lg:flex absolute flex-row justify-between gap-12 mx-auto my-auto px-10 w-full top-[70%] z-0 pointer-events-none">
-        <div onclick="prev()"
-            class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-l from-gray-600 to-gray-950 flex items-center justify-center transition hover:scale-95">
-            <i class="fa-solid fa-chevron-left text-white text-xl"></i>
-        </div>
-        <div onclick="next()"
-            class="pointer-events-auto cursor-pointer border border-white/60 rounded-full w-14 h-14 bg-linear-to-r from-purple-400 to-indigo-900 flex items-center justify-center transition hover:scale-95">
-            <i class="fa-solid fa-chevron-right text-white text-xl"></i>
-        </div>
-    </div>
-    </div>
-
-    {{-- confirm popup --}}
-    <div id="confirmOverlay" class="hidden fixed inset-0 z-999 items-center justify-center">
-        <div class="absolute inset-0 backdrop-blur-sm hidden lg:block"></div>
-        <div class="relative z-10">
-            <form id="confirm_form" action="{{ route('vote-in-submit') }}" method="post" class="my-auto">
-                @csrf
-                <input type="hidden" name="c_admin_id" id="confirm_id">
-                <section class="flex flex-col justify-center gap-8">
-                    <div
-                        class="bg-gray-600/20 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] py-6 px-1 text-center m-auto mx-12 rounded-2xl border border-white md:w-110 md:py-12 md:mx-auto lg:bg-none backdrop-blur-2xl">
-                        <p class="font-mono tracking-wide text-white mx-10 text-xl md:text-2xl">
-                            Choose it wisely.<br>
-                            Are you sure about your choice?
-                        </p>
-                    </div>
-
-                    <div class="flex w-full gap-5 md:gap-15 px-12 md:px-0 md:w-auto md:mx-auto">
-                        <button type="button" onclick="tutupConfirm()"
-                            class="bg-gray-600/20 text-white font-mono tracking-wide py-2 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] lg:text-2xl lg:py-1.5 lg:w-35 rounded-2xl border border-white lg:bg-none backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
-                            Back
-                        </button>
-
-                        <button type="button" onclick="submitVote()"
-                            class="bg-gray-600/20 text-white font-mono tracking-wide py-2 md:py-6 flex-1 md:w-50 shadow-[6px_6px_2px_rgba(0,0,0,0.5)] lg:text-2xl lg:py-1.5 lg:w-35 rounded-2xl border border-white lg:bg-none backdrop-blur-2xl lg:hover:bg-indigo-950/80 lg:hover:scale-95 lg:hover:transition-all">
-                            Confirm
-                        </button>
-                    </div>
-                </section>
-            </form>
         </div>
     </div>
 
