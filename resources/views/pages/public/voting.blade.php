@@ -103,8 +103,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <form method="post" action="{{ route('vote-in-submit') }}"
-                                class="frm_voting hidden lg:flex justify-center mt-5">
+                            <form method="post" action="{{ route('vote-in-submit') }}" class="frm_voting hidden lg:flex justify-center mt-5">
                                 @csrf
                                 <input type="hidden" name="c_admin_id" class="c_admin_id">
                                 <button type="submit"
