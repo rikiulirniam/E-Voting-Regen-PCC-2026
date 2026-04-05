@@ -56,7 +56,6 @@ class PesertaController extends Controller
             $delimiter = $sepVal ?: $delimiter;
             fgetcsv($handle, 0, $delimiter); // skip header row
         }
-        // else: $firstRaw was the header row, already consumed by fgets
 
         $inserted = 0;
         $skipped  = 0;

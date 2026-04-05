@@ -18,10 +18,11 @@
 
         <x-admin.sidebar />
 
-        <div class="flex-1 flex flex-col min-w-0">
+        <div class="flex-1 flex flex-col min-w-0 lg:ml-60">
 
             {{-- Mobile top bar --}}
             <header class="lg:hidden flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-30">
+
                 <button onclick="openSidebar()"
                         class="p-1.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -29,6 +30,7 @@
                     </svg>
                 </button>
                 <span class="text-base font-bold text-gray-800 dark:text-white">{{env('APP_NAME')}}</span>
+                
             </header>
 
             <main class="flex-1 overflow-y-auto">
