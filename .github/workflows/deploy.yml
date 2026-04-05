@@ -10,12 +10,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Node Dependencies
+        run: npm ci
+
+      - name: Build Frontend Assets
+        run: npm run build
+
       - name: Setup PHP & Install Dependencies
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
 
       - run: composer install --no-dev --optimize-autoloader
+
+      - name: Clear Laravel Cached Files Before Upload
+        run: |
+          rm -f bootstrap/cache/*.php
+          rm -f storage/framework/views/*.php
+          rm -f storage/framework/cache/data/*
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -31,3 +49,4 @@ jobs:
             **/node_modules/**
             **/tests/**
             **/.env
+            **/.github/**
