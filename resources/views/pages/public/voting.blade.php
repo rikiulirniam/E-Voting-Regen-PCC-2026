@@ -124,7 +124,7 @@
                         <i class="fa-solid fa-chevron-left text-white text-xl items-center"></i>
                     </p>
                 </div>
-                <form class="frm_voting" method="post" action="{{ route('vote-in-submit') }}">
+                <form class="frm_voting" method="post" action="{{ route('vote-in-submit') }}" >
                     @csrf
                     <input type="hidden" name="c_admin_id" class="c_admin_id">
                     <button type="submit"
