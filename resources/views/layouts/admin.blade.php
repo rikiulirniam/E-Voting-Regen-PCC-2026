@@ -18,7 +18,7 @@
 
         <x-admin.sidebar />
 
-        <div class="flex-1 flex flex-col min-w-0">
+        <div class="flex-1 flex flex-col min-w-0 lg:ml-60">
 
             {{-- Mobile top bar --}}
             <header class="lg:hidden flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-30">
