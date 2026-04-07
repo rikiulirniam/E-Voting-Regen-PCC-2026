@@ -153,6 +153,8 @@ class PesertaController extends Controller
     {
         $data = $request->validated();
 
+        $statusVoteSebelumnya = $peserta->status_vote;
+
         $peserta->update([
             'name'           => $data['name'],
             'nim'            => $data['nim'],
@@ -160,6 +162,10 @@ class PesertaController extends Controller
             'status_jabatan' => $data['status_jabatan'],
             'status_vote'    => $data['status_vote'],
         ]);
+
+        if ($statusVoteSebelumnya !== 'belum' && $data['status_vote'] === 'belum') {
+            Voting::where('id_peserta', $peserta->id)->delete();
+        }
 
         if ($peserta->user) {
             $peserta->user->update(['username' => $data['username']]);
