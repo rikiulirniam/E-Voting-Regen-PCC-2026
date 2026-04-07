@@ -10,11 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: migrate database
-        uses: php-actions/composer@v6
-        with:
-          php-version: '8.2'
-          run-script: 'php artisan migrate:fresh --seed --force'
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -33,7 +28,12 @@ jobs:
         with:
           php-version: '8.2'
 
-      - run: composer install --no-dev --optimize-autoloader
+      - name: Prepare Composer Workspace
+        run: |
+          rm -rf vendor
+
+      - name: Install PHP Dependencies (Production)
+        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
       - name: Clear Laravel Cached Files Before Upload
         run: |
