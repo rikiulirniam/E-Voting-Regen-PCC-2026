@@ -14,7 +14,6 @@ jobs:
         uses: php-actions/composer@v6
         with:
           php-version: '8.2'
-          composer-options: 'install --no-dev --optimize-autoloader'
           run-script: 'php artisan migrate:fresh --seed --force'
 
       - name: Setup Node.js
