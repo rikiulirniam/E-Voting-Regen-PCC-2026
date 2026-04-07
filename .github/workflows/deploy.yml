@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -27,7 +28,12 @@ jobs:
         with:
           php-version: '8.2'
 
-      - run: composer install --no-dev --optimize-autoloader
+      - name: Prepare Composer Workspace
+        run: |
+          rm -rf vendor
+
+      - name: Install PHP Dependencies (Production)
+        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
       - name: Clear Laravel Cached Files Before Upload
         run: |
