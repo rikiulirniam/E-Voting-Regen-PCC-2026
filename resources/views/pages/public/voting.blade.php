@@ -82,8 +82,10 @@
                                                 {{ $c_adm->visi }}
                                             </p>
                                             <p class="text-sm font-semibold mb-1 lg:text-lg">Misi</p>
-                                            <p class="text-xs opacity-90 lg:text-sm  whitespace-pre-wrap">
+                                            <p class="text-xs opacity-90 lg:text-sm whitespace-pre-wrap">
+
                                                 {{ $c_adm->misi }}
+                                                
                                             </p>
                                             <button type="button"
                                                 class="btn-tutup hidden flex flex-row gap-2 items-center justify-end mt-5 ml-auto mr-4">
