@@ -78,17 +78,9 @@
                                                 {{ $c_adm->name }}
                                             </h3>
                                             <p class="text-sm font-semibold mb-1 lg:text-lg">Visi</p>
-                                            <p class="text-xs mb-3 opacity-90 lg:text-sm">
-                                                {{ $c_adm->visi }}
-                                            </p>
+                                            <p class="text-xs mb-3 opacity-90 lg:text-sm">{!! nl2br(e($c_adm->visi)) !!}</p>
                                             <p class="text-sm font-semibold mb-1 lg:text-lg">Misi</p>
-                                            <p class="
-                                            text-xs 
-                                            opacity-90 
-                                            lg:text-sm 
-                                            whitespace-pre-line">
-                                                {{ $c_adm->misi }}
-                                            </p>
+                                            <p class="text-xs opacity-90 lg:text-sm">{!! nl2br(e($c_adm->misi)) !!}</p>
                                             <button type="button"
                                                 class="btn-tutup hidden flex flex-row gap-2 items-center justify-end mt-5 ml-auto mr-4">
                                                 <i class="fa-solid fa-chevron-down"></i>
