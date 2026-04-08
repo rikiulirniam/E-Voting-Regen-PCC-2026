@@ -30,7 +30,7 @@ class PesertaController extends Controller
             });
         }
 
-        $pesertas = $query->orderBy('name')->paginate(20)->withQueryString();
+        $pesertas = $query->orderBy('name')->paginate(10)->withQueryString();
 
         return view('pages.admin.peserta.index', compact('pesertas'));
     }
@@ -153,6 +153,8 @@ class PesertaController extends Controller
     {
         $data = $request->validated();
 
+        $statusVoteSebelumnya = $peserta->status_vote;
+
         $peserta->update([
             'name'           => $data['name'],
             'nim'            => $data['nim'],
@@ -160,6 +162,10 @@ class PesertaController extends Controller
             'status_jabatan' => $data['status_jabatan'],
             'status_vote'    => $data['status_vote'],
         ]);
+
+        if ($statusVoteSebelumnya !== 'belum' && $data['status_vote'] === 'belum') {
+            Voting::where('id_peserta', $peserta->id)->delete();
+        }
 
         if ($peserta->user) {
             $peserta->user->update(['username' => $data['username']]);
