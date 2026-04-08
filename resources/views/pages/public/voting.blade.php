@@ -78,11 +78,11 @@
                                                 {{ $c_adm->name }}
                                             </h3>
                                             <p class="text-sm font-semibold mb-1 lg:text-lg">Visi</p>
-                                            <p class="text-xs mb-3 opacity-90 lg:text-sm">
+                                            <p class="text-xs mb-3 opacity-90 lg:text-sm whitespace-pre-line">
                                                 {{ $c_adm->visi }}
                                             </p>
                                             <p class="text-sm font-semibold mb-1 lg:text-lg">Misi</p>
-                                            <p class="text-xs opacity-90 lg:text-sm whitespace-pre-wrap">
+                                            <p class="text-xs opacity-90 lg:text-sm whitespace-pre-line">
                                                 {{ $c_adm->misi }}
                                             </p>
                                             <button type="button"
