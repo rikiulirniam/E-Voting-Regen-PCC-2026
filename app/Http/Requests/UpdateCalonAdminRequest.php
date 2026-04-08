@@ -23,33 +23,4 @@ class UpdateCalonAdminRequest extends FormRequest
             'foto'     => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'visi' => $this->normalizeMultiline($this->input('visi')),
-            'misi' => $this->normalizeMultiline($this->input('misi')),
-        ]);
-    }
-
-    private function normalizeMultiline(?string $value): ?string
-    {
-        if ($value === null) {
-            return null;
-        }
-
-        $normalized = preg_replace("/\r\n?|\r/", "\n", $value);
-        $lines = explode("\n", (string) $normalized);
-        $trimmedLines = array_map(static fn (string $line): string => trim($line), $lines);
-
-        while (!empty($trimmedLines) && $trimmedLines[0] === '') {
-            array_shift($trimmedLines);
-        }
-
-        while (!empty($trimmedLines) && end($trimmedLines) === '') {
-            array_pop($trimmedLines);
-        }
-
-        return implode("\n", $trimmedLines);
-    }
 }
