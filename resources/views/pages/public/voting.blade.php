@@ -62,14 +62,6 @@
                                             {{ $c_adm->no_urut }}
                                         </p>
                                     </div>
-                                    {{-- nourut mobilr --}}
-                                    {{-- <div
-                                        class="lg:hidden absolute -top-9 -right-2.5 z-50 w-16 h-16 flex items-center justify-center rounded-full bg-gray-600/90 shadow-lg">
-                                        <p class="text-4xl font-bold text-red-500 font-lemon items-center"
-                                            style="-webkit-text-stroke: 0.1px #000;">
-                                            {{ $c_adm->no_urut }}
-                                        </p>
-                                    </div> --}}
                                     @if($c_adm->foto_url)
                                         <img src="{{ $c_adm->foto_url }}"
                                             class="absolute inset-0 w-full h-full object-cover rounded-2xl">
@@ -90,7 +82,7 @@
                                                 {{ $c_adm->visi }}
                                             </p>
                                             <p class="text-sm font-semibold mb-1 lg:text-lg">Misi</p>
-                                            <p class="text-xs opacity-90 lg:text-sm">
+                                            <p class="text-xs opacity-90 lg:text-sm whitespace-pre-wrap">
                                                 {{ $c_adm->misi }}
                                             </p>
                                             <button type="button"
