@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Gwendolyn:wght@400;700&family=Handjet:wght,ELSH@100..900,2&family=Lemon&family=Montaga&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import 'tailwindcss';
+@import url("https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Gwendolyn:wght@400;700&family=Handjet:wght,ELSH@100..900,2&family=Lemon&family=Montaga&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -7,8 +7,10 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans:
+        "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
     --font-montserrat: "Montserrat", ui-sans-serif, system-ui, sans-serif;
     --font-gabarito: "Montserrat", ui-sans-serif, system-ui, sans-serif;
     --font-lemon: "Lemon", ui-serif, system-ui, serif;
@@ -18,9 +20,8 @@
 }
 
 @layer utilities {
-
     .bg-mobile {
-        background-image: url('mobile_bg.png');
+        background-image: url("mobile_bg.png");
         background-color: #000c1a;
         background-size: cover;
         background-position: center;
@@ -29,14 +30,22 @@
 
     .bg-purple {
         background-image:
-            radial-gradient(circle at 0% 100%, rgba(67, 37, 137, 0.8), transparent 30%),
-            radial-gradient(circle at 50% 0%, rgba(67, 37, 137, 0.8), transparent 40%),
+            radial-gradient(
+                circle at 0% 100%,
+                rgba(67, 37, 137, 0.8),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 50% 0%,
+                rgba(67, 37, 137, 0.8),
+                transparent 40%
+            ),
             linear-gradient(to bottom, #020617, #000000);
     }
 
     @media (min-width: 1024px) {
         .bg-desktop {
-            background-image: url('desktop_bg.png');
+            background-image: url("desktop_bg.png");
             background-color: #000c1a;
             background-size: cover;
             background-position: center;
@@ -58,12 +67,62 @@
             0 0 10px rgba(255, 255, 255, 0.7),
             0 0 18px rgba(255, 255, 255, 0.5);
     }
-    .mask-transparan{
-        mask-image:linear-gradient(to top,black 75%,transparent 100%); 
-        -webkit-mask-image:linear-gradient(to top,black 75%,transparent 100%);
+    .mask-transparan {
+        mask-image: linear-gradient(to top, black 75%, transparent 100%);
+        -webkit-mask-image: linear-gradient(
+            to top,
+            black 75%,
+            transparent 100%
+        );
     }
-    .fade-btm{
+    .fade-btm {
         mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            black 75%,
+            transparent 100%
+        );
     }
+}
+
+/* styling intro masuk */
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes zoomOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transfrom: scale(1.2);
+        filter: blur(10px);
+    }
+}
+
+.in-logo {
+    animation: zoomIn 1s ease-out forwards;
+}
+
+.out-logo {
+    animation: zoomOut 0.7s ease-in forwards;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+#intro-screen {
+    transition: opacity 0.6s ease;
 }
