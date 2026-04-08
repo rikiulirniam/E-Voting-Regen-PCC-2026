@@ -86,7 +86,7 @@
                                             text-xs 
                                             opacity-90 
                                             lg:text-sm 
-                                            whitespace-pre-wrap">
+                                            whitespace-pre-line">
                                                 {{ $c_adm->misi }}
                                             </p>
                                             <button type="button"
