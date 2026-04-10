@@ -9,8 +9,16 @@
 
     <div class="h-screen w-full p-4 md:p-6 lg:p-8 overflow-auto lg:overflow-hidden">
         <div class="header py-3">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Display Voting</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400 my-1">Pantau statistik real-time untuk layar utama.</p>
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Display Voting</h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 my-1">Pantau statistik real-time untuk layar utama.</p>
+                </div>
+                <button type="button" id="display-timer-trigger"
+                    class="inline-flex opacity-0 items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-colors">
+                    Atur Timer
+                </button>
+            </div>
         </div>
         <div class="h-9/10 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
             <section class="lg:col-span-8 flex flex-col justify-center gap-4 lg:gap-6 min-h-0">
@@ -63,6 +71,12 @@
                                         <span id="display-progress-remaining-count" class="text-gray-600  dark:text-gray-400">Belum Vote ({{ $belumVote }})</span>
                                     </div>
                                 </div>
+
+                                <div id="display-countdown-box"
+                                    class="mt-8 rounded-2xl bg-gray-900 text-white p-6 md:p-8 text-center border border-gray-700 shadow-lg cursor-pointer">
+                                    <p class="text-sm uppercase tracking-widest text-gray-300">Countdown</p>
+                                    <p id="display-countdown-text" class="text-6xl md:text-7xl font-bold leading-none mt-3">00:00:00</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -90,12 +104,30 @@
             </aside>
         </div>
     </div>
+
+    <div id="display-timer-overlay" class="hidden fixed inset-0 z-50 items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="relative w-full max-w-sm rounded-xl bg-white dark:bg-gray-800 shadow-2xl p-5">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Atur Countdown Display</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Masukkan durasi timer dalam menit.</p>
+            <input id="display-timer-minutes" type="number" min="1" max="180" value="5"
+                class="mt-4 w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Batas: 1 sampai 180 menit.</p>
+            <div class="mt-5 flex gap-3">
+                <button type="button" id="display-timer-cancel"
+                    class="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">Batal</button>
+                <button type="button" id="display-timer-start"
+                    class="flex-1 rounded-lg bg-indigo-600 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-colors">Mulai</button>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
     <script>
         (function () {
             const statsUrl = @json(route('admin.display.stats'));
+            const countdownStorageKey = 'adminDisplayCountdownEndAt';
 
             const totalPesertaEl = document.getElementById('display-total-peserta');
             const sudahVoteEl = document.getElementById('display-sudah-vote');
@@ -106,6 +138,127 @@
             const progressRemainingTextEl = document.getElementById('display-progress-remaining-text');
             const progressVotedCountEl = document.getElementById('display-progress-voted-count');
             const progressRemainingCountEl = document.getElementById('display-progress-remaining-count');
+            const displayTimerTriggerEl = document.getElementById('display-timer-trigger');
+            const displayTimerOverlayEl = document.getElementById('display-timer-overlay');
+            const displayTimerMinutesEl = document.getElementById('display-timer-minutes');
+            const displayTimerCancelEl = document.getElementById('display-timer-cancel');
+            const displayTimerStartEl = document.getElementById('display-timer-start');
+            const displayCountdownBoxEl = document.getElementById('display-countdown-box');
+            const displayCountdownTextEl = document.getElementById('display-countdown-text');
+
+            let countdownIntervalId = null;
+            let countdownEndAt = null;
+
+            function formatCountdown(totalMilliseconds) {
+                const safeMilliseconds = Math.max(0, totalMilliseconds);
+                const totalSeconds = Math.floor(safeMilliseconds / 1000);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                const centiseconds = Math.floor((safeMilliseconds % 1000) / 10);
+
+                return String(minutes).padStart(2, '0')
+                    + ':' + String(seconds).padStart(2, '0')
+                    + ':' + String(centiseconds).padStart(2, '0');
+            }
+
+            function closeTimerPopup() {
+                displayTimerOverlayEl.classList.add('hidden');
+                displayTimerOverlayEl.classList.remove('flex');
+            }
+
+            function saveCountdownState() {
+                if (!countdownEndAt) {
+                    localStorage.removeItem(countdownStorageKey);
+                    return;
+                }
+
+                localStorage.setItem(countdownStorageKey, String(countdownEndAt));
+            }
+
+            function restoreCountdownState() {
+                const savedEndAt = Number(localStorage.getItem(countdownStorageKey));
+                if (!Number.isFinite(savedEndAt) || savedEndAt <= Date.now()) {
+                    localStorage.removeItem(countdownStorageKey);
+                    displayCountdownTextEl.textContent = '00:00:00';
+                    return;
+                }
+
+                countdownEndAt = savedEndAt;
+                displayCountdownTextEl.textContent = formatCountdown(countdownEndAt - Date.now());
+
+                countdownIntervalId = setInterval(function () {
+                    const remainingMilliseconds = Math.max(0, countdownEndAt - Date.now());
+                    displayCountdownTextEl.textContent = formatCountdown(remainingMilliseconds);
+
+                    if (remainingMilliseconds <= 0) {
+                        stopCountdown(true);
+                    }
+                }, 50);
+            }
+
+            function openTimerPopup() {
+                displayTimerOverlayEl.classList.remove('hidden');
+                displayTimerOverlayEl.classList.add('flex');
+                displayTimerMinutesEl.focus();
+                displayTimerMinutesEl.select();
+            }
+
+            function stopCountdown(showDoneAlert) {
+                if (countdownIntervalId) {
+                    clearInterval(countdownIntervalId);
+                    countdownIntervalId = null;
+                }
+                countdownEndAt = null;
+                saveCountdownState();
+                if (showDoneAlert) {
+                    displayCountdownTextEl.textContent = '00:00:00';
+                    alert('Waktu countdown selesai.');
+                }
+            }
+
+            function startCountdown(minutes) {
+                stopCountdown(false);
+
+                const safeMinutes = Math.max(1, Math.min(180, minutes));
+                const totalMilliseconds = safeMinutes * 60 * 1000;
+                countdownEndAt = Date.now() + totalMilliseconds;
+                saveCountdownState();
+                displayCountdownBoxEl.classList.remove('hidden');
+                displayCountdownTextEl.textContent = formatCountdown(totalMilliseconds);
+
+                countdownIntervalId = setInterval(function () {
+                    const remainingMilliseconds = Math.max(0, countdownEndAt - Date.now());
+                    displayCountdownTextEl.textContent = formatCountdown(remainingMilliseconds);
+
+                    if (remainingMilliseconds <= 0) {
+                        stopCountdown(true);
+                    }
+                }, 50);
+            }
+
+            displayTimerTriggerEl.addEventListener('click', openTimerPopup);
+            displayCountdownBoxEl.addEventListener('click', openTimerPopup);
+
+            displayTimerCancelEl.addEventListener('click', closeTimerPopup);
+            displayTimerStartEl.addEventListener('click', function () {
+                const minutes = Number(displayTimerMinutesEl.value);
+                if (!Number.isFinite(minutes) || minutes < 1 || minutes > 180) {
+                    alert('Masukkan menit antara 1 sampai 180.');
+                    displayTimerMinutesEl.focus();
+                    return;
+                }
+
+                startCountdown(minutes);
+                closeTimerPopup();
+            });
+
+            displayTimerOverlayEl.addEventListener('click', function (event) {
+                if (event.target === displayTimerOverlayEl) {
+                    closeTimerPopup();
+                }
+            });
+
+            restoreCountdownState();
 
             async function refreshStats() {
                 try {
