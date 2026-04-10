@@ -75,7 +75,8 @@
                                 <div id="display-countdown-box"
                                     class="mt-8 rounded-2xl bg-gray-900 text-white p-6 md:p-8 text-center border border-gray-700 shadow-lg cursor-pointer">
                                     <p class="text-sm uppercase tracking-widest text-gray-300">Countdown</p>
-                                    <p id="display-countdown-text" class="text-6xl md:text-7xl font-bold leading-none mt-3">00:00:00</p>
+                                    <p id="display-countdown-text" class="font-bold leading-none mt-3"
+                                        style="font-size: clamp(3rem, 9vw, 4.5rem);">00:00:00</p>
                                 </div>
                             </div>
                         </div>
