@@ -9,6 +9,18 @@
         <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
             <h1 class="text-3xl font-bold text-gray-800 dark:text-white">Data Peserta</h1>
             <div class="flex items-center gap-3">
+                <form action="{{ route('peserta.destroy-all') }}" method="POST"
+                      onsubmit="return confirm('Yakin ingin menghapus SEMUA peserta? Semua akun user peserta dan data voting terkait juga akan dihapus permanen.')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                            class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2m-8 0l1 12h6l1-12"/>
+                        </svg>
+                        Hapus Semua
+                    </button>
+                </form>
                 <a href="{{ route('peserta.export') }}"
                    class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors duration-200">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

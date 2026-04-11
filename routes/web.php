@@ -45,6 +45,7 @@ Route::middleware(["auth", "nocache", Authorize::class])->prefix('/admin')->grou
 
     Route::get("peserta/template", [PesertaController::class, 'downloadTemplate'])->name("peserta.template");
     Route::get("peserta/export", [PesertaController::class, 'export'])->name("peserta.export");
+    Route::delete("peserta", [PesertaController::class, 'destroyAll'])->name("peserta.destroy-all");
     Route::post("peserta/{peserta}/send-credentials", [PesertaController::class, 'sendCredentials'])->name("peserta.send-credentials");
     Route::resource("peserta", PesertaController::class)->except(['show'])->parameters(['peserta' => 'peserta']);
 });

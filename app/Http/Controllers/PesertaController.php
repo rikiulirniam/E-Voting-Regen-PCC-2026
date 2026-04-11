@@ -202,6 +202,23 @@ class PesertaController extends Controller
         return redirect()->route('peserta.index')->with('success', 'Peserta berhasil dihapus.');
     }
 
+    public function destroyAll()
+    {
+        $pesertaIds = Peserta::pluck('id');
+
+        if ($pesertaIds->isEmpty()) {
+            return redirect()->route('peserta.index')->with('error', 'Tidak ada data peserta untuk dihapus.');
+        }
+
+        DB::transaction(function () use ($pesertaIds) {
+            Voting::whereIn('id_peserta', $pesertaIds)->delete();
+            User::whereIn('id_peserta', $pesertaIds)->delete();
+            Peserta::whereIn('id', $pesertaIds)->delete();
+        });
+
+        return redirect()->route('peserta.index')->with('success', 'Semua data peserta berhasil dihapus.');
+    }
+
     public function downloadTemplate()
     {
         $headers = [
