@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\PesertaCredentials;
+use App\Models\CalonAdmin;
 use App\Models\Peserta;
 use App\Models\User;
 use App\Models\Voting;
@@ -104,7 +105,15 @@ class PesertaController extends Controller
 
             $plainPassword = Str::random(10);
 
-            DB::transaction(function () use ($name, $nim, $email, $status_jabatan, $username, $plainPassword, &$inserted) {
+            DB::transaction(function () use (
+                $name,
+                $nim,
+                $email,
+                $status_jabatan,
+                $username,
+                $plainPassword,
+                &$inserted
+            ) {
                 $peserta = Peserta::create([
                     'name'           => $name,
                     'nim'            => $nim,
@@ -129,6 +138,146 @@ class PesertaController extends Controller
         fclose($handle);
 
         $message = "{$inserted} peserta berhasil diimpor dan kredensial dikirim via email.";
+        if ($skipped > 0) {
+            $message .= " {$skipped} baris dilewati.";
+        }
+
+        return redirect()->route('peserta.index')
+            ->with('success', $message)
+            ->with('import_errors', $errors);
+    }
+
+    public function importVoteResults(StorePesertaRequest $request)
+    {
+        $file = $request->file('file');
+        $path = $file->getRealPath();
+        $handle = fopen($path, 'r');
+
+        $firstRaw = fgets($handle);
+        $delimiter = str_contains((string) $firstRaw, ';') ? ';' : ',';
+
+        if (str_starts_with(trim((string) $firstRaw), 'sep=')) {
+            $sepVal = trim(substr(trim((string) $firstRaw), 4));
+            $delimiter = $sepVal ?: $delimiter;
+            $headerRow = fgetcsv($handle, 0, $delimiter);
+        } else {
+            $headerRow = str_getcsv((string) $firstRaw, $delimiter);
+        }
+
+        if ($headerRow === false) {
+            fclose($handle);
+            return redirect()->route('peserta.index')->with('error', 'File CSV kosong atau tidak valid.');
+        }
+
+        $normalizeHeader = static function (?string $value): string {
+            $value = Str::lower(trim((string) $value));
+            $value = str_replace(['.', '-', ' '], '_', $value);
+            $value = preg_replace('/_+/', '_', $value);
+
+            return trim((string) $value, '_');
+        };
+
+        $headerMap = [];
+        foreach ($headerRow as $index => $headerCell) {
+            $key = $normalizeHeader($headerCell);
+            if ($key !== '') {
+                $headerMap[$key] = $index;
+            }
+        }
+
+        $resolveIndex = static function (array $aliases, array $map, ?int $fallback = null): ?int {
+            foreach ($aliases as $alias) {
+                if (array_key_exists($alias, $map)) {
+                    return $map[$alias];
+                }
+            }
+
+            return $fallback;
+        };
+
+        $nimIndex = $resolveIndex(['nim'], $headerMap, 1);
+        $statusVoteIndex = $resolveIndex(['status_vote'], $headerMap, 5);
+        $noUrutPilihanIndex = $resolveIndex(['no_urut_pilihan', 'no_urut', 'pilihan'], $headerMap, 6);
+
+        if ($nimIndex === null || $statusVoteIndex === null) {
+            fclose($handle);
+
+            return redirect()->route('peserta.index')
+                ->with('error', 'Header CSV wajib memuat kolom NIM dan Status Vote.');
+        }
+
+        $updated = 0;
+        $skipped = 0;
+        $errors = [];
+        $row = 1;
+
+        while (($data = fgetcsv($handle, 1000, $delimiter)) !== false) {
+            $row++;
+
+            if (empty(array_filter($data))) {
+                continue;
+            }
+
+            $nim = trim((string) ($data[$nimIndex] ?? ''));
+            $statusVote = Str::lower(trim((string) ($data[$statusVoteIndex] ?? '')));
+            $noUrutPilihan = $noUrutPilihanIndex !== null
+                ? trim((string) ($data[$noUrutPilihanIndex] ?? ''))
+                : '';
+
+            if ($nim === '') {
+                $errors[] = "Baris {$row}: kolom NIM kosong.";
+                $skipped++;
+                continue;
+            }
+
+            if (!in_array($statusVote, ['belum', 'sudah'], true)) {
+                $errors[] = "Baris {$row} ({$nim}): Status Vote harus bernilai belum/sudah.";
+                $skipped++;
+                continue;
+            }
+
+            $peserta = Peserta::where('nim', $nim)->first();
+            if (!$peserta) {
+                $errors[] = "Baris {$row} ({$nim}): peserta tidak ditemukan.";
+                $skipped++;
+                continue;
+            }
+
+            $selectedCalonAdmin = null;
+            if ($statusVote === 'sudah') {
+                if ($noUrutPilihan === '') {
+                    $errors[] = "Baris {$row} ({$nim}): status_vote sudah, tapi No.Urut Pilihan kosong.";
+                    $skipped++;
+                    continue;
+                }
+
+                $selectedCalonAdmin = CalonAdmin::where('no_urut', $noUrutPilihan)->first();
+                if (!$selectedCalonAdmin) {
+                    $errors[] = "Baris {$row} ({$nim}): No.Urut Pilihan {$noUrutPilihan} tidak ditemukan di data calon admin.";
+                    $skipped++;
+                    continue;
+                }
+            }
+
+            DB::transaction(function () use ($peserta, $statusVote, $selectedCalonAdmin, &$updated) {
+                $peserta->update(['status_vote' => $statusVote]);
+
+                if ($statusVote === 'sudah' && $selectedCalonAdmin) {
+                    Voting::updateOrCreate(
+                        ['id_peserta' => $peserta->id],
+                        ['id_calon_admin' => $selectedCalonAdmin->id]
+                    );
+                } else {
+                    Voting::where('id_peserta', $peserta->id)->delete();
+                }
+
+                $updated++;
+            });
+        }
+
+        fclose($handle);
+
+        $message = "{$updated} data hasil vote berhasil diimpor.";
         if ($skipped > 0) {
             $message .= " {$skipped} baris dilewati.";
         }

@@ -57,11 +57,7 @@
                             <p class="winner-kicker text-md uppercase tracking-[0.25em] text-emerald-300">Administrator 2026/2027</p>
                             <p class="winner-kicker text-xs uppercase tracking-[0.25em] text-emerald-300">Polytechnic Computer Club</p>
                             <h3 class="winner-title mt-4 text-4xl md:text-6xl font-black leading-tight">{{ $featuredWinner->name }}</h3>
-                            <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                <div class="winner-stat-card rounded-xl border border-white/20 bg-white/10 p-4">
-                                    <p class="text-xs uppercase tracking-wide text-gray-300">Nomor Urut</p>
-                                    <p class="text-3xl font-bold mt-2">{{ $featuredWinner->no_urut }}</p>
-                                </div>
+                            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="winner-stat-card rounded-xl border border-white/20 bg-white/10 p-4">
                                     <p class="text-xs uppercase tracking-wide text-gray-300">Suara Diperoleh</p>
                                     <p class="text-3xl font-bold mt-2">{{ $featuredWinner->votings_count }}</p>
@@ -77,7 +73,10 @@
                         </div>
 
                         <div class="winner-photo-wrap order-1 lg:order-2">
-                            <div class="winner-photo-card w-full max-w-md mx-auto rounded-3xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
+                            <div class="winner-photo-card relative w-full max-w-md mx-auto rounded-3xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
+                                <div class="winner-no-urut-stamp" aria-label="Nomor urut {{ $featuredWinner->no_urut }}">
+                                    <span class="winner-no-urut-stamp-value">{{ $featuredWinner->no_urut }}</span>
+                                </div>
                                 @if ($featuredWinner->foto_url)
                                     <img src="{{ $featuredWinner->foto_url }}" alt="Foto {{ $featuredWinner->name }}"
                                         class="w-full aspect-[4/5] object-cover rounded-2xl">
@@ -238,9 +237,46 @@
         .winner-result-stage .winner-photo-card,
         .winner-result-stage .winner-kicker,
         .winner-result-stage .winner-title,
+        .winner-result-stage .winner-no-urut-stamp,
         .winner-result-stage .winner-stat-card,
         .winner-result-stage .winner-scroll-note {
             opacity: 0;
+        }
+
+        .winner-no-urut-stamp {
+            position: absolute;
+            top: -24px;
+            right: -24px;
+            z-index: 5;
+            width: clamp(96px, 18vw, 128px);
+            aspect-ratio: 1;
+            border-radius: 999px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.2rem;
+            background: radial-gradient(circle at 30% 30%, #fde68a 0%, #f59e0b 48%, #b45309 100%);
+            border: 3px dashed rgba(120, 53, 15, 0.82);
+            box-shadow: 0 12px 26px rgba(245, 158, 11, 0.34), 0 0 0 5px rgba(255, 255, 255, 0.12);
+            transform: rotate(12deg) scale(0.8);
+            transform-origin: center;
+        }
+
+        .winner-no-urut-stamp-label {
+            font-size: 0.62rem;
+            line-height: 1;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(120, 53, 15, 0.9);
+            font-weight: 700;
+        }
+
+        .winner-no-urut-stamp-value {
+            font-size: clamp(3.3rem, 9.5vw, 4.8rem);
+            line-height: 1;
+            color: #7c2d12;
+            font-weight: 900;
         }
 
         .winner-result-stage .winner-copy {
@@ -259,6 +295,10 @@
             animation: fadeUp 0.5s ease 1.2s forwards;
         }
 
+        .winner-result-stage.is-revealed .winner-no-urut-stamp {
+            animation: stampIn 0.5s cubic-bezier(0.2, 1, 0.3, 1) 0.95s forwards;
+        }
+
         .winner-result-stage.is-revealed .winner-photo-card {
             animation: photoReveal 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) 0.12s forwards;
         }
@@ -269,10 +309,6 @@
 
         .winner-result-stage.is-revealed .winner-stat-card:nth-child(2) {
             animation: fadeUp 0.45s ease 1.48s forwards;
-        }
-
-        .winner-result-stage.is-revealed .winner-stat-card:nth-child(3) {
-            animation: fadeUp 0.45s ease 1.62s forwards;
         }
 
         .winner-result-stage.is-revealed .winner-scroll-note {
@@ -315,6 +351,23 @@
             }
         }
 
+        @keyframes stampIn {
+            0% {
+                opacity: 0;
+                transform: rotate(16deg) scale(1.55) translateY(-14px);
+                filter: blur(1px);
+            }
+            62% {
+                opacity: 1;
+                transform: rotate(9deg) scale(0.92) translateY(2px);
+                filter: blur(0);
+            }
+            100% {
+                opacity: 1;
+                transform: rotate(12deg) scale(1) translateY(0);
+            }
+        }
+
         @keyframes pulseGlow {
             0%, 100% {
                 box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
@@ -350,6 +403,7 @@
             .winner-result-stage.is-revealed .winner-copy,
             .winner-result-stage.is-revealed .winner-kicker,
             .winner-result-stage.is-revealed .winner-title,
+            .winner-result-stage.is-revealed .winner-no-urut-stamp,
             .winner-result-stage.is-revealed .winner-photo-card,
             .winner-result-stage.is-revealed .winner-stat-card,
             .winner-result-stage.is-revealed .winner-scroll-note,

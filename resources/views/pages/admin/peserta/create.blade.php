@@ -32,7 +32,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 110 20A10 10 0 0112 2z" />
             </svg>
             <div class="text-xs sm:text-sm text-blue-800 dark:text-blue-200 w-full">
-                <p class="font-semibold mb-2">Format CSV yang diperlukan:</p>
+                <p class="font-semibold mb-2">Format CSV untuk Import Peserta Baru:</p>
                 <div class="w-full overflow-x-auto">
                     <table class="min-w-[500px] text-xs sm:text-sm border-collapse mb-3">
                         <thead>
@@ -56,6 +56,7 @@
 
                 <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm leading-relaxed">
                     <li>Baris pertama adalah header (akan dilewati otomatis).</li>
+                    <li>Tombol <strong>Import Peserta Baru</strong> hanya untuk data peserta yang belum ada di database.</li>
                     <li>
                         <strong>Username</strong> dan
                         <strong>password</strong> akan di-generate otomatis dan dikirim ke email masing-masing peserta.
@@ -69,6 +70,16 @@
                     <li>NIM dan email harus unik — baris duplikat akan dilewati.</li>
                     <li>Simpan file Excel sebagai <strong>CSV (Comma delimited)</strong>.</li>
                 </ul>
+
+                <div class="mt-4 rounded-lg border border-blue-200 dark:border-blue-800 bg-white/70 dark:bg-gray-900/40 p-3">
+                    <p class="font-semibold mb-1">Import terpisah untuk hasil vote:</p>
+                    <p class="text-xs sm:text-sm leading-relaxed">
+                        Gunakan tombol <strong>Import Hasil Vote</strong> untuk file export yang berisi kolom
+                        <code class="bg-blue-100 dark:bg-blue-900 px-1 rounded">NIM</code>,
+                        <code class="bg-blue-100 dark:bg-blue-900 px-1 rounded">Status Vote</code>, dan
+                        <code class="bg-blue-100 dark:bg-blue-900 px-1 rounded">No.Urut Pilihan</code>.
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -119,7 +130,12 @@
             </a>
             <button type="submit"
                 class="px-5 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200">
-                Import Sekarang
+                Import Peserta Baru
+            </button>
+            <button type="submit"
+                formaction="{{ route('peserta.import-vote-results') }}"
+                class="px-5 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-colors duration-200">
+                Import Hasil Vote
             </button>
         </div>
     </form>
