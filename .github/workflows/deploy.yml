@@ -54,7 +54,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          server-dir: /
+          server-dir: ${{ secrets.FTP_SERVER_DIR || '/' }}
           exclude: |
             **/.git*
             **/.git*/**
@@ -62,3 +62,9 @@ jobs:
             **/tests/**
             **/.env
             **/.github/**
+
+      - name: Verify Deployed Audio URLs (Optional)
+        if: ${{ secrets.APP_URL != '' }}
+        run: |
+          curl -fI "${{ secrets.APP_URL }}/assets/audio/drumroll.wav"
+          curl -fI "${{ secrets.APP_URL }}/assets/audio/tadaa.wav"
