@@ -347,11 +347,6 @@
     </style>
 
     <script>
-        window.WINNER_AUDIO = {
-            drumrollUrl: @json(Vite::asset('resources/audio/drumroll.wav')),
-            tadaaUrl: @json(Vite::asset('resources/audio/tadaa.wav')),
-        };
-
         (function () {
             const showWinnerButton = document.getElementById('show-winner-btn');
             const introSection = document.getElementById('winner-intro');
