@@ -372,6 +372,24 @@
             const tadaaAudioEl = document.getElementById('tadaa-sfx');
             const confettiCanvas = document.getElementById('winner-confetti-canvas');
             let confettiHasPlayed = false;
+            let audioCtx = null;
+
+            async function getAudioContext() {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContextClass) {
+                    return null;
+                }
+
+                if (!audioCtx || audioCtx.state === 'closed') {
+                    audioCtx = new AudioContextClass();
+                }
+
+                if (audioCtx.state === 'suspended') {
+                    await audioCtx.resume();
+                }
+
+                return audioCtx;
+            }
 
             function playAudio(audioEl, volume) {
                 if (!audioEl) {
@@ -387,6 +405,81 @@
                         // Ignore playback block and continue visual flow.
                     });
                 }
+            }
+
+            async function playFallbackDrumroll(durationMs) {
+                const ctx = await getAudioContext();
+                if (!ctx) {
+                    return;
+                }
+
+                const now = ctx.currentTime + 0.01;
+                const duration = Math.max(0.5, durationMs / 1000);
+
+                const master = ctx.createGain();
+                master.gain.setValueAtTime(0.0001, now);
+                master.gain.exponentialRampToValueAtTime(0.13, now + 0.08);
+                master.gain.setValueAtTime(0.13, now + Math.max(0.2, duration - 0.3));
+                master.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+                master.connect(ctx.destination);
+
+                let t = now;
+                let i = 0;
+                while (t < now + duration - 0.05) {
+                    const progress = Math.min(1, i / 24);
+                    const interval = 0.32 - (0.2 * progress);
+
+                    const osc = ctx.createOscillator();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(120 - (28 * progress), t);
+                    osc.frequency.exponentialRampToValueAtTime(55, t + 0.11);
+
+                    const gain = ctx.createGain();
+                    gain.gain.setValueAtTime(0.0001, t);
+                    gain.gain.exponentialRampToValueAtTime(0.2, t + 0.01);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.15);
+
+                    osc.connect(gain);
+                    gain.connect(master);
+                    osc.start(t);
+                    osc.stop(t + 0.16);
+
+                    t += Math.max(0.11, interval);
+                    i++;
+                }
+            }
+
+            async function playFallbackTadaa() {
+                const ctx = await getAudioContext();
+                if (!ctx) {
+                    return;
+                }
+
+                const now = ctx.currentTime + 0.01;
+                const notes = [523.25, 659.25, 783.99];
+
+                const master = ctx.createGain();
+                master.gain.setValueAtTime(0.0001, now);
+                master.gain.exponentialRampToValueAtTime(0.2, now + 0.04);
+                master.gain.exponentialRampToValueAtTime(0.0001, now + 1.1);
+                master.connect(ctx.destination);
+
+                notes.forEach(function (note) {
+                    const osc = ctx.createOscillator();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(note, now);
+                    osc.frequency.exponentialRampToValueAtTime(note * 1.15, now + 0.35);
+
+                    const gain = ctx.createGain();
+                    gain.gain.setValueAtTime(0.0001, now);
+                    gain.gain.exponentialRampToValueAtTime(0.11, now + 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
+
+                    osc.connect(gain);
+                    gain.connect(master);
+                    osc.start(now);
+                    osc.stop(now + 0.95);
+                });
             }
 
             function launchConfettiOnce() {
@@ -483,6 +576,8 @@
             showWinnerButton.addEventListener('click', async function () {
                 showWinnerButton.disabled = true;
                 introSection.classList.add('intro-exit');
+                const hasDrumrollFile = !!drumrollAudioEl;
+                const hasTadaaFile = !!tadaaAudioEl;
 
                 setTimeout(function () {
                     introSection.classList.add('hidden');
@@ -492,14 +587,22 @@
                         suspenseLayer.classList.remove('hidden');
                     }
 
-                    playAudio(drumrollAudioEl, 0.95);
+                    if (hasDrumrollFile) {
+                        playAudio(drumrollAudioEl, 0.95);
+                    } else {
+                        playFallbackDrumroll(5000);
+                    }
 
                     setTimeout(function () {
-                        if (drumrollAudioEl) {
+                        if (hasDrumrollFile && drumrollAudioEl) {
                             drumrollAudioEl.pause();
                             drumrollAudioEl.currentTime = 0;
                         }
-                        playAudio(tadaaAudioEl, 1);
+                        if (hasTadaaFile) {
+                            playAudio(tadaaAudioEl, 1);
+                        } else {
+                            playFallbackTadaa();
+                        }
 
                         winnerResultSection.classList.remove('is-waiting');
                         if (suspenseLayer) {
