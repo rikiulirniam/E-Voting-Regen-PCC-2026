@@ -7,6 +7,25 @@
         $featuredPercentage = ($totalVotes > 0 && $featuredWinner)
             ? round(($featuredWinner->votings_count / $totalVotes) * 100, 2)
             : 0;
+
+        $winnerAudio = [
+            'drumrollUrl' => null,
+            'tadaaUrl' => null,
+        ];
+
+        $manifestPath = public_path('build/manifest.json');
+        if (is_file($manifestPath)) {
+            $manifest = json_decode(file_get_contents($manifestPath), true);
+            if (is_array($manifest)) {
+                if (isset($manifest['resources/audio/drumroll.wav']['file'])) {
+                    $winnerAudio['drumrollUrl'] = asset('build/' . $manifest['resources/audio/drumroll.wav']['file']);
+                }
+
+                if (isset($manifest['resources/audio/tadaa.wav']['file'])) {
+                    $winnerAudio['tadaaUrl'] = asset('build/' . $manifest['resources/audio/tadaa.wav']['file']);
+                }
+            }
+        }
     @endphp
 
     <section id="winner-intro" class="winner-intro-stage relative min-h-screen flex items-center justify-center px-6 py-10 bg-gradient-to-br from-slate-800 via-slate-700 to-emerald-800">
@@ -347,6 +366,8 @@
     </style>
 
     <script>
+        window.WINNER_AUDIO = Object.assign({}, window.WINNER_AUDIO || {}, @json($winnerAudio));
+
         (function () {
             const showWinnerButton = document.getElementById('show-winner-btn');
             const introSection = document.getElementById('winner-intro');
