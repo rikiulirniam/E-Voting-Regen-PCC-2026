@@ -7,6 +7,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      APP_URL: ${{ secrets.APP_URL }}
     steps:
       - uses: actions/checkout@v4
 
@@ -64,7 +66,7 @@ jobs:
             **/.github/**
 
       - name: Verify Deployed Audio URLs (Optional)
-        if: ${{ secrets.APP_URL != '' }}
+        if: ${{ env.APP_URL != '' }}
         run: |
-          curl -fI "${{ secrets.APP_URL }}/assets/audio/drumroll.wav"
-          curl -fI "${{ secrets.APP_URL }}/assets/audio/tadaa.wav"
+          curl -fI "$APP_URL/assets/audio/drumroll.wav"
+          curl -fI "$APP_URL/assets/audio/tadaa.wav"
