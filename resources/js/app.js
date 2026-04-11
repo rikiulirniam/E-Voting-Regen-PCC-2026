@@ -1,9 +1,16 @@
 import './bootstrap';
 import '../css/app.css'
+import drumrollAudioUrl from '../audio/drumroll.wav'
+import tadaaAudioUrl from '../audio/tadaa.wav'
 
 import Alpine from 'alpinejs'
 window.Alpine= Alpine
 Alpine.start()
+
+window.WINNER_AUDIO = {
+    drumrollUrl: drumrollAudioUrl,
+    tadaaUrl: tadaaAudioUrl,
+}
 
 // fitur pencegahan spam
 document.addEventListener('DOMContentLoaded', function () {

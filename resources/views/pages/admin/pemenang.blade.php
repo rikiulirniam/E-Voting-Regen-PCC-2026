@@ -7,12 +7,6 @@
         $featuredPercentage = ($totalVotes > 0 && $featuredWinner)
             ? round(($featuredWinner->votings_count / $totalVotes) * 100, 2)
             : 0;
-        $drumrollAudioUrl = file_exists(public_path('assets/audio/drumroll.wav'))
-            ? asset('assets/audio/drumroll.wav')
-            : null;
-        $tadaaAudioUrl = file_exists(public_path('assets/audio/tadaa.wav'))
-            ? asset('assets/audio/tadaa.wav')
-            : null;
     @endphp
 
     <section id="winner-intro" class="winner-intro-stage relative min-h-screen flex items-center justify-center px-6 py-10 bg-gradient-to-br from-slate-800 via-slate-700 to-emerald-800">
@@ -119,16 +113,6 @@
         </section>
     </section>
 
-    @if ($drumrollAudioUrl)
-        <audio id="drumroll-sfx" preload="auto" class="hidden" aria-hidden="true">
-            <source src="{{ $drumrollAudioUrl }}" type="audio/wav">
-        </audio>
-    @endif
-    @if ($tadaaAudioUrl)
-        <audio id="tadaa-sfx" preload="auto" class="hidden" aria-hidden="true">
-            <source src="{{ $tadaaAudioUrl }}" type="audio/wav">
-        </audio>
-    @endif
     <canvas id="winner-confetti-canvas" class="winner-confetti-canvas hidden" aria-hidden="true"></canvas>
 @endsection
 
@@ -363,16 +347,30 @@
     </style>
 
     <script>
+        window.WINNER_AUDIO = {
+            drumrollUrl: @json(Vite::asset('resources/audio/drumroll.wav')),
+            tadaaUrl: @json(Vite::asset('resources/audio/tadaa.wav')),
+        };
+
         (function () {
             const showWinnerButton = document.getElementById('show-winner-btn');
             const introSection = document.getElementById('winner-intro');
             const winnerResultSection = document.getElementById('winner-result');
             const suspenseLayer = document.getElementById('winner-suspense');
-            const drumrollAudioEl = document.getElementById('drumroll-sfx');
-            const tadaaAudioEl = document.getElementById('tadaa-sfx');
+            const winnerAudio = window.WINNER_AUDIO || {};
+            const drumrollAudioEl = winnerAudio.drumrollUrl ? new Audio(winnerAudio.drumrollUrl) : null;
+            const tadaaAudioEl = winnerAudio.tadaaUrl ? new Audio(winnerAudio.tadaaUrl) : null;
             const confettiCanvas = document.getElementById('winner-confetti-canvas');
             let confettiHasPlayed = false;
             let audioCtx = null;
+
+            if (drumrollAudioEl) {
+                drumrollAudioEl.preload = 'auto';
+            }
+
+            if (tadaaAudioEl) {
+                tadaaAudioEl.preload = 'auto';
+            }
 
             async function getAudioContext() {
                 const AudioContextClass = window.AudioContext || window.webkitAudioContext;

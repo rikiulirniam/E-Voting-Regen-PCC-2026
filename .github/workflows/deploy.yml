@@ -25,11 +25,13 @@ jobs:
       - name: Build Frontend Assets
         run: npm run build
 
-      - name: Verify Winner Audio Assets
+      - name: Verify Winner Audio In Build
         run: |
-          test -f public/assets/audio/drumroll.wav
-          test -f public/assets/audio/tadaa.wav
-          ls -lah public/assets/audio
+          test -f resources/audio/drumroll.wav
+          test -f resources/audio/tadaa.wav
+          test -f public/build/manifest.json
+          grep -q 'resources/audio/drumroll.wav' public/build/manifest.json
+          grep -q 'resources/audio/tadaa.wav' public/build/manifest.json
 
       - name: Setup PHP & Install Dependencies
         uses: shivammathur/setup-php@v2
@@ -68,6 +70,9 @@ jobs:
       - name: Verify Deployed Audio URLs (Optional)
         if: ${{ env.APP_URL != '' }}
         run: |
+          DRUMROLL_PATH=$(node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync('public/build/manifest.json','utf8')); process.stdout.write('/build/' + m['resources/audio/drumroll.wav'].file);")
+          TADAA_PATH=$(node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync('public/build/manifest.json','utf8')); process.stdout.write('/build/' + m['resources/audio/tadaa.wav'].file);")
+
           check_url () {
             local url="$1"
             local code
@@ -88,5 +93,5 @@ jobs:
             return 1
           }
 
-          check_url "$APP_URL/assets/audio/drumroll.wav"
-          check_url "$APP_URL/assets/audio/tadaa.wav"
+          check_url "$APP_URL$DRUMROLL_PATH"
+          check_url "$APP_URL$TADAA_PATH"
