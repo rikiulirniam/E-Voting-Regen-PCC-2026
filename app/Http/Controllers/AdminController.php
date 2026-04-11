@@ -28,6 +28,11 @@ class AdminController extends Controller
         return response()->json($this->displayStatsData());
     }
 
+    public function pemenang()
+    {
+        return view('pages.admin.pemenang', $this->winnerData());
+    }
+
     private function displayStatsData(): array
     {
         $totalPeserta = Peserta::count();
@@ -56,6 +61,29 @@ class AdminController extends Controller
             'belumVote'     => $stats['belumVote'],
             'totalCamin'    => CalonAdmin::count(),
             'votePerPaslon' => CalonAdmin::withCount('votings')->orderBy('no_urut')->get(),
+        ];
+    }
+
+    private function winnerData(): array
+    {
+        $candidates = CalonAdmin::withCount('votings')
+            ->orderByDesc('votings_count')
+            ->orderBy('no_urut')
+            ->get();
+
+        $maxVotes = (int) $candidates->max('votings_count');
+        $totalVotes = (int) $candidates->sum('votings_count');
+
+        $winners = $maxVotes > 0
+            ? $candidates->where('votings_count', $maxVotes)->values()
+            : collect();
+
+        return [
+            'candidates' => $candidates,
+            'winners' => $winners,
+            'maxVotes' => $maxVotes,
+            'totalVotes' => $totalVotes,
+            'isTie' => $winners->count() > 1,
         ];
     }
 

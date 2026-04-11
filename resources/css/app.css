@@ -5,6 +5,7 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+@source inline('bg-red-600 hover:bg-red-700 text-white');
 
 @theme {
     --font-sans:

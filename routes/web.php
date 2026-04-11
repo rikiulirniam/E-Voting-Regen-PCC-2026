@@ -40,6 +40,7 @@ Route::middleware(["auth", "nocache", Authorize::class])->prefix('/admin')->grou
     Route::get("/", [AdminController::class, 'index'])->name("admin.dashboard");
     Route::get('/display', [AdminController::class, 'display'])->name('admin.display');
     Route::get('/display/stats', [AdminController::class, 'displayStats'])->name('admin.display.stats');
+    Route::get('/pemenang', [AdminController::class, 'pemenang'])->name('admin.pemenang');
 
     Route::resource("camin", CalonAdminController::class);
 

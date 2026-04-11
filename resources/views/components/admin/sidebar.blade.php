@@ -56,6 +56,16 @@
             </svg>
             Display
         </a>
+
+        {{-- Pemenang --}}
+        <a href="{{ route('admin.pemenang') }}" onclick="closeSidebar()"
+           class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200
+                  {{ request()->routeIs('admin.pemenang') ? 'bg-blue-600 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 3l4 6h6l4-6M4 10h16l-1.5 9a2 2 0 01-2 1.7h-9a2 2 0 01-2-1.7L4 10z"/>
+            </svg>
+            Pemenang
+        </a>
     </nav>
 
     {{-- Logout --}}
