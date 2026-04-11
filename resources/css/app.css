@@ -107,7 +107,7 @@
 
     to {
         opacity: 0;
-        transfrom: scale(1.2);
+        transform: scale(1.2);
         filter: blur(10px);
     }
 }
