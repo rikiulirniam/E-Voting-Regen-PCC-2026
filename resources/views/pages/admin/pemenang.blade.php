@@ -7,13 +7,19 @@
         $featuredPercentage = ($totalVotes > 0 && $featuredWinner)
             ? round(($featuredWinner->votings_count / $totalVotes) * 100, 2)
             : 0;
+        $drumrollAudioUrl = file_exists(public_path('assets/audio/drumroll.wav'))
+            ? asset('assets/audio/drumroll.wav')
+            : null;
+        $tadaaAudioUrl = file_exists(public_path('assets/audio/tadaa.wav'))
+            ? asset('assets/audio/tadaa.wav')
+            : null;
     @endphp
 
     <section id="winner-intro" class="winner-intro-stage relative min-h-screen flex items-center justify-center px-6 py-10 bg-gradient-to-br from-slate-800 via-slate-700 to-emerald-800">
         <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 20% 20%, #ffffff 1px, transparent 1px); background-size: 22px 22px;"></div>
         <div class="relative z-10 text-center">
-            <p class="text-sm uppercase tracking-[0.35em] text-emerald-200 mb-4">Hasil Voting 2026</p>
-            <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-8">Pengumuman Pemenang</h2>
+            <p class="winner-intro-label text-sm uppercase tracking-[0.35em] text-emerald-200 mb-4">Hasil Voting 2026</p>
+            <h2 class="winner-intro-heading text-3xl md:text-5xl font-extrabold text-white mb-8">Pengumuman Pemenang</h2>
             <button id="show-winner-btn" type="button"
                 class="winner-cta-btn inline-flex items-center justify-center rounded-2xl px-8 py-4 text-base md:text-lg font-semibold text-slate-800 bg-emerald-300 hover:bg-emerald-200 transition-colors shadow-xl">
                 Tampilkan Pemenang
@@ -113,12 +119,16 @@
         </section>
     </section>
 
-    <audio id="drumroll-sfx" preload="auto" class="hidden" aria-hidden="true">
-        <source src="{{ asset('assets/audio/drumroll.wav') }}" type="audio/wav">
-    </audio>
-    <audio id="tadaa-sfx" preload="auto" class="hidden" aria-hidden="true">
-        <source src="{{ asset('assets/audio/tadaa.wav') }}" type="audio/wav">
-    </audio>
+    @if ($drumrollAudioUrl)
+        <audio id="drumroll-sfx" preload="auto" class="hidden" aria-hidden="true">
+            <source src="{{ $drumrollAudioUrl }}" type="audio/wav">
+        </audio>
+    @endif
+    @if ($tadaaAudioUrl)
+        <audio id="tadaa-sfx" preload="auto" class="hidden" aria-hidden="true">
+            <source src="{{ $tadaaAudioUrl }}" type="audio/wav">
+        </audio>
+    @endif
     <canvas id="winner-confetti-canvas" class="winner-confetti-canvas hidden" aria-hidden="true"></canvas>
 @endsection
 
@@ -138,7 +148,25 @@
         }
 
         .winner-cta-btn {
+            background-color: #6ee7b7;
+            color: #0f172a;
+            border-radius: 1rem;
+            padding: 1rem 2rem;
+            font-size: clamp(1rem, 1.2vw, 1.125rem);
+            font-weight: 700;
             animation: pulseGlow 2.1s ease-in-out infinite;
+        }
+
+        .winner-cta-btn:hover {
+            background-color: #a7f3d0;
+        }
+
+        .winner-intro-label {
+            color: #a7f3d0;
+        }
+
+        .winner-intro-heading {
+            color: #ffffff;
         }
 
         .winner-confetti-canvas {
